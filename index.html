@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<!-- Yugal Agro build v13: customer signup needs email OTP once; login via Google / password / email code; admin gate (email+password) + Operational & Confidential (3 separate passwords) -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="build" content="v9">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yugal Agro – Farm-fresh dairy, spices, pulses & vermicompost</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Work+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#f7f3e6;--card:#fffdf6;--ink:#17261a;--mute:#566650;--g:#1f6b3d;--g2:#e1eed8;--acc:#e0a526;--line:#e2dbc3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a12;--card:#1b261b;--ink:#eef3e9;--mute:#a4b3a0;--g:#6cc07a;--g2:#223422;--acc:#f0a63c;--line:#2d3d2d}}
+:root[data-theme="dark"]{--bg:#121a12;--card:#1b261b;--ink:#eef3e9;--mute:#a4b3a0;--g:#6cc07a;--g2:#223422;--acc:#f0a63c;--line:#2d3d2d}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Work Sans",system-ui,-apple-system,"Segoe UI","Noto Sans Devanagari",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3{font-family:Fraunces,Georgia,"Noto Serif Devanagari",serif;line-height:1.2;margin:0 0 .5em}
+a{color:inherit}.wrap{max-width:1060px;margin:auto;padding:0 18px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:12px;height:58px}.logo{font:700 20px Georgia,serif;color:var(--g);text-decoration:none;margin-right:auto}
+.nav a.l{text-decoration:none;color:var(--mute);font-size:14px}.nav a.l:hover{color:var(--g)}
+@media(max-width:760px){.nav a.l{display:none}}
+button,select{font:inherit;color:inherit}
+.btn{background:var(--g);color:#fff;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;font-weight:600}
+[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn{color:#10200f}
+.btn.o{background:none;color:var(--g);border:1.5px solid var(--g)}
+.ic{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 10px;cursor:pointer}
+.hero{padding:48px 0 30px}.slides{position:relative}.sl{display:none;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}.sl.on{display:grid;animation:f .6s}@keyframes f{from{opacity:0;transform:translateY(8px)}}.dots{display:flex;gap:8px;margin-top:16px}.dots i{width:28px;height:5px;border-radius:9px;background:var(--line);cursor:pointer}.dots i.on{background:var(--g)}.art{display:flex;justify-content:center;align-items:flex-end;gap:4px;border-radius:28px;padding:30px 14px 18px;background:radial-gradient(circle at 50% 70%,var(--g2),transparent 72%);min-height:230px}.art svg{width:31%;filter:drop-shadow(0 12px 10px #0003)}.art svg:nth-child(2){width:38%;transform:translateY(-12px)}
+@media(max-width:760px){.sl.on{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(30px,5vw,46px)}.hero p{color:var(--mute);max-width:46ch}
+.tag{display:inline-block;background:var(--g2);color:var(--g);border-radius:99px;padding:3px 12px;font-size:13px;font-weight:600;margin-bottom:12px}
+.stack{perspective:900px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pk{background:var(--g2);border:1px solid var(--line);border-radius:16px;padding:22px 10px;text-align:center;font-size:44px;transform:rotateY(-12deg) rotateX(6deg);transition:.3s}
+.pk:nth-child(even){transform:rotateY(12deg) rotateX(6deg)}.pk:hover{transform:none}.pk small{display:block;font-size:13px;color:var(--mute);font-family:system-ui}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:var(--g);color:#fff;border-radius:16px;padding:18px;text-align:center}
+:root[data-theme="dark"] .stats{color:#10200f}
+.stats b{font:700 24px Georgia,serif;display:block}.stats span{font-size:13px;opacity:.9}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}}
+.trust{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0 0;color:var(--mute);font-size:14px}
+.trust span{border:1px solid var(--line);border-radius:99px;padding:4px 12px;background:var(--card)}
+section{padding:42px 0}h2{font-size:28px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.tabs button{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 16px;cursor:pointer}
+.tabs button.on{background:var(--g);color:#fff;border-color:var(--g)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card .em{font-size:40px}.card h3{font-size:17px;margin:6px 0 2px}.card .u{color:var(--mute);font-size:13px}
+.card .r{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.card .r b{color:var(--g);font-size:18px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;counter-reset:s}
+.steps .card::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:700;margin-bottom:8px}
+.alt{background:var(--g2)}
+.trk{display:grid;gap:18px;grid-template-columns:1fr 1fr}@media(max-width:760px){.trk{grid-template-columns:1fr}}
+input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%}
+.route{display:flex;align-items:flex-start;margin:20px 0 6px}
+.route div{flex:1;text-align:center;font-size:12px;color:var(--mute);position:relative}
+.route div::before{content:"";display:block;width:16px;height:16px;border-radius:50%;background:var(--line);margin:0 auto 6px;position:relative;z-index:1}
+.route div::after{content:"";position:absolute;top:7px;left:-50%;width:100%;height:3px;background:var(--line)}
+.route div:first-child::after{display:none}.route .d::before,.route .d::after{background:var(--g)}.route .d{color:var(--ink)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:8px}summary{cursor:pointer;font-weight:600}
+footer{background:#16231a;color:#d8e3d3;padding:34px 0 40px;font-size:14px}footer a{color:#fff}
+footer .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.ov{position:fixed;inset:0;background:#0008;display:none;z-index:40}.ov.on{display:block}
+.dr{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--bg);z-index:50;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.dr.on{transform:none}.dr .b{flex:1;overflow:auto}
+.it{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);align-items:center}
+.q button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.sp{display:flex;gap:6px;margin-bottom:12px;font-size:13px}.sp span{flex:1;text-align:center;padding:5px;border-radius:8px;background:var(--g2);color:var(--mute)}.sp .on{background:var(--g);color:#fff}
+label{display:block;font-size:13px;color:var(--mute);margin:8px 0 3px}
+#qr{display:grid;place-items:center;margin:12px 0;background:#fff;padding:12px;border-radius:12px;width:max-content;margin-inline:auto}
+.small{font-size:13px;color:var(--mute)}
+.ph{height:196px;border-radius:12px;background:linear-gradient(160deg,var(--g2),var(--card));display:grid;place-items:center;overflow:hidden}.ph svg{height:178px}.ph img{width:100%;height:100%;object-fit:cover}.bulk{display:grid;gap:18px;grid-template-columns:1fr 1fr}@media(max-width:760px){.bulk{grid-template-columns:1fr}}.wa{background:#1ea952!important;color:#fff!important}
+.card{transition:.25s;box-shadow:0 6px 18px #0000000d}.card:hover{transform:translateY(-4px);box-shadow:0 16px 32px #0000001c}.art{background:radial-gradient(circle at 50% 78%,var(--g2),transparent 70%),radial-gradient(circle at 18% 20%,#e0a52630 0 9%,transparent 10%),radial-gradient(circle at 86% 30%,#1f6b3d26 0 7%,transparent 8%)}.art svg{width:30%}.art svg:nth-child(2){width:36%}.alt .ph,.stories .ph{height:190px}
+.top{background:#0d3b22;color:#cfe5d3;font-size:12px}.top .wrap{display:flex;justify-content:space-between;align-items:center;height:34px}.top select{background:#0d3b22;color:#fff;border:1px solid #ffffff44;border-radius:8px;padding:2px 6px}
+.mb{display:flex;align-items:center;gap:16px;padding:10px 0}.lg{display:flex;gap:8px;align-items:center;text-decoration:none;color:var(--g);line-height:1}.lg b{font:700 26px Fraunces,Georgia,serif;letter-spacing:.04em;display:block}.lg small{font-size:8px;letter-spacing:.12em;color:var(--mute)}
+.mb input{flex:1;border-radius:99px;max-width:520px}
+.nv{background:#0d3b22}.nv .wrap{display:flex;gap:4px;overflow-x:auto;justify-content:center}.nv a{color:#fff;text-decoration:none;text-align:center;padding:8px 14px;font-weight:600;font-size:14px;white-space:nowrap;line-height:1.2}.nv a:hover{background:#ffffff18}.nv small{display:block;font-size:11px;font-weight:400;color:#cfe5d3}html[lang="en"] .nv small{display:none}
+.h2x{background:#0d3b22;position:relative;overflow:hidden;color:#fff;min-height:300px}.h2x .wrap{position:relative;z-index:2;padding-top:56px;padding-bottom:56px}.h2x h1{font-size:clamp(30px,5vw,52px);max-width:11ch;margin-bottom:12px}.h2x p{max-width:34ch;font-size:18px}
+.h2x img{position:absolute;right:0;top:0;height:100%;width:58%;object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%)}
+.or{background:#f07a1a;color:#fff;border:0;border-radius:10px;padding:12px 26px;font-weight:700;font-size:17px;cursor:pointer}
+@media(max-width:760px){.h2x img{position:relative;width:100%;height:220px;display:block;-webkit-mask-image:linear-gradient(0deg,transparent,#000 40%);mask-image:linear-gradient(0deg,transparent,#000 40%)}.h2x .wrap{padding-bottom:10px}.h2x{display:flex;flex-direction:column-reverse}}
+.cir{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;background:#fbf3dc;padding:26px 18px;border-radius:0 0 18px 18px}[data-theme="dark"] .cir{background:#1b261b}
+.cir button{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 6px;cursor:pointer;font-weight:600;font-size:14px}.cir img{width:86px;height:86px;border-radius:50%;border:3px solid #d8b24a;display:block;margin:0 auto 8px;object-fit:cover}
+.tr4{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:22px 0}.tr4 div{background:#fbf3dc;border-radius:14px;padding:18px;text-align:center;font-weight:600}[data-theme="dark"] .tr4 div{background:#1b261b}.tr4 i{display:block;font-size:30px;font-style:normal}
+.pay{background:#fbf3dc;border-radius:16px;padding:26px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-around}[data-theme="dark"] .pay{background:#1b261b}.pay h3{font-size:24px;margin:0}#pq{background:#fff;padding:8px;border:2px solid #17261a;border-radius:10px}
+footer{background:#0d3b22!important}.fl{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;border-bottom:1px solid #ffffff33;padding-bottom:16px;margin-bottom:18px}.fb{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}.fb span.bd{background:#fff;color:#2a4f9c;font:italic 700 22px Georgia,serif;border-radius:8px;padding:6px 14px}.bt{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));background:#0d3b22;color:#fff;border-radius:99px;padding:9px 16px;text-decoration:none;font-size:13px;z-index:15}
+.ph{height:210px}.ph img{width:100%;height:100%;object-fit:cover;object-position:center 55%}.ln{display:flex;gap:10px;align-items:center}.th{width:52px;height:52px;border-radius:10px;object-fit:cover}.card .ph{margin:-16px -16px 12px;width:calc(100% + 32px);border-radius:14px 14px 0 0}.steps .card{text-align:left}.nv .wrap{justify-content:flex-start}@media(min-width:900px){.nv .wrap{justify-content:center}}
+.doc{max-width:78ch}.doc h3{font-size:19px;margin:20px 0 6px;color:var(--g)}.doc p,.doc li{color:var(--mute);margin:0 0 6px}.doc ul{padding-left:20px;margin:0}.am{position:fixed;inset:0;background:#0009;display:none;place-items:center;z-index:60;padding:16px}.am.on{display:grid}.amc{background:var(--bg);border-radius:16px;padding:20px;width:min(560px,100%);max-height:88vh;overflow:auto}.amc table{width:100%;border-collapse:collapse}.amc td{padding:4px 3px;font-size:14px}.amc input{padding:6px 8px}
+.lgc{width:min(860px,100%);max-height:92vh}.lgb{counter-reset:c}.lgb h2{font-size:26px;margin:14px 0 2px}.lgb h3{counter-increment:c;font-size:17px;margin:22px 0 6px;color:var(--g)}.lgb h3::before{content:counter(c) ". "}.lgb p,.lgb li{color:var(--mute);font-size:15px;margin:0 0 6px}.lgb ul{padding-left:20px;margin:0 0 6px}
+.h2x{min-height:460px;background:linear-gradient(100deg,#0a3019 0%,#0d3b22 55%,#124a2b 100%)}.h2x .wrap{padding-top:64px;padding-bottom:64px;display:flex;flex-direction:column;justify-content:center;min-height:460px}.h2x .hk{align-self:flex-start;background:#ffffff1f;border:1px solid #ffffff40;color:#ffe9a8;border-radius:99px;padding:5px 14px;font-size:13px;font-weight:600;letter-spacing:.03em;margin-bottom:16px}.h2x .hk::before{content:"🌿 "}.h2x h1{font-size:clamp(34px,5.4vw,60px);max-width:12ch;line-height:1.08;text-shadow:0 2px 14px #0006}.hb{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}.hb .or{box-shadow:0 8px 20px #f07a1a55;transition:.2s}.hb .or:hover{transform:translateY(-2px)}.hb .gh{background:transparent;color:#fff;border:1.5px solid #ffffffaa;border-radius:10px;padding:12px 24px;font-weight:700;font-size:16px;cursor:pointer;text-decoration:none;display:inline-block;transition:.2s}.hb .gh:hover{background:#ffffff1f}.hc{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}.hc span{background:#ffffff14;border:1px solid #ffffff30;border-radius:99px;padding:5px 12px;font-size:13px;color:#e6f1e8}@media(max-width:760px){.h2x{min-height:0}.h2x .wrap{min-height:0;padding-top:22px;padding-bottom:30px}}
+.vz{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 2px}.vb{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:3px 11px;font-size:13px;cursor:pointer;font-weight:600}.vb.on{background:var(--g);color:#fff;border-color:var(--g)}:root[data-theme="dark"] .vb.on{color:#10200f}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .vb.on{color:#10200f}}
+#adm .amc{width:min(760px,100%);padding:0;border:0;box-shadow:0 24px 70px #0007}#adm .amc>div:first-child{background:linear-gradient(100deg,#0d3b22,#1f8a4c 62%,#e0a526);color:#fff;padding:16px 20px;border-radius:16px 16px 0 0}#adm .amc>div:first-child h3{color:#fff;font-size:20px}#adm #ab{padding:16px 20px 22px}
+#adm .tabs{gap:8px}#adm .tabs button{border:0;color:#fff;font-weight:700;padding:8px 18px;opacity:.55;transition:.2s}#adm .tabs button.on{opacity:1;box-shadow:0 6px 14px #0003;transform:translateY(-1px)}#adm .tabs [data-t=p]{background:#1f8a4c}#adm .tabs [data-t=b]{background:#2f7fd0}#adm .tabs [data-t=y]{background:#e07a1a}#adm .tabs [data-t=a]{background:#8e44ad}
+#adm .pb{border:1px solid var(--line);border-left:6px solid #1f8a4c;border-radius:12px;padding:10px 12px;margin-bottom:10px;background:var(--card)}#adm .pb.c1{border-left-color:#2f7fd0}#adm .pb.c2{border-left-color:#e07a1a}#adm .pb.c3{border-left-color:#8e44ad}#adm .ph2{display:flex;justify-content:space-between;align-items:center;gap:8px}#adm .ph2 select{font:inherit;padding:3px 6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}#adm .pr{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+#adm label{color:#1f6b3d;font-weight:600}#adm input:focus{outline:2px solid #e0a526;border-color:#e0a526}#adm .btn{background:linear-gradient(90deg,#1f8a4c,#2fae66);color:#fff}#adm .btn.o{background:none;color:#1f8a4c;border:1.5px solid #1f8a4c}#adm #asv{background:linear-gradient(90deg,#e07a1a,#f0a63c)}
+footer.ftr{padding:0;background:#0b2f1b!important;color:#d8e3d3}footer.ftr::before{content:"";display:block;height:5px;background:linear-gradient(90deg,#f07a1a,#e0a526,#2fae66)}
+.fst{background:#124a2b;border-bottom:1px solid #ffffff1a}.fst .wrap{display:flex;flex-wrap:wrap;gap:8px 30px;justify-content:center;padding:14px 18px;font-weight:600;color:#ffe9a8;font-size:14px}
+.fg{display:grid;grid-template-columns:1.4fr .9fr .9fr .9fr 1.7fr;gap:26px;padding:34px 18px 26px}
+.fcol h4{font:700 17px Fraunces,Georgia,serif;color:#e0a526;margin:0 0 12px}.fcol ul{list-style:none;margin:0;padding:14px 16px;background:#ffffff12;border:1px solid #ffffff14;border-radius:12px;display:grid;gap:9px}.fcol a{text-decoration:none;color:#fff;font-weight:600}.fcol a:hover{color:#e0a526}.fcol li{overflow-wrap:break-word;font-size:14px}
+.fbrand .lg{color:#fff}.fbrand .lg small{color:#cfe5d3}.fbrand p{opacity:.85;margin:14px 0}.fb2{display:flex;gap:12px;align-items:center;border:1px solid #ffffff33;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:13px}.fb2 img{height:46px;border-radius:6px}
+.fbot{background:#082316}.fbot .wrap{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:center;padding:13px 18px;font-size:13px;color:#a9c4b0}.fbot a{color:#a9c4b0}
+@media(max-width:900px){.fg{grid-template-columns:1fr 1fr}.fbrand{grid-column:1/-1}}@media(max-width:520px){.fg{grid-template-columns:1fr}.fbot .wrap{justify-content:center;text-align:center}}
+/* ===== final polish: nav, header icons, favourites, account, admin logout ===== */
+html{scroll-padding-top:150px}
+.card{position:relative}
+.nv{box-shadow:0 4px 14px #0003}
+.nv .wrap{justify-content:flex-start;gap:2px;padding-top:0;padding-bottom:0;scrollbar-width:none}.nv .wrap::-webkit-scrollbar{display:none}
+.nv .wrap>a:first-child{margin-left:auto}
+.nv a{padding:13px 15px;font-size:14px;font-weight:600;border-bottom:3px solid transparent;display:flex;align-items:center;gap:2px;transition:.15s}
+.nv a.on{border-bottom-color:#e0a526;background:#ffffff1a}
+.nv .bdg{background:#e0a526;color:#10200f;border-radius:99px;font-size:11px;font-weight:700;padding:0 6px;margin-left:5px;line-height:17px;min-width:17px;text-align:center}
+.nv .bdg:empty{display:none}
+.mb .ic{position:relative;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.mb .ic .bdg{position:absolute;top:-6px;right:-6px;background:#e0245e;color:#fff;border-radius:99px;font-size:11px;font-weight:700;min-width:18px;line-height:18px;text-align:center;padding:0 4px}
+.mb .ic .bdg:empty{display:none}
+.mb{padding:10px 18px}.mb input{margin-right:auto}.acb{font-weight:600;font-size:14px}.acb svg{width:18px;height:18px}
+@media(max-width:640px){.mb{flex-wrap:wrap;gap:8px}.mb .lg{order:1;margin-right:auto}.mb input{margin-right:0}.mb .ic,.mb .btn{order:2}.mb input{order:3;flex-basis:100%;max-width:none}.acb span{display:none}}
+@media(max-width:480px){.mb{gap:6px;padding:8px 14px}.mb .lg small{display:none}.mb .lg b{font-size:22px}.mb .ic{padding:7px 9px}.mb .btn{padding:9px 12px}}
+.fv{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:0;background:#fffffff2;color:#8a948a;cursor:pointer;font-size:19px;line-height:34px;padding:0;box-shadow:0 2px 8px #0003;z-index:2;transition:.15s}
+.fv:hover{transform:scale(1.12)}.fv.on{color:#e0245e}
+.acc{width:min(560px,100%)}.ach{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.ach h3{margin:0}
+.ord{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--card)}
+.ord .oh{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{background:var(--g2);color:var(--g);border-radius:99px;padding:2px 10px;font-size:12px;font-weight:700}
+.ord ul{margin:8px 0;padding-left:18px;color:var(--mute);font-size:14px}
+.prof{display:flex;gap:14px;align-items:center;margin-bottom:14px}.av{width:54px;height:54px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;font:700 22px Fraunces,Georgia,serif}
+.lst{display:grid;gap:8px}.lst .btn{width:100%;text-align:left}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#0d3b22;color:#fff;padding:10px 20px;border-radius:99px;z-index:90;font-size:14px;box-shadow:0 8px 24px #0005}
+#adm .amc>div:first-child{align-items:center}
+#axc.pw{background:#ffffff26;color:#fff;border:1.5px solid #ffffff88;border-radius:99px;padding:6px 14px 6px 10px;display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:14px;transition:.15s}
+#axc.pw svg{width:18px;height:18px}
+#axc.pw:hover,#axc.pw:focus-visible{background:#d6343a;border-color:#d6343a;box-shadow:0 4px 14px #0004}
+/* ===== hero video background ===== */
+.h2x{min-height:580px;background:#0a3019}
+.h2x .wrap{min-height:580px;padding-bottom:64px}
+.hv{position:absolute;inset:0;z-index:0;overflow:hidden;background:#0a3019 url(videos/milk-poster.jpg) center/cover no-repeat}
+.hv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease;pointer-events:none;will-change:opacity;background:transparent}
+.hv video.on{opacity:1}
+.hv::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,34,18,calc(.46*var(--ov,1))) 0%,rgba(6,34,18,calc(.24*var(--ov,1))) 36%,rgba(6,34,18,0) 66%),linear-gradient(0deg,rgba(6,34,18,calc(.30*var(--ov,1))) 0%,transparent 24%)}
+@media(max-width:760px){.h2x{display:block;min-height:520px}.h2x .wrap{min-height:500px;padding-top:34px;padding-bottom:40px}.hv::after{background:linear-gradient(180deg,rgba(6,34,18,calc(.22*var(--ov,1))) 0%,rgba(6,34,18,calc(.18*var(--ov,1))) 45%,rgba(6,34,18,calc(.55*var(--ov,1))) 100%)}}
+.bt{opacity:0;pointer-events:none;transition:opacity .25s}.bt.show{opacity:1;pointer-events:auto}
+@media(max-width:760px){.h2x .hk{margin-bottom:12px}.h2x h1{font-size:clamp(30px,9vw,40px);max-width:14ch}.h2x p{font-size:16px;max-width:30ch}.hb{gap:10px;margin-top:18px;flex-wrap:nowrap}.hb a{display:block}.hb .or,.hb .gh{padding:11px 16px;font-size:15px;white-space:nowrap}.hc{margin-top:18px;gap:6px}.hc span{font-size:12px;padding:4px 10px}}
+@media(max-width:380px){.hb{flex-wrap:wrap}}
+/* ===== footer: admin tab under contact ===== */
+.fstack{display:flex;flex-direction:column;gap:16px}
+.fadm ul{padding:10px 16px}
+.fadm a{display:flex;align-items:center;gap:8px}
+.fadm a::after{content:"→";margin-left:auto;opacity:.6}
+
+/* ===== v6: lighter hero, payment methods, admin orders ===== */
+.hv{--ov:1} /* hero overlay: 0 = bilkul saaf video, 1 = abhi jaisa, 2 = double dark */
+.hv video{filter:saturate(1.12) contrast(1.05) brightness(1.06)}
+.h2x h1{text-shadow:0 2px 20px #000c,0 1px 3px #0008}.h2x p{text-shadow:0 1px 12px #000c,0 1px 2px #0008}
+.h2x .hk,.h2x .hc span{background:#00000047;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.pm{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.pmb{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 6px;font-weight:600;cursor:pointer;font-size:14px}
+.pmb.on{background:var(--g);color:#fff;border-color:var(--g)}
+:root[data-theme="dark"] .pmb.on{color:#10200f}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .pmb.on{color:#10200f}}
+.slp{max-width:130px;max-height:130px;border-radius:8px;border:1px solid var(--line);display:block;margin:6px 0;background:#fff}
+.warn{background:#fff3cd;color:#664d03;padding:8px 10px;border-radius:8px;font-size:13px;margin:0 0 10px}
+#adm .tabs [data-t=o]{background:#d6343a}
+#lgo svg{width:20px;height:20px}
+#adm #axc:not(.pw){color:#1b4d2b!important;font-size:20px;font-weight:700}
+#adm .tabs [data-t=c]{background:#0e7c86}#adm .tabs [data-t=s]{background:#475569}
+#adm .oa{border:1px solid var(--line);border-left:6px solid #d6343a;border-radius:12px;padding:10px 12px;margin-bottom:10px;background:var(--card);font-size:14px}
+#adm .oa .oh{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+#adm .oa ul{margin:6px 0;padding-left:18px;color:var(--mute)}
+#adm .oa .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+#adm .oa select,#adm .oa input.nt{font:inherit;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+#adm .oa input.nt{flex:1;min-width:120px;width:auto}
+#adm .oa .chip.cod{background:#fde8c8;color:#8a4b00}#adm .oa .chip.on2{background:#d8ecff;color:#0b4a8a}
+
+/* ===== v7: login dropdown + admin gateway ===== */
+.lgw{position:relative;display:inline-flex}
+.lgdd{position:absolute;right:0;top:calc(100% + 8px);min-width:265px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px #0004;padding:8px;z-index:70;display:none}
+.lgdd.on{display:block}
+.lgdd button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--ink);font:inherit}
+.lgdd button:hover,.lgdd button:focus-visible{background:var(--g2)}
+.lgdd .di{font-size:22px;line-height:1.1}
+.lgdd b{display:block;font-size:14px}.lgdd small{color:var(--mute);font-size:12px;font-weight:400}
+.lgdd hr{border:0;border-top:1px solid var(--line);margin:4px 6px}
+@media(max-width:640px){.lgw{order:2}}
+#adm .alc{text-align:center;padding:8px 0}#adm .alk{font-size:42px}
+#adm .alc h4{margin:6px 0;font:700 20px Fraunces,Georgia,serif;color:var(--ink)}
+#gbtn{display:flex;justify-content:center;margin:16px 0;min-height:44px}
+.apk{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.apc{border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:18px 14px;text-align:left;cursor:pointer;color:var(--ink);font:inherit;transition:.15s}
+.apc:hover,.apc:focus-visible{border-color:#e0a526;transform:translateY(-2px);box-shadow:0 8px 20px #0002}
+.apc i{font-style:normal;font-size:28px;display:block;margin-bottom:6px}.apc b{display:block;font-size:16px;margin-bottom:4px}.apc span{font-size:12.5px;color:var(--mute);display:block}
+.apc.op{border-top:4px solid #1f8a4c}.apc.cf{border-top:4px solid #d6343a}
+.ais{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.lnk{background:none;border:0;color:#1f8a4c;text-decoration:underline;cursor:pointer;font:inherit;padding:0}
+.pwf{max-width:380px;margin:0 auto;text-align:left}.pwf input{width:100%;box-sizing:border-box}
+.pwf h4{text-align:center;margin:0 0 4px}
+.msg{font-size:13px;margin:8px 0;min-height:18px}.msg.bad{color:#d6343a}.msg.ok{color:#1f8a4c}
+@media(max-width:560px){.apk{grid-template-columns:1fr}}
+
+/* ===== v8: customer accounts ===== */
+.ctabs{display:flex;gap:6px;margin-bottom:12px}
+.ctabs button{flex:1;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 10px;font-weight:600;cursor:pointer}
+.ctabs button.on{background:var(--g);color:#fff;border-color:var(--g)}
+:root[data-theme="dark"] .ctabs button.on{color:#10200f}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .ctabs button.on{color:#10200f}}
+.acc .lnk{color:var(--g)}.acc input{width:100%;box-sizing:border-box}
+.ord .pay{font-size:13px;color:var(--mute);margin:4px 0}
+#adm table.ct th{text-align:left;font-size:12px;color:var(--mute);padding:4px 6px;border-bottom:1px solid var(--line);white-space:nowrap}#adm table.ct td{padding:6px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}
+
+/* ===== v8: full-page admin portal ===== */
+@keyframes admIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#adm.am{padding:0;place-items:stretch;align-items:start;background:radial-gradient(900px 340px at 85% -80px,#e0a52633,transparent 70%),radial-gradient(800px 320px at 0 -60px,#1f8a4c33,transparent 70%),var(--bg);overflow:auto;z-index:80}
+#adm .amc{width:100%;max-width:none;max-height:none;min-height:100vh;border-radius:0;overflow:visible;background:transparent;box-shadow:none}
+#adm .amc>div:first-child{border-radius:0;position:sticky;top:0;z-index:5;padding:max(16px,env(safe-area-inset-top)) clamp(16px,5vw,56px) 16px;background:linear-gradient(100deg,#082a18,#1f8a4c 62%,#e0a526);box-shadow:0 10px 28px #0004}
+#adm .amc>div:first-child h3{font:700 clamp(20px,3vw,28px) Fraunces,Georgia,serif;letter-spacing:.2px}
+#adm .amc>div:first-child h3::before{content:"\1F33E  "}
+#adm #ab{max-width:1100px;margin:0 auto;padding:26px clamp(14px,4vw,32px) 70px;animation:admIn .45s ease}
+#adm .pwf{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 28px;box-shadow:0 22px 56px #0003;max-width:430px;margin:26px auto}
+#adm .alc{margin-top:28px}#adm .alc .alk{font-size:56px;filter:drop-shadow(0 8px 10px #0003)}
+#adm .apk{max-width:700px;margin:18px auto}
+#adm .apc{border-radius:20px;padding:24px 18px;box-shadow:0 10px 26px #0001}#adm .apc:hover{transform:translateY(-4px);box-shadow:0 18px 38px #0003}
+#adm .ais{border:0;border-radius:16px;padding:14px 18px;background:linear-gradient(100deg,var(--g2),var(--card));box-shadow:0 6px 18px #0001}
+#adm .tabs{gap:10px;margin:6px 0 22px}#adm .tabs button{border-radius:14px;padding:11px 24px;font-size:15px}
+#adm .pb,#adm .oa{border-radius:16px;padding:14px 16px;box-shadow:0 8px 22px #0001;transition:.2s}#adm .pb:hover,#adm .oa:hover{transform:translateY(-2px);box-shadow:0 14px 30px #0002}
+#adm input,#adm select,#adm textarea{border-radius:10px}
+#adm .btn{border-radius:12px;padding:12px 22px;box-shadow:0 8px 20px #1f8a4c44}
+#adm table.ct{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 6px 18px #0001}
+@media(max-width:560px){#adm .pwf{padding:22px 16px;border-radius:18px}#adm .tabs button{padding:9px 16px}}
+
+/* order item photos */
+li.oli{list-style:none;display:flex;align-items:center;gap:10px;margin:6px 0}ul:has(>li.oli){padding-left:0!important}
+.oi{width:48px;height:48px;border-radius:12px;object-fit:cover;flex:none;border:1px solid var(--line);background:var(--g2)}.oi.ox{display:grid;place-items:center;font-size:24px}
+
+/* sharper icons + clear payment slip */
+.slp{max-width:min(100%,320px);max-height:300px;width:auto;height:auto;object-fit:contain;image-rendering:auto;cursor:zoom-in}
+.slb{position:fixed;inset:0;z-index:200;background:#000d;display:grid;place-items:center;padding:14px;cursor:zoom-out}.slb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;background:#fff}.slb span{position:fixed;top:14px;right:18px;color:#fff;font-size:28px}
+.oi{width:64px;height:64px}
+#adm .alc .alk{filter:none}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="wrap"><span data-i="topN"></span><select id="lang" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="hg">Hinglish</option></select></div></div>
+<div class="wrap mb"><a class="lg" href="#top"><svg width="38" height="38" viewBox="0 0 40 40"><path d="M20 36C8 32 4 20 8 8c12 0 16 10 12 28z" fill="#2e8b3d"/><path d="M20 36c12-4 16-16 12-28-12 0-16 10-12 28z" fill="#e0a526"/></svg><span><b>YUGAL</b><small>AGRO FOOD PRODUCTS</small></span></a><input data-ph="search" type="search"><button class="ic" id="favb" data-ac="fav" aria-label="Favourites" title="Favourites">♡<span class="bdg" id="fc"></span></button><span class="lgw" id="lgw"><button class="ic acb" id="accb" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span id="accl">Login</span></button><div class="lgdd" id="lgdd" role="menu"></div></span><button class="ic" id="lgo" aria-label="Logout" title="Logout" style="display:none"></button><button class="ic" id="th" aria-label="Theme">🌓</button><button class="btn" id="cb">🛒 <span id="cc">0</span></button></div>
+<nav class="nv" aria-label="Main"><div class="wrap"><a href="#top"><span data-i="mHome"></span></a><a href="#range"><span data-i="mProd"></span></a><a href="#" data-ac="ord"><span data-i="mOrd"></span></a><a href="#" data-ac="fav"><span data-i="mFav"></span><span class="bdg" id="nfc"></span></a><a href="#track"><span data-i="mTrack"></span></a><a href="#about"><span data-i="mAbout"></span></a><a href="#" data-lg="refund"><span data-i="mPol"></span></a><a href="#faq"><span data-i="mFaq"></span></a><a href="#bulk"><span data-i="mCon"></span></a></div></nav></header>
+<main id="top">
+<div class="h2x"><div class="hv" id="hv"><video autoplay muted playsinline preload="auto" poster="videos/milk-poster.jpg" src="videos/milk.mp4" data-src="videos/milk.mp4" aria-hidden="true"></video><video muted playsinline preload="none" poster="videos/paneer-poster.jpg" data-src="videos/paneer.mp4" aria-hidden="true"></video><video muted playsinline preload="none" poster="videos/ghee-poster.jpg" data-src="videos/ghee.mp4" aria-hidden="true"></video><video muted playsinline preload="none" poster="videos/dal-poster.jpg" data-src="videos/dal.mp4" aria-hidden="true"></video><video muted playsinline preload="none" poster="videos/vermicompost-poster.jpg" data-src="videos/vermicompost.mp4" aria-hidden="true"></video></div><div class="wrap"><span class="hk" data-i="tag"></span><h1 data-i="heroH"></h1><p data-i="heroS"></p><div class="hb"><a href="#range"><button class="or" data-i="shop"></button></a><a class="gh" id="hwa" href="#bulk" target="_blank" rel="noopener" data-i="wa"></a></div><div class="hc"><span data-i="tr2"></span><span data-i="tr3"></span><span data-i="tr4"></span></div></div></div>
+<div class="wrap"><h2 style="text-align:center;margin:30px 0 14px" data-i="ourP"></h2>
+<div class="cir"><button class="cc" data-c="dairy"><img src="images/cat-paneer.jpg" alt=""><span data-i="c1"></span></button><button class="cc" data-c="dairy"><img src="images/cat-ghee.jpg" alt=""><span data-i="c2"></span></button><button class="cc" data-c="dairy"><img src="images/cat-milk.jpg" alt=""><span data-i="c3"></span></button><button class="cc" data-c="spices"><img src="images/cat-spices.jpg" alt=""><span data-i="c4"></span></button><button class="cc" data-c="pulses"><img src="images/cat-dals.jpg" alt=""><span data-i="c5"></span></button><button class="cc" data-c="vermi"><img src="images/cat-vermicompost.jpg" alt=""><span data-i="c6"></span></button></div>
+<div class="tr4" id="quality"><div><i>📜</i><span data-i="tr1"></span></div><div><i>🌿</i><span data-i="tr2"></span></div><div><i>📱</i><span data-i="tr3"></span></div><div><i>🛵</i><span data-i="tr4"></span></div></div>
+</div></div>
+<section class="alt"><div class="wrap"><h2 style="text-align:center" data-i="nHow"></h2><div class="steps"><div class="card"><h3 data-i="hw1"></h3><p class="small" data-i="hw1d"></p></div><div class="card"><h3 data-i="hw2"></h3><p class="small" data-i="hw2d"></p></div><div class="card"><h3 data-i="hw3"></h3><p class="small" data-i="hw3d"></p></div></div></div></section>
+<div id="dots" hidden></div>
+<section id="range"><div class="wrap"><h2 data-i="nAll"></h2><div class="tabs" id="tabs"></div><div class="grid" id="grid"></div></div></section>
+<section id="bulk" class="alt"><div class="wrap bulk"><div><h2 data-i="bulkH"></h2><p style="color:var(--mute)" data-i="bulkP"></p><p class="small">📞 <span data-cfg="phone"></span> · ✉️ <span data-cfg="email"></span></p></div><div class="card"><label data-i="bCo"></label><input id="bco"><label data-i="bQty"></label><input id="bqty"><p><button class="btn wa" id="bsend" data-i="bSend"></button></p></div></div></section>
+<section id="track"><div class="wrap"><h2 data-i="nTrack"></h2><div class="trk"><div class="card"><label data-i="oid"></label><input id="oid" placeholder="YA-1234"><p><button class="btn" id="tb" data-i="trackBtn"></button></p><p class="small" data-i="trackNote"></p></div><div class="card"><b id="tstat"></b><div class="route" id="route"></div></div></div></div></section>
+<section id="about" class="alt"><div class="wrap"><h2 data-i="nAbout"></h2><div class="doc" id="aboutBox"></div><p><button class="btn o" data-lg="awards">Company profile, certificates &amp; safety →</button></p></div></section>
+<section id="refund"><div class="wrap"><h2 data-i="nRefund"></h2><p style="max-width:70ch" data-i="refundP"></p><p><button class="btn o" data-lg="refund">Read the full Refund &amp; Return Policy →</button></p></div></section>
+<section id="faq" class="alt"><div class="wrap"><h2 data-i="nFaq"></h2><div id="faqBox"></div></div></section>
+</main>
+<footer class="ftr">
+<div class="fst"><div class="wrap"><span data-i="t1"></span><span data-i="t2"></span><span data-i="t3"></span><span data-i="tr4"></span></div></div>
+<div class="wrap fg">
+<div class="fbrand"><a class="lg" href="#top"><svg width="40" height="40" viewBox="0 0 40 40"><path d="M20 36C8 32 4 20 8 8c12 0 16 10 12 28z" fill="#2e8b3d"/><path d="M20 36c12-4 16-16 12-28-12 0-16 10-12 28z" fill="#e0a526"/></svg><span><b>YUGAL</b><small>AGRO FOOD PRODUCTS</small></span></a><p data-i="foot"></p><div class="fb2"><img src="images/fssai-logo.png" alt="FSSAI"><span><b data-i="applied"></b><br><span><span data-i="appNo"></span>: </span><b data-cfg="fssai">10261002109140938</b></span></div></div>
+<div class="fcol"><h4 data-i="fKnow"></h4><ul><li><a href="#about" data-i="nAbout"></a></li><li><a href="#" data-lg="awards" data-i="awards"></a></li><li><a href="#faq" data-i="nFaq"></a></li><li><a href="#bulk" data-i="nBulk"></a></li></ul></div>
+<div class="fcol"><h4 data-i="fProd"></h4><ul><li><a href="#range" data-c="dairy" data-i="fdy"></a></li><li><a href="#range" data-c="spices" data-i="fsp"></a></li><li><a href="#range" data-c="pulses" data-i="fpl"></a></li><li><a href="#range" data-c="vermi" data-i="fvm"></a></li></ul></div>
+<div class="fcol"><h4 data-i="fPol"></h4><ul><li><a href="#" data-lg="refund" data-i="nRefund"></a></li><li><a href="#" data-lg="terms" data-i="terms"></a></li><li><a href="#" data-lg="privacy" data-i="priv"></a></li><li><a href="#track" data-i="nTrack"></a></li></ul></div>
+<div class="fcol fstack"><div><h4 data-i="fCon"></h4><ul><li>📞 <span data-cfg="phone"></span></li><li>✉️ <span data-cfg="email"></span></li><li>💬 <a id="fwa" href="#bulk" target="_blank" rel="noopener" data-i="wa"></a></li><li id="adw">📍 <span data-cfg="addr"></span></li></ul></div></div>
+</div>
+<div class="fbot"><div class="wrap"><span>© Yugal Agro Food Products</span><span data-i="fPay"></span></div></div>
+</footer>
+<a class="bt" href="#top">▲ Back to top</a>
+<div class="ov" id="ov"></div>
+<aside class="dr" id="dr" aria-label="Cart"><div style="display:flex;justify-content:space-between;align-items:center"><h3 id="dt" style="margin:0"></h3><button class="ic" id="cx">✕</button></div><div class="sp" id="sp"></div><div class="b" id="db"></div><div id="df" style="padding-top:10px"></div></aside>
+<div class="am" id="lg"><div class="amc lgc" id="lgm"><div style="display:flex;justify-content:flex-end"><button class="ic" id="lgx">✕</button></div><div class="lgb" id="lgb"></div></div></div>
+<div class="am" id="ac"><div class="amc acc"><div class="ach"><h3 id="act"></h3><button class="ic" id="acx" aria-label="Close">✕</button></div><div id="acbody"></div></div></div>
+<script id="pd" type="application/json">{}</script>
+<div class="am" id="adm"><div class="amc"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0" id="adt">Admin Login</h3><button class="ic" id="axc">✕</button></div><div id="ab"></div></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ---- EDIT THESE ---- */
+var CFG={upi:"yourupi@bank",name:"Yugal Agro",ship:40,wa:"917004504259",gid:"" /* <-- Google OAuth Client ID (xxxx.apps.googleusercontent.com) yahan paste karein */,
+  api:"https://script.google.com/macros/s/AKfycbyH85K7gWcw6upKreWTP7HMp59juac-MVhYjBl2pdYFlHO-6O-rHORoAL3kAurrFdXAKw/exec" /* <-- Google Apps Script Web App URL yahan paste karein (apps-script-backend.gs dekhein). Isse prices/orders sabke liye sync honge. */};
+var PH={1:'images/milk.jpg',2:'images/ghee.jpg',3:'images/paneer.jpg',4:'images/red-chilli.jpg',5:'images/haldi.jpg',6:'images/jeera.jpg',7:'images/arhar-dal.jpg',8:'images/masoor-dal.jpg',9:'images/chana-dal.jpg',10:'images/vermicompost-5kg.jpg',11:'images/vermicompost-25kg.jpg'}; /* photos: id -> "data:image/jpeg;base64,..." */
+/* -------------------- */
+var P=[
+{id:1,c:"dairy",e:"🥛",n:{en:"Farm Fresh Milk",hi:"ताज़ा दूध",hg:"Fresh Doodh"},u:"1 L",p:62},
+{id:2,c:"dairy",e:"🧈",n:{en:"Desi Ghee",hi:"देसी घी",hg:"Desi Ghee"},u:"500 ml",p:480},
+{id:3,c:"dairy",e:"🥣",n:{en:"Fresh Paneer",hi:"ताज़ा पनीर",hg:"Fresh Paneer"},u:"250 g",p:110},
+{id:4,c:"spices",e:"🌶️",n:{en:"Red Chilli Powder",hi:"लाल मिर्च पाउडर",hg:"Lal Mirch Powder"},u:"200 g",p:70},
+{id:5,c:"spices",e:"🟡",n:{en:"Turmeric Powder",hi:"हल्दी पाउडर",hg:"Haldi Powder"},u:"200 g",p:60},
+{id:6,c:"spices",e:"🌿",n:{en:"Whole Cumin",hi:"साबुत जीरा",hg:"Sabut Jeera"},u:"200 g",p:90},
+{id:7,c:"pulses",e:"🫘",n:{en:"Arhar Dal",hi:"अरहर दाल",hg:"Arhar Dal"},u:"1 kg",p:155},
+{id:8,c:"pulses",e:"🟠",n:{en:"Masoor Dal",hi:"मसूर दाल",hg:"Masoor Dal"},u:"1 kg",p:110},
+{id:9,c:"pulses",e:"🌾",n:{en:"Chana Dal",hi:"चना दाल",hg:"Chana Dal"},u:"1 kg",p:120},
+{id:10,c:"vermi",e:"🌱",n:{en:"Vermicompost",hi:"वर्मीकम्पोस्ट",hg:"Vermicompost"},u:"5 kg",p:220},
+{id:11,c:"vermi",e:"🪴",n:{en:"Vermicompost (Bulk)",hi:"वर्मीकम्पोस्ट (थोक)",hg:"Vermicompost (Bulk)"},u:"25 kg",p:950}];
+var CAT={all:{en:"All",hi:"सभी",hg:"Sab"},dairy:{en:"Dairy",hi:"डेयरी",hg:"Dairy"},spices:{en:"Spices",hi:"मसाले",hg:"Masale"},pulses:{en:"Pulses",hi:"दालें",hg:"Dalein"},vermi:{en:"Vermicompost",hi:"वर्मीकम्पोस्ट",hg:"Vermicompost"}};
+var T={
+en:{nRange:"Our Range",nHow:"How it works",nTrack:"Track Order",nAbout:"About Us",nFaq:"FAQ",nStory:"Range stories",nRefund:"Refund Policy",nContact:"Contact Us",nLegal:"Legal",nSocial:"Social media",terms:"Terms & Conditions",priv:"Privacy Policy",
+tag:"Farm to doorstep",h1:"Pure dairy, spices, pulses & vermicompost.",sub:"Yugal Agro brings honest, farm-sourced produce straight to your kitchen and your fields.",shop:"Shop now",topN:"🌿 Pure, natural & farm fresh — straight from our farms",nHome:"Home",nAll:"All Products",nQual:"FSSAI & Quality",nPol:"Policies & Contact",heroH:"Straight from the farm to your kitchen",heroS:"100% Natural, Fresh & Organic Indian Products",ourP:"Our Products",c1:"Fresh Paneer",c2:"Pure Desi Ghee",c3:"Fresh Milk",c4:"Natural Spices",c5:"Nutritious Dals",c6:"Organic Vermicompost",tr1:"FSSAI Application in Process",tr2:"100% Natural & Farm Fresh",tr3:"Secure QR & UPI Checkout",tr4:"Fast Doorstep Delivery",payT:"Easy Payment",payS:"Scan for secure payment",awards:"Awards & Certificates",support:"Customer Support",applied:"FSSAI License: In Progress",appNo:"Application No.",search:"Search dal, spices, milk…",tag2:"Fresh ground",h2:"Spices ground for real kitchens.",sub2:"Red chilli, haldi and jeera, ground and sealed so the aroma reaches your tadka.",tag3:"Kitchen and farm",h3:"Dal for the thali, compost for the field.",sub3:"Clean pulses for your kitchen, and vermicompost that gives your soil new life.",nBulk:"Bulk Orders",bulkH:"Bulk orders for shops, hotels & farms",bulkP:"Buying 25 kg or more of dairy, spices, pulses or vermicompost? Send an enquiry and we will quote on WhatsApp.",bCo:"Business / farm name",bQty:"What do you need, and how much?",bSend:"Send enquiry on WhatsApp",wa:"Order on WhatsApp",
+s1:"Product lines",s2:"Quality checked",s3:"Checkout",s4:"Payments",t1:"🌾 Farm sourced",t2:"🔒 Secure UPI",t3:"↩️ Easy refunds",
+hw1:"Pick your products",hw1d:"Browse the range and add to cart.",hw2:"Pay by UPI",hw2d:"Scan the QR or tap the payment link.",hw3:"We deliver",hw3d:"Track your order until it reaches you.",
+st1:"Dairy",st1d:"Milk, ghee and paneer from local farms, packed fresh.",st2:"Spices",st2d:"Ground and sealed for aroma, with no added colour.",st3:"Vermicompost",st3d:"Organic nutrition that revives soil, for kitchen gardens and farms.",
+oid:"Order ID",trackBtn:"Track",trackNote:"Demo tracker: connect your order system to show live status.",
+aboutP:"Yugal Agro is a farm-rooted business offering dairy products, spices, pulses and vermicompost. We keep sourcing short and packing careful so you get food and farm inputs you can trust.",
+refundP:"If an item arrives damaged, wrong or unfit for use, tell us within 48 hours with a photo and we will replace it or refund to your original UPI account within 5–7 working days. Perishable dairy cannot be returned once accepted, except for quality issues.",
+q1:"Are your products FSSAI compliant?",a1:"Yes. Our FSSAI licence number is shown in the footer on every page.",q2:"How do I pay?",a2:"Pay by UPI: scan the QR code or use the payment link at checkout, then confirm.",q3:"Do you deliver everywhere?",a3:"We deliver in our service areas. Enter your address at checkout and we will confirm.",q4:"How does a refund work?",a4:"See the Refund Policy section above.",
+foot:"Farm-fresh goods, honestly made.",cart:"Your cart",empty:"Your cart is empty.",s_cart:"Cart",s_addr:"Details",s_pay:"Pay",add:"Add",next:"Continue",back:"Back",name:"Full name",phone:"Phone",addr:"Delivery address",sub_t:"Subtotal",ship:"Delivery",total:"Total",upiId:"Your UPI ID (for payment receipt)",payScan:"Scan with any UPI app, or tap the link.",payLink:"Open UPI app",place:"Place order",done:"Order placed! Your order ID is",need:"Please fill name, phone and address.",
+st:["Placed","Packed","Shipped","Delivered"]},
+hi:{nRange:"हमारे उत्पाद",nHow:"कैसे काम करता है",nTrack:"ऑर्डर ट्रैक करें",nAbout:"हमारे बारे में",nFaq:"सामान्य प्रश्न",nStory:"उत्पाद कहानियाँ",nRefund:"रिफंड नीति",nContact:"संपर्क करें",nLegal:"नीतियाँ",nSocial:"सोशल मीडिया",terms:"नियम व शर्तें",priv:"गोपनीयता नीति",
+tag:"खेत से आपके द्वार",h1:"शुद्ध डेयरी, मसाले, दालें और वर्मीकम्पोस्ट।",sub:"युगल एग्रो खेत से सीधे आपकी रसोई और खेतों तक ईमानदार उत्पाद पहुँचाता है।",shop:"अभी खरीदें",topN:"🌿 शुद्ध, प्राकृतिक और खेत-ताज़ा — सीधे हमारे खेतों से",nHome:"होम",nAll:"सभी उत्पाद",nQual:"गुणवत्ता और FSSAI",nPol:"नीति और संपर्क",heroH:"खेतों से सीधा आपकी रसोई तक",heroS:"100% Natural, Fresh & Organic Indian Products",ourP:"हमारा उत्पाद",c1:"ताज़ा पनीर",c2:"शुद्ध देसी घी",c3:"ताज़ा दूध",c4:"प्राकृतिक मसाले",c5:"पौष्टिक दालें",c6:"जैविक केंचुआ खाद",tr1:"FSSAI आवेदन प्रक्रिया में",tr2:"100% प्राकृतिक और खेत-ताज़ा",tr3:"सुरक्षित QR और UPI चेकआउट",tr4:"तेज़ डोरस्टेप डिलीवरी",payT:"आसान भुगतान",payS:"सुरक्षित भुगतान के लिए स्कैन करें",awards:"पुरस्कार और प्रमाणपत्र",support:"ग्राहक सहायता",applied:"FSSAI लाइसेंस: प्रक्रिया में",appNo:"आवेदन संख्या",search:"दालें, मसाले, दूध…",tag2:"ताज़ा पिसे",h2:"असली रसोई के लिए पिसे मसाले।",sub2:"लाल मिर्च, हल्दी और जीरा, पीसकर सील ताकि खुशबू आपके तड़के तक पहुँचे।",tag3:"रसोई और खेत",h3:"थाली के लिए दाल, खेत के लिए खाद।",sub3:"रसोई के लिए साफ़ दालें और मिट्टी को नई जान देने वाला वर्मीकम्पोस्ट।",nBulk:"थोक ऑर्डर",bulkH:"दुकान, होटल और खेत के लिए थोक ऑर्डर",bulkP:"डेयरी, मसाले, दालें या वर्मीकम्पोस्ट 25 किलो या ज़्यादा चाहिए? पूछताछ भेजें, हम WhatsApp पर भाव बताएँगे।",bCo:"व्यवसाय / खेत का नाम",bQty:"क्या और कितना चाहिए?",bSend:"WhatsApp पर पूछताछ भेजें",wa:"WhatsApp पर ऑर्डर करें",
+s1:"उत्पाद श्रेणियाँ",s2:"गुणवत्ता जाँच",s3:"चेकआउट",s4:"भुगतान",t1:"🌾 खेत से सीधे",t2:"🔒 सुरक्षित UPI",t3:"↩️ आसान रिफंड",
+hw1:"उत्पाद चुनें",hw1d:"सूची देखें और कार्ट में जोड़ें।",hw2:"UPI से भुगतान",hw2d:"QR स्कैन करें या पेमेंट लिंक दबाएँ।",hw3:"हम पहुँचाते हैं",hw3d:"पहुँचने तक ऑर्डर ट्रैक करें।",
+st1:"डेयरी",st1d:"स्थानीय खेतों का दूध, घी और पनीर, ताज़ा पैक।",st2:"मसाले",st2d:"खुशबू के लिए पिसे और सील, बिना रंग मिलावट।",st3:"वर्मीकम्पोस्ट",st3d:"मिट्टी को जीवन देने वाला जैविक पोषण।",
+oid:"ऑर्डर आईडी",trackBtn:"ट्रैक करें",trackNote:"डेमो ट्रैकर: लाइव स्थिति के लिए अपना ऑर्डर सिस्टम जोड़ें।",
+aboutP:"युगल एग्रो खेतों से जुड़ा व्यवसाय है जो डेयरी उत्पाद, मसाले, दालें और वर्मीकम्पोस्ट देता है। हम सीधी खरीद और सावधान पैकिंग से भरोसेमंद सामान पहुँचाते हैं।",
+refundP:"सामान क्षतिग्रस्त, गलत या उपयोग के अयोग्य आए तो 48 घंटे में फोटो के साथ बताएँ; हम बदलेंगे या 5–7 कार्य दिवस में आपके UPI खाते में रिफंड करेंगे। खराबी के अलावा स्वीकार किए गए डेयरी उत्पाद वापस नहीं होते।",
+q1:"क्या उत्पाद FSSAI मानक के अनुसार हैं?",a1:"हाँ। हमारा FSSAI लाइसेंस नंबर हर पेज के फूटर में है।",q2:"भुगतान कैसे करें?",a2:"चेकआउट पर QR स्कैन करें या पेमेंट लिंक से UPI भुगतान करें।",q3:"क्या हर जगह डिलीवरी है?",a3:"हमारे सेवा क्षेत्र में। चेकआउट पर पता डालें, हम पुष्टि करेंगे।",q4:"रिफंड कैसे मिलेगा?",a4:"ऊपर रिफंड नीति देखें।",
+foot:"खेत की ताज़गी, ईमानदारी से।",cart:"आपका कार्ट",empty:"कार्ट खाली है।",s_cart:"कार्ट",s_addr:"विवरण",s_pay:"भुगतान",add:"जोड़ें",next:"आगे बढ़ें",back:"पीछे",name:"पूरा नाम",phone:"फोन",addr:"डिलीवरी का पता",sub_t:"उप-योग",ship:"डिलीवरी",total:"कुल",upiId:"आपकी UPI आईडी (रसीद के लिए)",payScan:"किसी भी UPI ऐप से स्कैन करें या लिंक दबाएँ।",payLink:"UPI ऐप खोलें",place:"ऑर्डर करें",done:"ऑर्डर हो गया! आपकी ऑर्डर आईडी:",need:"कृपया नाम, फोन और पता भरें।",
+st:["ऑर्डर मिला","पैक हुआ","भेजा गया","पहुँच गया"]},
+hg:{nRange:"Hamare Products",nHow:"Kaise kaam karta hai",nTrack:"Track Order",nAbout:"Hamare Baare Mein",nFaq:"FAQ",nStory:"Range stories",nRefund:"Refund Policy",nContact:"Contact Us",nLegal:"Policies",nSocial:"Social media",terms:"Terms & Conditions",priv:"Privacy Policy",
+tag:"Khet se seedha ghar",h1:"Shuddh dairy, masale, dalein aur vermicompost.",sub:"Yugal Agro khet ka imandaar maal seedha aapki rasoi aur kheton tak pahunchata hai.",shop:"Abhi kharidein",topN:"🌿 Shuddh, natural aur farm fresh — seedha hamare kheton se",nHome:"Home",nAll:"Sabhi Products",nQual:"Quality aur FSSAI",nPol:"Policy aur Contact",heroH:"Kheton se seedha aapki rasoi tak",heroS:"100% Natural, Fresh & Organic Indian Products",ourP:"Hamare Products",c1:"Taaza Paneer",c2:"Shuddh Desi Ghee",c3:"Taaza Doodh",c4:"Prakritik Masale",c5:"Poshtik Dalein",c6:"Organic Vermicompost",tr1:"FSSAI application process mein",tr2:"100% Natural aur Farm Fresh",tr3:"Secure QR aur UPI Checkout",tr4:"Tez Doorstep Delivery",payT:"Aasaan Payment",payS:"Secure payment ke liye scan karein",awards:"Awards aur Certificates",support:"Customer Support",applied:"FSSAI License: Process mein",appNo:"Application No.",search:"Dal, masale, doodh dhoondhein…",tag2:"Taaza pise",h2:"Asli rasoi ke liye pise masale.",sub2:"Lal mirch, haldi aur jeera, pees kar sealed taaki khushboo aapke tadke tak pahunche.",tag3:"Rasoi aur khet",h3:"Thali ke liye dal, khet ke liye khaad.",sub3:"Rasoi ke liye saaf dalein aur mitti ko nayi jaan dene wala vermicompost.",nBulk:"Bulk Orders",bulkH:"Dukaan, hotel aur khet ke liye bulk orders",bulkP:"Dairy, masale, dalein ya vermicompost 25 kg ya zyada chahiye? Enquiry bhejein, hum WhatsApp par rate batayenge.",bCo:"Business / khet ka naam",bQty:"Kya aur kitna chahiye?",bSend:"WhatsApp par enquiry bhejein",wa:"WhatsApp par order karein",
+s1:"Product lines",s2:"Quality checked",s3:"Checkout",s4:"Payments",t1:"🌾 Khet se seedha",t2:"🔒 Secure UPI",t3:"↩️ Easy refund",
+hw1:"Products chunein",hw1d:"Range dekhein aur cart mein daalein.",hw2:"UPI se pay karein",hw2d:"QR scan karein ya payment link dabayein.",hw3:"Hum deliver karte hain",hw3d:"Pahunchne tak order track karein.",
+st1:"Dairy",st1d:"Local farms ka doodh, ghee aur paneer, taaza pack.",st2:"Masale",st2d:"Khushboo ke liye pise aur sealed, bina rang milaye.",st3:"Vermicompost",st3d:"Mitti ko nayi jaan dene wala organic poshan.",
+oid:"Order ID",trackBtn:"Track karein",trackNote:"Demo tracker: live status ke liye apna order system jodein.",
+aboutP:"Yugal Agro khet se jura business hai jo dairy, masale, dalein aur vermicompost deta hai. Seedhi sourcing aur dhyan se packing, taaki aapko bharosemand saaman mile.",
+refundP:"Saaman kharab, galat ya use ke layak na ho to 48 ghante mein photo ke saath bataiye; hum replace karenge ya 5–7 working days mein aapke UPI account mein refund karenge. Kharabi ke bina accept kiya dairy wapas nahi hota.",
+q1:"Kya products FSSAI compliant hain?",a1:"Haan. FSSAI licence number har page ke footer mein hai.",q2:"Payment kaise karein?",a2:"Checkout par QR scan karein ya payment link se UPI pay karein.",q3:"Kya sab jagah delivery hai?",a3:"Hamare service area mein. Checkout par address daalein, hum confirm karenge.",q4:"Refund kaise milega?",a4:"Upar Refund Policy dekhein.",
+foot:"Khet ki taazgi, imandaari se.",cart:"Aapka cart",empty:"Cart khaali hai.",s_cart:"Cart",s_addr:"Details",s_pay:"Pay",add:"Add",next:"Aage badhein",back:"Peeche",name:"Poora naam",phone:"Phone",addr:"Delivery address",sub_t:"Subtotal",ship:"Delivery",total:"Total",upiId:"Aapki UPI ID (receipt ke liye)",payScan:"Kisi bhi UPI app se scan karein ya link dabayein.",payLink:"UPI app kholein",place:"Place order",done:"Order ho gaya! Aapki order ID:",need:"Kripya naam, phone aur address bharein.",
+st:["Placed","Packed","Shipped","Delivered"]}};
+var X={en:{plk:"Open payment link",bk:"Bank transfer",bn:"Bank",ac:"Account name",an:"Account no.",ifsc:"IFSC",free:"Free",nop:"Online payment details are not set yet. Please order on WhatsApp."},hi:{plk:"पेमेंट लिंक खोलें",bk:"बैंक ट्रांसफर",bn:"बैंक",ac:"खाताधारक",an:"खाता संख्या",ifsc:"IFSC",free:"मुफ़्त",nop:"ऑनलाइन भुगतान की जानकारी अभी नहीं जुड़ी है। कृपया WhatsApp पर ऑर्डर करें।"},hg:{plk:"Payment link kholein",bk:"Bank transfer",bn:"Bank",ac:"Account name",an:"Account no.",ifsc:"IFSC",free:"Free",nop:"Online payment details abhi set nahi hain. Kripya WhatsApp par order karein."}};for(var xk in X)for(var xj in X[xk])T[xk][xj]=X[xk][xj];
+var X2={en:{fKnow:"Know Us",fProd:"Our Products",fPol:"Policies",fCon:"Contact Us",fdy:"Dairy",fsp:"Spices",fpl:"Pulses",fvm:"Vermicompost",fPay:"UPI · Bank transfer · WhatsApp orders"},hi:{fKnow:"हमें जानें",fProd:"हमारे उत्पाद",fPol:"नीतियाँ",fCon:"संपर्क करें",fdy:"डेयरी",fsp:"मसाले",fpl:"दालें",fvm:"वर्मीकम्पोस्ट",fPay:"UPI · बैंक ट्रांसफर · WhatsApp ऑर्डर"},hg:{fKnow:"Humein Jaanein",fProd:"Hamare Products",fPol:"Policies",fCon:"Contact Karein",fdy:"Dairy",fsp:"Masale",fpl:"Dalein",fvm:"Vermicompost",fPay:"UPI · Bank transfer · WhatsApp order"}};for(var yk in X2)for(var yj in X2[yk])T[yk][yj]=X2[yk][yj];
+var FQ={en:[
+["Do you have an FSSAI licence?","We have applied for our FSSAI licence and the application is in process (Application No. {{fssai}}). We will show the licence number here and in the footer as soon as it is issued."],
+["What products do you sell?","Dairy (fresh milk, desi ghee, paneer), spices (red chilli, turmeric, whole cumin), pulses (arhar, masoor and chana dal) and vermicompost in 5 kg and 25 kg packs."],
+["How do you maintain quality?","We source from local farms and trusted suppliers, check every lot for freshness, cleanliness and aroma, set aside anything that does not meet our standard, and pack in clean, sealed packs."],
+["How do I place an order?","Pick a product, choose its pack size, add it to the cart, enter your name, phone and address, then pay. You can also send your order on WhatsApp."],
+["Can I choose a different pack size?","Many products come in more than one pack size. Tap the size on the product card (for example 500 g, 1 kg or 5 kg) and the price updates for that size."],
+["How can I pay?","Pay by UPI QR code or payment link, or by bank transfer using the details shown at checkout. You can also arrange payment on WhatsApp. We do not store your card or bank credentials."],
+["Do you deliver to my area, and how long does it take?","We deliver in our service areas. Enter your address at checkout and we will confirm availability, delivery time and charges before dispatch."],
+["What is the delivery charge?","The delivery charge, if any, is shown in your cart before you pay. Bulk orders can be quoted separately."],
+["How do I track my order?","After you place an order you get an Order ID. Enter it in the Track Order section, or message us on WhatsApp with your Order ID for an update."],
+["What if my order is damaged or wrong?","Tell us within 48 hours of delivery with your Order ID and a clear photo or short video. After approval we replace the item or refund you to the original payment source within 5 to 7 working days."],
+["Can I cancel my order?","Yes, before it is dispatched, for a full refund. Once dispatched it cannot be cancelled, but the damaged and wrong-item rules still apply."],
+["Do you take bulk orders?","Yes. Shops, hotels, caterers and farms can order 25 kg or more of dairy, spices, pulses or vermicompost. Use the Bulk Orders form and we will quote on WhatsApp."],
+["How should I store the products?","Store as advised on the pack. Dairy needs refrigeration and should be used within the period stated on the pack. Keep spices and pulses sealed in a cool, dry place."],
+["What is vermicompost and how is it used?","Vermicompost is organic compost made from farm waste with the help of earthworms. It is used in kitchen gardens and farms to improve the soil. It is not for consumption; keep it away from food and children."],
+["How can I contact you?","Call {{phone}}, email {{email}} or message us on WhatsApp. Please include your Order ID if your question is about an order."]],
+hi:[
+["क्या आपके पास FSSAI लाइसेंस है?","हमने FSSAI लाइसेंस के लिए आवेदन किया है और वह प्रक्रिया में है (आवेदन संख्या {{fssai}})। लाइसेंस मिलते ही उसका नंबर यहाँ और फूटर में दिखाएँगे।"],
+["आप कौन से उत्पाद बेचते हैं?","डेयरी (ताज़ा दूध, देसी घी, पनीर), मसाले (लाल मिर्च, हल्दी, साबुत जीरा), दालें (अरहर, मसूर और चना दाल) और 5 किलो व 25 किलो पैक में वर्मीकम्पोस्ट।"],
+["आप गुणवत्ता कैसे बनाए रखते हैं?","हम स्थानीय खेतों और भरोसेमंद सप्लायर से माल लेते हैं, हर खेप की ताज़गी, सफ़ाई और खुशबू जाँचते हैं, मानक पर खरा न उतरने वाला माल अलग कर देते हैं और साफ़, सील बंद पैक में भेजते हैं।"],
+["ऑर्डर कैसे करूँ?","उत्पाद चुनें, उसका पैक साइज़ चुनें, कार्ट में जोड़ें, नाम, फोन और पता भरें, फिर भुगतान करें। आप अपना ऑर्डर WhatsApp पर भी भेज सकते हैं।"],
+["क्या मैं अलग पैक साइज़ चुन सकता हूँ?","कई उत्पाद एक से ज़्यादा पैक साइज़ में आते हैं। उत्पाद कार्ड पर साइज़ (जैसे 500 ग्राम, 1 किलो या 5 किलो) दबाएँ, उसी साइज़ का भाव दिखेगा।"],
+["भुगतान कैसे करूँ?","UPI QR कोड या पेमेंट लिंक से, या चेकआउट पर दिखे बैंक विवरण से बैंक ट्रांसफर करें। WhatsApp पर भी भुगतान तय कर सकते हैं। हम आपके कार्ड या बैंक की जानकारी सेव नहीं करते।"],
+["क्या मेरे क्षेत्र में डिलीवरी है और कितना समय लगेगा?","हम अपने सेवा क्षेत्र में डिलीवरी करते हैं। चेकआउट पर पता डालें, भेजने से पहले हम उपलब्धता, समय और शुल्क की पुष्टि करेंगे।"],
+["डिलीवरी शुल्क कितना है?","डिलीवरी शुल्क, अगर है तो, भुगतान से पहले आपके कार्ट में दिखता है। थोक ऑर्डर का भाव अलग से बताया जा सकता है।"],
+["अपना ऑर्डर कैसे ट्रैक करूँ?","ऑर्डर करने पर आपको ऑर्डर आईडी मिलती है। उसे ऑर्डर ट्रैक करें सेक्शन में डालें, या जानकारी के लिए ऑर्डर आईडी के साथ WhatsApp पर संदेश भेजें।"],
+["सामान खराब या गलत आए तो?","डिलीवरी के 48 घंटे के भीतर ऑर्डर आईडी और साफ़ फोटो या छोटे वीडियो के साथ बताएँ। मंज़ूरी के बाद हम सामान बदलेंगे या 5 से 7 कार्य दिवस में मूल भुगतान माध्यम में रिफंड करेंगे।"],
+["क्या मैं ऑर्डर रद्द कर सकता हूँ?","हाँ, भेजे जाने से पहले, पूरे रिफंड के साथ। भेजे जाने के बाद रद्द नहीं होता, पर खराब या गलत सामान के नियम लागू रहते हैं।"],
+["क्या आप थोक ऑर्डर लेते हैं?","हाँ। दुकान, होटल, कैटरर और खेत डेयरी, मसाले, दालें या वर्मीकम्पोस्ट 25 किलो या ज़्यादा मँगा सकते हैं। थोक ऑर्डर फ़ॉर्म भरें, हम WhatsApp पर भाव बताएँगे।"],
+["उत्पाद कैसे रखें?","पैक पर लिखे अनुसार रखें। डेयरी को फ्रिज में रखें और पैक पर लिखी अवधि में इस्तेमाल करें। मसाले और दालें ठंडी, सूखी जगह पर बंद रखें।"],
+["वर्मीकम्पोस्ट क्या है और कैसे इस्तेमाल होता है?","वर्मीकम्पोस्ट केंचुओं की मदद से खेत के कचरे से बनी जैविक खाद है। इसे किचन गार्डन और खेतों में मिट्टी सुधारने के लिए इस्तेमाल करते हैं। यह खाने के लिए नहीं है; खाने और बच्चों से दूर रखें।"],
+["आपसे संपर्क कैसे करूँ?","{{phone}} पर कॉल करें, {{email}} पर ईमेल करें या WhatsApp पर संदेश भेजें। ऑर्डर के बारे में पूछते समय ऑर्डर आईडी ज़रूर लिखें।"]],
+hg:[
+["Kya aapke paas FSSAI licence hai?","Humne FSSAI licence ke liye apply kiya hai aur wo process mein hai (Application No. {{fssai}}). Licence milte hi uska number yahan aur footer mein dikhayenge."],
+["Aap kaun se products bechte hain?","Dairy (taaza doodh, desi ghee, paneer), masale (lal mirch, haldi, sabut jeera), dalein (arhar, masoor aur chana dal) aur 5 kg aur 25 kg pack mein vermicompost."],
+["Aap quality kaise banaye rakhte hain?","Hum local farms aur bharosemand suppliers se maal lete hain, har lot ki freshness, safai aur khushboo check karte hain, standard par khara na utarne wala maal alag kar dete hain aur saaf, sealed pack mein bhejte hain."],
+["Order kaise karein?","Product chunein, uska pack size chunein, cart mein daalein, naam, phone aur address bharein, phir payment karein. Aap order WhatsApp par bhi bhej sakte hain."],
+["Kya main alag pack size chun sakta hoon?","Kai products ek se zyada pack size mein aate hain. Product card par size (jaise 500 g, 1 kg ya 5 kg) dabayein, usi size ka rate dikhega."],
+["Payment kaise karein?","UPI QR code ya payment link se, ya checkout par dikhe bank details se bank transfer karein. WhatsApp par bhi payment tay kar sakte hain. Hum aapke card ya bank ki jaankari save nahi karte."],
+["Kya mere area mein delivery hai aur kitna time lagega?","Hum apne service area mein delivery karte hain. Checkout par address daalein, dispatch se pehle hum availability, time aur charges confirm karenge."],
+["Delivery charge kitna hai?","Delivery charge, agar hai to, payment se pehle aapke cart mein dikhta hai. Bulk orders ka rate alag se bataya ja sakta hai."],
+["Apna order track kaise karein?","Order karne par aapko Order ID milti hai. Use Track Order section mein daalein, ya update ke liye Order ID ke saath WhatsApp par message karein."],
+["Saaman kharab ya galat aaye to?","Delivery ke 48 ghante ke andar Order ID aur saaf photo ya chhote video ke saath bataiye. Approve hone ke baad hum saaman badlenge ya 5 se 7 working days mein original payment source mein refund karenge."],
+["Kya main order cancel kar sakta hoon?","Haan, dispatch se pehle, poore refund ke saath. Dispatch ke baad cancel nahi hota, par kharab ya galat saaman ke niyam lagu rehte hain."],
+["Kya aap bulk orders lete hain?","Haan. Dukaan, hotel, caterer aur khet dairy, masale, dalein ya vermicompost 25 kg ya zyada mangwa sakte hain. Bulk Orders form bharein, hum WhatsApp par rate batayenge."],
+["Products ko kaise rakhein?","Pack par likhe hisaab se rakhein. Dairy ko fridge mein rakhein aur pack par likhe time ke andar use karein. Masale aur dalein thandi, sookhi jagah par band rakhein."],
+["Vermicompost kya hai aur kaise use hota hai?","Vermicompost kenchuon ki madad se khet ke kachre se bani organic khaad hai. Ise kitchen garden aur kheton mein mitti sudharne ke liye use karte hain. Ye khane ke liye nahi hai; khane aur bachchon se door rakhein."],
+["Aapse contact kaise karein?","{{phone}} par call karein, {{email}} par email karein ya WhatsApp par message karein. Order ke baare mein poochte waqt Order ID zaroor likhein."]]};
+var PD={};try{PD=JSON.parse(document.getElementById("pd").textContent)}catch(e){}
+try{var pc0=JSON.parse(localStorage.getItem("ya_pd_cache")||"null");if(pc0&&typeof pc0==="object"&&(pc0.ts||0)>(PD.ts||0))PD=pc0}catch(e){}
+P.forEach(function(p){p.bu=p.u;p.bp=p.p});
+function applyPD(){P.forEach(function(p){var d=PD[p.id];p.u=p.bu;p.p=p.bp;p.v=[{u:p.u,p:p.p}];if(d){p.p=+d.p||p.p;if(d.u)p.u=d.u;p.v=(d.v&&d.v.length)?d.v.map(function(x){return{u:String(x.u||""),p:+x.p||0}}):[{u:p.u,p:p.p}]}})}
+applyPD();
+var sel={};function vars(p){var a=p.v.filter(function(x){return x.u});return a.length?a:[{u:p.u,p:p.p}]}
+function item(k){var a=String(k).split("_"),p=P.find(function(x){return x.id==a[0]}),l=vars(p);return{p:p,v:l[+a[1]]||l[0]}}
+var L=localStorage.getItem&&safe("lang")||"en",cat="all",cart={},step=0,form={name:"",phone:"",addr:"",upi:"",pay:"online",utr:"",slip:""},busy=false,ADMPW="";
+function safe(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function $(i){return document.getElementById(i)}
+function t(k){return T[L][k]}
+function inr(n){return "₹"+n.toLocaleString("en-IN")}
+function render(){
+ document.documentElement.lang=L==="hi"?"hi":"en";
+ document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=t(e.dataset.i)});
+ $("tabs").innerHTML=Object.keys(CAT).map(function(k){return '<button class="'+(k===cat?"on":"")+'" data-c="'+k+'">'+CAT[k][L]+'</button>'}).join("");
+ $("grid").innerHTML=P.filter(function(p){return (cat==="all"||p.c===cat)&&(!Q||(p.n.en+" "+p.n.hi+" "+p.n.hg+" "+p.c).toLowerCase().indexOf(Q)>-1)}).map(function(p){var l=vars(p),si=Math.min(sel[p.id]||0,l.length-1),v=l[si];return '<div class="card"><button class="fv'+(isFav(p.id)?' on':'')+'" data-f="'+p.id+'" aria-label="Favourite" title="Favourite">'+(isFav(p.id)?'♥':'♡')+'</button><div class="ph">'+pic(p.id)+'</div><h3>'+p.n[L]+'</h3>'+(l.length>1?'<div class="vz">'+l.map(function(x,i){return '<button class="vb'+(i===si?' on':'')+'" data-z="'+p.id+'_'+i+'">'+esc(x.u)+'</button>'}).join("")+'</div>':'<div class="u">'+esc(v.u)+'</div>')+'<div class="r"><b>'+inr(v.p)+'</b><button class="btn" data-a="'+p.id+'_'+si+'">'+t("add")+'</button></div></div>'}).join("")||'<p class="small">'+t("noRes")+'</p>';
+ drawer();tracker();docs();applyCfg();shell();document.querySelectorAll("[data-ph]").forEach(function(e){e.placeholder=t(e.dataset.ph)});
+}
+function count(){return Object.keys(cart).reduce(function(a,k){return a+cart[k]},0)}
+function sub(){return Object.keys(cart).reduce(function(a,k){return a+cart[k]*item(k).v.p},0)}
+function drawer(){
+ $("cc").textContent=count();$("dt").textContent=t("cart");
+ $("sp").innerHTML=[t("s_cart"),t("s_addr"),t("s_pay")].map(function(s,i){return '<span class="'+(i===step?"on":"")+'">'+(i+1)+'. '+s+'</span>'}).join("");
+ var b=$("db"),f=$("df"),s=sub(),sh=s?CFG.ship:0,tot=s+sh;
+ if(!count()){b.innerHTML='<p class="small">'+t("empty")+'</p>';f.innerHTML="";return}
+ if(step===0){
+  b.innerHTML=Object.keys(cart).map(function(k){var it=item(k),p=it.p;return '<div class="it"><span class="ln">'+(PH[p.id]?'<img class="th" src="'+PH[p.id]+'" alt="" onerror="this.style.display=\'none\'">':'')+'<span>'+p.n[L]+'<br><span class="small">'+it.v.u+' · '+inr(it.v.p)+'</span></span></span><span class="q"><button data-m="'+k+'">−</button> '+cart[k]+' <button data-p="'+k+'">+</button></span></div>'}).join("");
+  f.innerHTML=sums(s,sh,tot)+'<button class="btn" style="width:100%" data-s="1">'+t("next")+'</button>';
+ }else if(step===1){
+  b.innerHTML='<label>'+t("name")+'</label><input id="fn" value="'+esc(form.name)+'" autocomplete="name"><label>'+t("phone")+'</label><input id="fp" type="tel" value="'+esc(form.phone)+'" autocomplete="tel"><label>'+t("addr")+'</label><input id="fa" value="'+esc(form.addr)+'" autocomplete="street-address">';
+  f.innerHTML=sums(s,sh,tot)+'<button class="btn" style="width:100%" data-s="2">'+t("next")+'</button> <button class="btn o" style="width:100%;margin-top:8px" data-s="0">'+t("back")+'</button>';
+ }else{
+  var pc=PD.cfg||{},hu=hasUpi(),qi=pc.qr||"",pl=/^(https?|upi):\/\//i.test(pc.plink||"")?pc.plink:"",
+  link=hu?"upi://pay?pa="+encodeURIComponent(CFG.upi)+"&pn="+encodeURIComponent(CFG.name)+"&am="+tot+"&cu=INR&tn="+encodeURIComponent("Yugal Agro order"):"",
+  bank=pc.acno?[["bn",pc.bank],["ac",pc.acname],["an",pc.acno],["ifsc",pc.ifsc]].filter(function(r){return r[1]}):[],
+  btn=(hu?'<a href="'+esc(link)+'"><button class="btn o">'+t("payLink")+'</button></a> ':'')+(pl?'<a href="'+esc(pl)+'" target="_blank" rel="noopener"><button class="btn o">'+t("plk")+'</button></a>':''),
+  anyp=qi||hu||pl||bank.length,pm=form.pay==="cod"?"cod":"online",
+  hh='<div class="pm"><button class="pmb'+(pm==="online"?" on":"")+'" data-pm="online">\ud83d\udcb3 '+t("pmO")+'</button><button class="pmb'+(pm==="cod"?" on":"")+'" data-pm="cod">\ud83d\udcb5 '+t("pmC")+'</button></div><h3 style="text-align:center;margin:0">'+inr(tot)+'</h3>';
+  if(pm==="cod"){hh+='<p class="small" style="text-align:center">'+t("codN")+'</p>'}
+  else{hh+=(qi||hu?'<p class="small" style="text-align:center">'+t("payScan")+'</p><div id="qr">'+(qi?'<img src="'+esc(qi)+'" alt="QR" style="width:190px;height:190px;object-fit:contain">':'')+'</div>':'')+(btn?'<p style="text-align:center">'+btn+'</p>':'')+(bank.length?'<div class="card" style="margin:10px 0"><b>'+t("bk")+'</b>'+bank.map(function(r){return '<div class="it"><span>'+t(r[0])+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+'</div>':'')+(anyp?'':'<p class="small">'+t("nop")+'</p>')+'<p class="small">'+t("payFirst")+'</p><label>'+t("utrL")+'</label><input id="fut" placeholder="'+t("utrP")+'" value="'+esc(form.utr)+'" autocomplete="off"><label>'+t("slipL")+'</label><input type="file" id="fsl" accept="image/*">'+(form.slip?'<img class="slp" src="'+form.slip+'" alt=""><span class="small">\u2705 '+t("slipOk")+'</span>':'')}
+  b.innerHTML=hh;
+  if(pm==="online"&&hu&&!qi){try{new QRCode($("qr"),{text:link,width:170,height:170})}catch(e){$("qr").textContent=link}}
+  f.innerHTML=sums(s,sh,tot)+'<button class="btn" style="width:100%" data-s="3"'+(busy?' disabled':'')+'>'+(busy?t("sending"):(pm==="cod"?t("placeC"):t("placeO")))+'</button> <button class="btn wa" style="width:100%;margin-top:8px" data-s="4">'+t("wa")+'</button> <button class="btn o" style="width:100%;margin-top:8px" data-s="1">'+t("back")+'</button>';
+ }
+}
+function sums(s,sh,tot){return '<div class="it"><span>'+t("sub_t")+'</span><span>'+inr(s)+'</span></div><div class="it"><span>'+t("ship")+'</span><span>'+(sh?inr(sh):t("free"))+'</span></div><div class="it" style="border:0"><b>'+t("total")+'</b><b>'+inr(tot)+'</b></div>'}
+function hasUpi(){return !!CFG.upi&&CFG.upi.indexOf("yourupi")<0}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function grab(){var a=$("fn");if(a){form.name=a.value;form.phone=$("fp").value;form.addr=$("fa").value}var u=$("fut");if(u)form.utr=u.value}
+var order=null;
+function tracker(){
+ var n=order?order.stage:-1;
+ $("tstat").textContent=order?order.id+" · "+(order.label||t("st")[n]):"—";
+ $("route").innerHTML=t("st").map(function(s,i){return '<div class="'+(i<=n?"d":"")+'">'+s+'</div>'}).join("");
+}
+function open_(v){$("dr").classList.toggle("on",v);$("ov").classList.toggle("on",v)}
+document.addEventListener("click",function(e){
+ var d=e.target.closest("[data-a],[data-c],[data-m],[data-p],[data-s],[data-z]");if(!d)return;var D=d.dataset;
+ if(D.a){cart[D.a]=(cart[D.a]||0)+1;step=0;open_(true)}
+ else if(D.c){cat=D.c}
+ else if(D.z){var za=D.z.split("_");sel[za[0]]=+za[1]}
+ else if(D.p){cart[D.p]++}
+ else if(D.m){if(--cart[D.m]<=0)delete cart[D.m]}
+ else if(D.s){grab();var s=+D.s;
+  if(s===2&&(!form.name||!form.phone||!form.addr)){alert(t("need"));return}
+  if(s>=3){placeOrder(s);return}
+  step=s}
+ render();
+});
+$("cb").onclick=function(){step=0;open_(true);render()};$("cx").onclick=$("ov").onclick=function(){open_(false)};
+$("lang").value=L;$("lang").onchange=function(){grab();L=this.value;save("lang",L);render()};
+$("tb").onclick=async function(){var v=$("oid").value.trim().toUpperCase();if(!v)return;$("tstat").textContent="…";var r=await findOrder(v);if(!r){order=null;tracker();$("tstat").textContent=v+" · "+t("nf");return}order={id:v,stage:stageOf(r.status),label:r.status};tracker()};
+$("th").onclick=function(){var r=document.documentElement,d=r.dataset.theme==="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme: dark)").matches);r.dataset.theme=d?"light":"dark";save("theme",r.dataset.theme)};
+(function(){var s=safe("theme");if(s)document.documentElement.dataset.theme=s})();
+var SP={1:["Fresh Milk","#2f7fd0","#8cc0f0","m"],2:["Desi Ghee","#b9770e","#f3c94f","j"],3:["Paneer","#2e7d4f","#8fcf9f","p"],4:["Red Chilli","#a51212","#e94b3c","s"],5:["Haldi","#c98a00","#ffd54a","s"],6:["Jeera","#5d3a1a","#b07f50","s"],7:["Arhar Dal","#b8860b","#f2c94c","d"],8:["Masoor Dal","#b4501f","#f08a4b","d"],9:["Chana Dal","#a8801f","#e8c35a","d"],10:["Vermicompost","#4a3418","#9a7440","v"],11:["Vermicompost","#4a3418","#9a7440","v"]};
+function art(id){var a=SP[id],n=a[0],c1=a[1],c2=a[2],k=a[3],u=P.find(function(p){return p.id==id}).u.replace(" ",""),g="g"+id,U="url(#"+g+")",
+LB='<rect x="29" y="46" width="62" height="64" rx="8" fill="#fffaf0"/><text x="60" y="59" text-anchor="middle" font-size="7.5" font-weight="700" fill="'+c1+'" font-family="Georgia,serif">YUGAL AGRO</text><text x="60" y="73" text-anchor="middle" font-size="9" font-weight="700" fill="#17261a" font-family="Georgia,serif">'+n+'</text><circle cx="88" cy="116" r="11" fill="#e0a526"/><text x="88" y="119" text-anchor="middle" font-size="7" font-weight="700" fill="#17261a">'+u+'</text>',
+x='<svg viewBox="0 0 120 150" aria-hidden="true"><defs><linearGradient id="'+g+'" x1="0" x2="1"><stop offset="0" stop-color="'+c1+'"/><stop offset=".45" stop-color="'+c2+'"/><stop offset="1" stop-color="'+c1+'"/></linearGradient></defs><ellipse cx="60" cy="145" rx="40" ry="5" fill="#000" opacity=".2"/>',m="";
+if(k=="m")x+='<rect x="44" y="10" width="32" height="16" rx="4" fill="#2f7fd0"/><path d="M40 28h40q8 6 8 16v88q0 10-10 10H42q-10 0-10-10V44q0-10 8-16z" fill="'+U+'"/>'+LB+'<path d="M40 100q10-6 20 0t20 0v6H40z" fill="#2f7fd0" opacity=".55"/>';
+else if(k=="j")x+='<rect x="26" y="18" width="68" height="16" rx="5" fill="#6b3f12"/><path d="M28 34h64q4 6 4 18v74q0 12-12 12H36q-12 0-12-12V52q0-12 4-18z" fill="'+U+'"/>'+LB+'<circle cx="60" cy="95" r="9" fill="#f0c24a"/>';
+else if(k=="v")x+='<path d="M24 36q36-16 72 0l8 98H16z" fill="'+U+'"/><path d="M34 36q26 12 52 0" stroke="#2b1e0c" stroke-width="3" fill="none"/><path d="M60 36V16" stroke="#2e8b3d" stroke-width="3"/><path d="M60 22q-16-4-18-16 14 0 18 16zM60 22q16-4 18-16-14 0-18 16z" fill="#43a653"/>'+LB+'<path d="M38 104q22-22 44 0z" fill="#4a3418"/>';
+else{x+='<path d="M20 20h80l5 8-5 104q0 8-8 8H28q-8 0-8-8L15 28z" fill="'+U+'"/><rect x="18" y="20" width="84" height="7" fill="#000" opacity=".15"/>'+LB;
+ if(k=="s")m='<path d="M36 105q24-30 48 0z" fill="'+c1+'"/>';
+ else if(k=="d")m='<ellipse cx="60" cy="99" rx="24" ry="8" fill="'+c2+'"/><g fill="#fff" opacity=".4"><circle cx="50" cy="97" r="2"/><circle cx="62" cy="100" r="2"/><circle cx="72" cy="96" r="2"/></g>';
+ else m='<g fill="#fff" stroke="#cfe3d3"><rect x="40" y="90" width="14" height="14" rx="2"/><rect x="56" y="90" width="14" height="14" rx="2"/><rect x="48" y="78" width="14" height="14" rx="2"/></g>'}
+return x+m+'<path d="M25 26h11l-3 104h-8z" fill="#fff" opacity=".2"/></svg>'}
+document.querySelectorAll("[data-pic]").forEach(function(e){e.innerHTML=art(e.dataset.pic)});
+function pic(id){return PH[id]?'<img src="'+PH[id]+'" alt="" onerror="this.outerHTML=art('+id+')">':art(id)}
+document.querySelectorAll(".art").forEach(function(a){a.innerHTML=a.dataset.art.split(",").map(function(i){return PH[i]?'<img src="'+PH[i]+'" style="width:31%;border-radius:14px">':art(i)}).join("")});
+var si=0,SL=document.querySelectorAll(".sl");$("dots").innerHTML=[].map.call(SL,function(_,i){return '<i data-d="'+i+'"></i>'}).join("");
+function go(n){si=n%SL.length;SL.forEach(function(e,i){e.classList.toggle("on",i===si)});[].forEach.call($("dots").children,function(e,i){e.classList.toggle("on",i===si)})}
+$("dots").onclick=function(e){if(e.target.dataset.d)go(+e.target.dataset.d)};go(0);setInterval(function(){go(si+1)},5500);
+$("bsend").onclick=function(){window.open("https://wa.me/"+CFG.wa+"?text="+encodeURIComponent("Bulk enquiry – "+$("bco").value+": "+$("bqty").value),"_blank")};
+document.querySelectorAll(".cc").forEach(function(b){b.onclick=function(){cat=this.dataset.c;render();$("range").scrollIntoView({behavior:"smooth"})}});
+var DOC={"about": {"en": [["Who we are", "Yugal Agro Food Products is a farm-rooted food and agriculture business. We bring everyday kitchen staples and natural farm inputs from the field to your doorstep, with honest quality and fair prices."], ["What we offer", "Dairy: fresh milk, pure desi ghee and fresh paneer.|Spices: red chilli, turmeric, cumin and more, ground and packed for aroma.|Pulses: arhar, masoor and chana dal, cleaned and graded.|Vermicompost: organic compost in 5 kg packs and 25 kg bulk bags for kitchen gardens and farms."], ["Our promise", "We keep our products as close to nature as possible. We do not believe in shortcuts: what is on the label is what reaches your home."], ["Sourcing and quality", "We work with local farms and trusted suppliers, check every lot for freshness, cleanliness and aroma, and set aside whatever does not meet our standard."], ["Packing and hygiene", "Products are packed in clean, sealed packs showing the product name, weight and handling advice. Dairy is handled with care so it stays fresh until delivery."], ["Delivery", "We deliver in our service areas. Enter your address at checkout and we will confirm availability, delivery time and charges before dispatch."], ["Easy and safe payment", "Pay by UPI QR code or payment link, or place your order on WhatsApp. Your order ID lets you track every step."], ["Licence status", "Our FSSAI licence is in process. Application No.: {{fssai}}."], ["Bulk orders and farmers", "Shops, hotels, caterers and farms can order 25 kg or more directly from us. Use the Bulk Orders form to get a quote."], ["Customer care", "Have a question, feedback or a problem with an order? Message us on WhatsApp or use the contact details in the footer. We reply as quickly as we can."]], "hi": [["हम कौन हैं", "युगल एग्रो फूड प्रोडक्ट्स खेतों से जुड़ा खाद्य और कृषि व्यवसाय है। हम रसोई की रोज़मर्रा की चीज़ें और प्राकृतिक कृषि उत्पाद खेत से सीधे आपके द्वार तक पहुँचाते हैं, ईमानदार गुणवत्ता और वाजिब दाम पर।"], ["हम क्या देते हैं", "डेयरी: ताज़ा दूध, शुद्ध देसी घी और ताज़ा पनीर।|मसाले: लाल मिर्च, हल्दी, जीरा और अन्य, खुशबू के लिए पिसे और पैक।|दालें: अरहर, मसूर और चना दाल, साफ़ और छँटी हुई।|वर्मीकम्पोस्ट: किचन गार्डन और खेतों के लिए 5 किलो पैक और 25 किलो थोक बोरी में जैविक खाद।"], ["हमारा वादा", "हम अपने उत्पादों को प्रकृति के जितना करीब हो सके रखते हैं। हम शॉर्टकट में विश्वास नहीं करते: लेबल पर जो लिखा है, वही आपके घर पहुँचता है।"], ["खरीद और गुणवत्ता", "हम स्थानीय खेतों और भरोसेमंद सप्लायर के साथ काम करते हैं, हर खेप की ताज़गी, सफ़ाई और खुशबू जाँचते हैं, और जो हमारे मानक पर खरा नहीं उतरता उसे अलग कर देते हैं।"], ["पैकिंग और स्वच्छता", "उत्पाद साफ़, सील बंद पैक में आते हैं जिन पर नाम, वज़न और रखरखाव की जानकारी होती है। डेयरी को सावधानी से संभाला जाता है ताकि डिलीवरी तक ताज़ा रहे।"], ["डिलीवरी", "हम अपने सेवा क्षेत्र में डिलीवरी करते हैं। चेकआउट पर पता डालें, भेजने से पहले हम उपलब्धता, समय और शुल्क की पुष्टि करेंगे।"], ["आसान और सुरक्षित भुगतान", "UPI QR कोड या पेमेंट लिंक से भुगतान करें, या WhatsApp पर ऑर्डर दें। ऑर्डर आईडी से आप हर चरण ट्रैक कर सकते हैं।"], ["लाइसेंस की स्थिति", "हमारा FSSAI लाइसेंस प्रक्रिया में है। आवेदन संख्या: {{fssai}}।"], ["थोक ऑर्डर और किसान", "दुकानें, होटल, कैटरर और खेत 25 किलो या अधिक सीधे हमसे मँगा सकते हैं। भाव के लिए थोक ऑर्डर फ़ॉर्म भरें।"], ["ग्राहक सहायता", "कोई सवाल, सुझाव या ऑर्डर में समस्या है? WhatsApp पर संदेश भेजें या फूटर में दिए संपर्क का उपयोग करें। हम जल्द से जल्द जवाब देते हैं।"]], "hg": [["Hum kaun hain", "Yugal Agro Food Products khet se jura food aur agriculture business hai. Hum rasoi ka roz ka saaman aur natural farm inputs khet se seedha aapke ghar tak pahunchate hain, imandaar quality aur sahi daam par."], ["Hum kya dete hain", "Dairy: taaza doodh, shuddh desi ghee aur taaza paneer.|Masale: lal mirch, haldi, jeera aur aur bhi, khushboo ke liye pise aur pack.|Dalein: arhar, masoor aur chana dal, saaf aur grade ki hui.|Vermicompost: kitchen garden aur kheton ke liye 5 kg pack aur 25 kg bulk bori mein organic khaad."], ["Hamara vaada", "Hum apne products ko jitna ho sake prakriti ke kareeb rakhte hain. Hum shortcut mein yakeen nahi karte: label par jo likha hai wahi aapke ghar pahunchta hai."], ["Sourcing aur quality", "Hum local farms aur bharosemand suppliers ke saath kaam karte hain, har lot ki freshness, safai aur khushboo check karte hain, aur jo hamare standard par khara na ho use alag kar dete hain."], ["Packing aur hygiene", "Products saaf, sealed pack mein aate hain jis par naam, weight aur rakh-rakhaav ki jaankari hoti hai. Dairy ko dhyan se handle kiya jata hai taaki delivery tak fresh rahe."], ["Delivery", "Hum apne service area mein delivery karte hain. Checkout par address daalein, dispatch se pehle hum availability, time aur charges confirm karenge."], ["Aasaan aur safe payment", "UPI QR code ya payment link se pay karein, ya WhatsApp par order dein. Order ID se aap har step track kar sakte hain."], ["Licence ki sthiti", "Hamara FSSAI licence process mein hai. Application No.: {{fssai}}."], ["Bulk orders aur kisan", "Dukaan, hotel, caterer aur khet 25 kg ya zyada seedha humse mangwa sakte hain. Rate ke liye Bulk Orders form bharein."], ["Customer care", "Koi sawaal, feedback ya order mein dikkat? WhatsApp par message karein ya footer ke contact use karein. Hum jald se jald jawab dete hain."]]}, "refund": {"en": [["Our commitment", "We want you to be happy with every order. If something is wrong, we will make it right with a replacement or a refund, as set out below."], ["When you can claim", "The product arrives damaged, leaked, spoiled or expired.|You received a wrong or missing item.|The quality is clearly not as described.|The weight or quantity is less than what you paid for."], ["Not eligible", "Change of mind after the pack is opened or used.|Damage caused by wrong storage or handling after delivery.|Dairy that was accepted in good condition and later spoiled due to storage.|Wrong address or phone number given by the customer, or nobody available after repeated delivery attempts.|Normal natural variation in colour, aroma or texture of spices, pulses and vermicompost."], ["How to claim", "1. Within 48 hours of delivery, message us on WhatsApp with your order ID.|2. Send clear photos or a short video of the product, the pack and the delivery label.|3. Our team reviews your claim and replies within 1 working day.|4. Please keep the product until the claim is settled; in some cases we may ask for it back."], ["Replacement or refund", "Once your claim is approved you can choose a free replacement or a refund. If the product is out of stock, we will refund you."], ["Refund timeline and mode", "Approved refunds go to the original UPI account or payment source within 5 to 7 working days. For orders paid by UPI on WhatsApp, the refund goes to the UPI ID that made the payment. Your bank may take a little longer to show it."], ["Cancellation", "You can cancel an order for a full refund before it is dispatched. After dispatch it cannot be cancelled, but the claim rules above still apply."], ["Delivery charges", "Delivery charges are refunded only when the problem is from our side (damaged, wrong or missing item), not for a change of mind."], ["Failed or double payments", "If money is deducted but no order is created, or you are charged twice, send us the payment screenshot. We will refund the extra amount within 5 to 7 working days."], ["Bulk orders", "Bulk orders and vermicompost orders of 25 kg or more are checked at delivery. Please report any issue the same day with photos."], ["Contact us", "For refunds and returns, message us on WhatsApp or use the details in the footer. Always include your order ID."]], "hi": [["हमारी प्रतिबद्धता", "हम चाहते हैं कि आप हर ऑर्डर से संतुष्ट रहें। कुछ गड़बड़ हो तो हम नीचे दिए नियमों के अनुसार बदलकर या रिफंड देकर उसे ठीक करेंगे।"], ["कब दावा कर सकते हैं", "उत्पाद टूटा-फूटा, लीक, खराब या एक्सपायर होकर आए।|गलत या कम सामान मिले।|गुणवत्ता विवरण से साफ़ तौर पर अलग हो।|वज़न या मात्रा भुगतान से कम हो।"], ["कब पात्र नहीं", "पैक खोलने या उपयोग के बाद मन बदलना।|डिलीवरी के बाद गलत स्टोरेज या हैंडलिंग से हुआ नुकसान।|अच्छी हालत में स्वीकार किया गया डेयरी, जो बाद में स्टोरेज के कारण खराब हुआ।|ग्राहक द्वारा गलत पता या फोन नंबर देना, या बार-बार प्रयास पर भी कोई उपलब्ध न होना।|मसालों, दालों और वर्मीकम्पोस्ट के रंग, खुशबू या बनावट में सामान्य प्राकृतिक अंतर।"], ["दावा कैसे करें", "1. डिलीवरी के 48 घंटे के भीतर ऑर्डर आईडी के साथ WhatsApp पर संदेश भेजें।|2. उत्पाद, पैक और डिलीवरी लेबल की साफ़ फोटो या छोटा वीडियो भेजें।|3. हमारी टीम दावे की जाँच करके 1 कार्य दिवस में जवाब देगी।|4. दावा निपटने तक उत्पाद संभालकर रखें; कुछ मामलों में हम उसे वापस मँगा सकते हैं।"], ["बदलाव या रिफंड", "दावा स्वीकृत होने पर आप मुफ़्त बदलाव या रिफंड चुन सकते हैं। उत्पाद स्टॉक में न हो तो रिफंड दिया जाएगा।"], ["रिफंड की समय-सीमा और माध्यम", "स्वीकृत रिफंड 5 से 7 कार्य दिवस में मूल UPI खाते या भुगतान माध्यम में भेजा जाता है। WhatsApp पर UPI से भुगतान वाले ऑर्डर में रिफंड उसी UPI आईडी में जाता है जिससे भुगतान हुआ। आपके बैंक में दिखने में थोड़ा अधिक समय लग सकता है।"], ["ऑर्डर रद्द करना", "भेजे जाने से पहले ऑर्डर रद्द करने पर पूरा रिफंड मिलेगा। भेजे जाने के बाद रद्द नहीं होता, पर ऊपर के दावा नियम लागू रहते हैं।"], ["डिलीवरी शुल्क", "डिलीवरी शुल्क तभी वापस होता है जब गलती हमारी हो (खराब, गलत या कम सामान), मन बदलने पर नहीं।"], ["असफल या दोहरा भुगतान", "पैसे कट गए पर ऑर्डर नहीं बना, या दो बार कटे, तो भुगतान का स्क्रीनशॉट भेजें। अतिरिक्त राशि 5 से 7 कार्य दिवस में लौटाई जाएगी।"], ["थोक ऑर्डर", "25 किलो या अधिक के थोक और वर्मीकम्पोस्ट ऑर्डर की जाँच डिलीवरी पर होती है। कोई समस्या हो तो उसी दिन फोटो के साथ बताएँ।"], ["संपर्क करें", "रिफंड और वापसी के लिए WhatsApp पर संदेश भेजें या फूटर के विवरण का उपयोग करें। हमेशा अपनी ऑर्डर आईडी लिखें।"]], "hg": [["Hamari commitment", "Hum chahte hain ki aap har order se khush rahein. Kuch galat ho to hum neeche diye niyam se replacement ya refund dekar use theek karenge."], ["Kab claim kar sakte hain", "Product toota-phoota, leak, kharab ya expire aaye.|Galat ya kam saaman mile.|Quality description se saaf alag ho.|Weight ya quantity payment se kam ho."], ["Kab eligible nahi", "Pack kholne ya use karne ke baad mann badalna.|Delivery ke baad galat storage ya handling se hua nuksaan.|Achhi halat mein accept kiya dairy jo baad mein storage se kharab hua.|Customer ka galat address ya phone number dena, ya baar-baar try par bhi koi na milna.|Masale, dal aur vermicompost ke rang, khushboo ya texture mein normal natural farak."], ["Claim kaise karein", "1. Delivery ke 48 ghante ke andar order ID ke saath WhatsApp par message karein.|2. Product, pack aur delivery label ki saaf photo ya chhota video bhejein.|3. Hamari team claim check karke 1 working day mein jawab degi.|4. Claim settle hone tak product sambhal kar rakhein; kuch cases mein hum use wapas mangwa sakte hain."], ["Replacement ya refund", "Claim approve hone par aap free replacement ya refund chun sakte hain. Product stock mein na ho to refund diya jayega."], ["Refund ka time aur tareeka", "Approved refund 5 se 7 working days mein original UPI account ya payment source mein jata hai. WhatsApp par UPI se hue payment ka refund usi UPI ID mein jata hai. Aapke bank mein dikhne mein thoda zyada time lag sakta hai."], ["Cancellation", "Dispatch se pehle order cancel karne par poora refund milega. Dispatch ke baad cancel nahi hota, par upar ke claim niyam lagu rehte hain."], ["Delivery charges", "Delivery charges tabhi wapas hote hain jab galti hamari ho (kharab, galat ya kam saaman), mann badalne par nahi."], ["Failed ya double payment", "Paise kat gaye par order nahi bana, ya do baar kate, to payment ka screenshot bhejein. Extra amount 5 se 7 working days mein wapas hoga."], ["Bulk orders", "25 kg ya zyada ke bulk aur vermicompost orders delivery par check hote hain. Koi dikkat ho to usi din photo ke saath bataiye."], ["Contact karein", "Refund aur return ke liye WhatsApp par message karein ya footer ke details use karein. Hamesha apni order ID likhein."]]}};
+function docs(){var fb=$("faqBox");if(fb)fb.innerHTML=FQ[L].map(function(r){return "<details><summary>"+r[0]+"</summary><p>"+fill(r[1])+"</p></details>"}).join("");[["aboutBox","about"],["refundBox","refund"]].forEach(function(x){var e=$(x[0]);if(!e)return;e.innerHTML=DOC[x[1]][L].map(function(r){var b=r[1].indexOf("|")>-1?"<ul>"+r[1].split("|").map(function(i){return "<li>"+i+"</li>"}).join("")+"</ul>":"<p>"+r[1]+"</p>";return "<h3>"+r[0]+"</h3>"+fill(b)}).join("")})}
+var LG={"refund": ["Refund & Return Policy", [["Scope", "This policy applies to every order placed with Yugal Agro Food Products (Yugal Agro, we, us) through this website, WhatsApp or phone. By placing an order you agree to this policy."], ["Eligibility for replacement or refund", "The product is damaged, leaked, spoiled or past its expiry date on delivery.|A wrong item was delivered, or an item is missing from your order.|The quality is clearly different from what was described at the time of sale.|The weight or quantity delivered is less than what was paid for."], ["Cases not eligible", "Change of mind after the pack has been opened or used.|Damage or spoilage caused by incorrect storage or handling after delivery.|An incorrect address or phone number supplied by the customer, or no one available to receive the order after repeated delivery attempts.|Normal natural variation in colour, aroma or texture of spices, pulses and vermicompost.|Dairy accepted in good condition that later spoiled because it was not stored as advised."], ["How to make a claim", "Contact us on WhatsApp or by email within 48 hours of delivery and quote your order ID.|Send clear photographs or a short video showing the product, the pack and the delivery label.|Keep the product and its packaging until the claim is settled. In some cases we may ask for it to be returned.|For dairy and other perishable items, please report the issue as soon as possible, ideally on the day of delivery."], ["Review and resolution", "Our team reviews each claim and replies within one working day of receiving complete details.|If the claim is approved, you may choose a free replacement or a refund. If the item is out of stock, a refund will be issued.|If a claim is declined, we will explain the reason in writing."], ["Refund method and timeline", "Approved refunds are made to the original payment source, normally the UPI account that made the payment, within 5 to 7 working days of approval.|We do not offer cash refunds.|Your bank may need additional time to show the credit."], ["Order cancellation", "An order can be cancelled for a full refund at any time before it is dispatched.|Once an order is dispatched it cannot be cancelled, but the claim terms above continue to apply."], ["Delivery charges", "Delivery charges are refunded only where the problem is on our side (damaged, wrong or missing item). They are not refunded for a change of mind."], ["Failed or duplicate payments", "If money has been deducted but no order was created, or you were charged twice, send us the payment screenshot and your registered phone number. The excess amount will be refunded within 5 to 7 working days."], ["Bulk orders", "Bulk orders and vermicompost orders of 25 kg or more are inspected at the time of delivery. Any issue must be reported on the same day with photographs."], ["Changes to this policy", "We may update this policy from time to time. The version published on this website at the time of your order applies to that order."], ["Contact", "For refunds, returns and cancellations, contact us on WhatsApp {{wa}}, phone {{phone}} or email {{email}}, and always include your order ID."]]], "terms": ["Terms & Conditions", [["Acceptance of terms", "By visiting this website or placing an order you agree to these Terms & Conditions, our Refund & Return Policy and our Privacy Policy. If you do not agree, please do not use the website."], ["About us", "Yugal Agro Food Products supplies dairy products, spices, pulses and vermicompost. Our FSSAI licence is in process (Application No. {{fssai}})."], ["Products and information", "We make every effort to describe products, weights and prices accurately. Product images are for illustration and the pack may differ slightly.|Natural products such as spices, pulses and compost may vary in colour, aroma and texture between batches."], ["Prices and availability", "All prices are in Indian Rupees and are as displayed at checkout. Prices and availability may change without notice.|If a price is shown wrongly because of an error, we may cancel the affected order and refund any payment made."], ["Orders and acceptance", "An order is confirmed only when we confirm it to you by order ID.|We may decline or cancel an order for reasons such as stock unavailability, delivery area limits, suspected misuse or a pricing error."], ["Payment", "Payment can be made by UPI QR code or payment link, or arranged through WhatsApp.|We do not store your bank or card credentials. UPI payments are processed by your own UPI app and bank."], ["Delivery", "We deliver within our service areas. Delivery times are estimates and may be affected by weather, traffic and other circumstances.|Risk in the goods passes to you on delivery. Please inspect the order when it arrives and report any issue as described in our Refund & Return Policy."], ["Storage and food safety", "Please store products as advised on the pack. Dairy products need refrigeration and should be consumed within the period stated on the pack.|Vermicompost is an agricultural input and is not for consumption. Keep it away from food and children."], ["Acceptable use", "You agree to provide accurate information, not to misuse the website, and not to attempt to interfere with its operation or security."], ["Intellectual property", "The name, logo, text and images on this website belong to Yugal Agro Food Products or their owners and may not be copied or reused without permission."], ["Limitation of liability", "To the extent permitted by law, our liability for any claim relating to an order is limited to the value of that order. We are not liable for indirect or consequential loss."], ["Governing law", "These terms are governed by the laws of India. Any dispute will be subject to the jurisdiction of the courts at the place of our business."], ["Changes and contact", "We may update these terms from time to time. For questions, contact {{phone}} or {{email}}."]]], "privacy": ["Privacy Policy", [["Information we collect", "Details you give us when you order or enquire: name, phone number, delivery address and order details.|Your UPI ID, only if you provide it for payment confirmation or a refund.|Basic preferences stored in your browser, such as language and theme."], ["How we use your information", "To process, deliver and track your orders.|To provide customer support, handle claims and issue refunds.|To respond to bulk-order enquiries.|To keep our records and meet legal requirements."], ["Sharing of information", "We share only what is needed with delivery partners and payment services to complete your order.|We do not sell your personal information."], ["Payment information", "We do not store your card or bank credentials. UPI payments are completed in your own UPI app."], ["Security and retention", "We take reasonable steps to protect your information and keep it only as long as needed for the purposes above or as required by law."], ["Your choices", "You may ask us to access, correct or delete your personal information, subject to legal requirements, by contacting us."], ["Children", "Our website is intended for adults. We do not knowingly collect information from children."], ["Changes and contact", "We may update this policy from time to time. For privacy questions, contact {{email}} or {{phone}}."]]], "awards": ["Awards, Certificates & Company Profile", [["Company overview", "Yugal Agro Food Products is a farm-rooted business supplying dairy products, spices, pulses and vermicompost directly to households, shops, hotels and farms."], ["What we handle and how", "Dairy: milk is sourced from local farms, filtered, chilled and packed in clean containers. Paneer is prepared fresh and packed in food-grade packs. Ghee is filled into clean, sealed jars.|Spices: raw material is cleaned, dried, ground, cooled and sealed to keep aroma.|Pulses: sourced, cleaned, graded and packed in food-grade packs.|Vermicompost: made from organic farm waste with earthworms, matured, sieved and bagged in 5 kg and 25 kg packs."], ["Supply chain and delivery", "Sourcing from farms and trusted suppliers, then processing and packing at our facility.|Dispatch with order ID so each order can be tracked.|Delivery to the customer within our service areas, with dairy dispatched promptly in clean packaging."], ["Quality assurance", "Every incoming lot is checked for freshness, cleanliness, aroma and foreign matter.|Products that do not meet our standard are set aside.|Packs carry the product name and weight."], ["Food safety and hygiene", "Clean equipment, work areas and containers, and good personal hygiene for staff handling food.|Food-grade packaging, and storage that keeps products away from moisture, pests and direct sunlight.|Older stock is dispatched first.|Vermicompost is stored and handled separately from food products."], ["Certificates and licences", "FSSAI licence: application in process. Application No. {{fssai}}.|Further registrations and certificates will be listed here as they are issued."]]]};
+function fill(x){var c=PD.cfg||{};return x.split("{{fssai}}").join(c.fssai||"10261002109140938").split("{{phone}}").join(c.phone||"+91 70045 04259").split("{{email}}").join(c.email||"care.yugalagro@gmail.com").split("{{wa}}").join(c.wa||CFG.wa)}
+function openLg(k){$("lg").classList.add("on");var d=LG[k],tabs=["refund","terms","privacy","awards"].map(function(q){return '<button class="'+(q==k?"on":"")+'" data-lg="'+q+'">'+LG[q][0].split(",")[0]+'</button>'}).join("");
+ var body=d[1].map(function(r){return "<h3>"+r[0]+"</h3>"+(r[1].indexOf("|")>-1?"<ul>"+r[1].split("|").map(function(i){return "<li>"+i+"</li>"}).join("")+"</ul>":"<p>"+r[1]+"</p>")}).join("");
+ if(k=="awards"){var aw=PD.awards||[];body+="<h3>Awards and recognition</h3>"+(aw.length?"<ul>"+aw.map(function(a){var p=a.split("|");return "<li><b>"+esc(p[0].trim())+"</b>"+(p[1]?" — "+esc(p[1].trim()):"")+"</li>"}).join("")+"</ul>":"<p>Awards and recognition will be listed here as they are received.</p>")}
+ $("lgb").innerHTML='<div class="tabs">'+tabs+'</div><h2>'+d[0]+'</h2><p class="small">Yugal Agro Food Products · Last updated 25 October 2026'+(L!=="en"?' · Full text is currently available in English':'')+'</p>'+fill(body);$("lgm").scrollTop=0}
+document.addEventListener("click",function(e){var a=e.target.closest("[data-lg]");if(a){e.preventDefault();openLg(a.dataset.lg)}});
+$("lgx").onclick=function(){$("lg").classList.remove("on")};
+function applyCfg(){var c=PD.cfg||{};if(c.wa)CFG.wa=c.wa;var fw=$("fwa");if(fw)fw.href="https://wa.me/"+CFG.wa;var hw=$("hwa");if(hw)hw.href="https://wa.me/"+CFG.wa+"?text="+encodeURIComponent("Hello Yugal Agro, I want to place an order.");if(c.upi!==undefined)CFG.upi=c.upi;if(c.ship!==undefined&&c.ship!=="")CFG.ship=+c.ship;
+ var v={phone:c.phone||"+91 70045 04259",email:c.email||"care.yugalagro@gmail.com",fssai:c.fssai||"10261002109140938",addr:c.addr||""};
+ document.querySelectorAll("[data-cfg]").forEach(function(e){e.textContent=v[e.dataset.cfg]});var w=$("adw");if(w)w.style.display=v.addr?"":"none"}
+var PF=[["ship","Delivery charge (₹) — 0 likhne par delivery free"],["bank","Bank name"],["acname","Account holder name"],["acno","Account number"],["ifsc","IFSC code"],["upi","UPI ID (QR aur UPI button ke liye)"],["plink","Payment link (https://...)"]];
+var BF=[["phone","Phone / contact number"],["email","Email"],["wa","WhatsApp number (91 + number, no +)"],["fssai","FSSAI application / licence no."],["addr","Business address"]];
+function collect(){if(document.querySelector("#ab .ap")){P.forEach(function(p){var us=document.querySelectorAll('#ab .au[data-id="'+p.id+'"]'),ps=document.querySelectorAll('#ab .ap[data-id="'+p.id+'"]');if(!us.length)return;p.v=[].map.call(us,function(u,k){return{u:u.value.trim(),p:Math.max(0,+ps[k].value||0)}});var f=vars(p)[0];p.u=f.u;p.p=f.p;PD[p.id]={p:p.p,u:p.u,v:p.v}})}
+ if($("bf_phone")){PD.cfg=PD.cfg||{};BF.forEach(function(f){PD.cfg[f[0]]=$("bf_"+f[0]).value.trim()})}
+ if($("pf_bank")){PD.cfg=PD.cfg||{};PF.forEach(function(f){PD.cfg[f[0]]=$("pf_"+f[0]).value.trim()})}
+ if($("aw"))PD.awards=$("aw").value.split("\n").map(function(x){return x.trim()}).filter(Boolean)}
+function admTabs(){return AL=="cf"?[["b","Business info"],["y","Payment & Bank"],["s","Security"]]:[["p","Prices"],["o","Orders"],["c","Customers"],["a","Awards"],["s","Security"]]}
+function admView(auth,tab){var b=$("ab");tab=tab||(AL=="cf"?"b":"p");admHead(ALN[AL]);admX(1);
+ var c=PD.cfg||{},d={phone:"+91 70045 04259",email:"care.yugalagro@gmail.com",wa:CFG.wa,upi:CFG.upi,fssai:"10261002109140938",ship:CFG.ship,addr:""},
+ st='<div class="ais"><span><span class="chip">'+ALN[AL]+'</span> <span class="small">'+esc(AEM)+'</span></span><button class="lnk" id="asw">Switch admin type</button></div>',
+ tb='<div class="tabs">'+admTabs().map(function(t){return '<button class="'+(t[0]==tab?"on":"")+'" data-t="'+t[0]+'">'+t[1]+'</button>'}).join("")+'</div>',bd;
+ if(tab=="p")bd=P.map(function(p,pi){var n=p.v.length;return '<div class="pb c'+(pi%4)+'"><div class="ph2"><b>'+p.n.en+'</b><span class="small">Pack sizes: <select class="an" data-id="'+p.id+'">'+[1,2,3,4,5,6].map(function(k){return '<option'+(k==n?' selected':'')+'>'+k+'</option>'}).join("")+'</select></span></div><div class="pr">'+p.v.map(function(v){return '<input class="au" data-id="'+p.id+'" placeholder="Size e.g. 500 g" value="'+esc(v.u)+'"><input class="ap" data-id="'+p.id+'" type="number" min="0" placeholder="Price ₹" value="'+v.p+'">'}).join("")+'</div></div>'}).join("")+'<p class="small">Pack sizes mein number chunein (jaise 3) to utni size-price ki rows aa jayengi. Homepage par har size ka alag button banega.</p>';
+ else if(tab=="b")bd=BF.map(function(f){var v=c[f[0]]!==undefined&&c[f[0]]!==""?c[f[0]]:d[f[0]];return '<label>'+f[1]+'</label><input id="bf_'+f[0]+'" value="'+esc(v)+'">'}).join("");
+ else if(tab=="y")bd=payHtml(c);else if(tab=="o")bd='<div id="ol" class="small">Loading…</div>';else if(tab=="c")bd='<div id="cl" class="small">Loading…</div>';
+ else if(tab=="s")bd='<div class="pwf"><h4>Change password</h4><label>Kaunsa password badalna hai?</label><select id="spt" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="'+AL+'">'+ALN[AL]+' (is section ka)</option><option value="gate">Admin login (email wala) password</option></select><label>Current password</label><input id="spo" type="password" autocomplete="current-password"><label>New password (kam se kam 8 characters)</label><input id="spn" type="password" autocomplete="new-password"><label>Confirm new password</label><input id="spc" type="password" autocomplete="new-password"><p><button class="btn" id="spb">Change password</button></p></div><p class="small">Teeno password (admin login, Operational, Confidential) ek doosre se alag hone chahiye.</p>';
+ else bd='<label>Awards and recognition, one per line as: Title | Details</label><textarea id="aw" rows="7" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)">'+esc((PD.awards||[]).join("\n"))+'</textarea>';
+ b.innerHTML=st+tb+bd+((tab=="o"||tab=="c")?'<p><button class="btn" id="orf">Refresh</button> <button class="btn o" id="ax">Close</button></p>':tab=="s"?'<p><button class="btn o" id="ax">Close</button></p>':'<p><button class="btn" id="asv">Save &amp; Exit</button> <button class="btn o" id="ax">Cancel</button></p>')+'<p class="msg" id="am"></p>';
+ b.querySelectorAll("[data-t]").forEach(function(x){x.onclick=function(){collect();admView(1,x.dataset.t)}});b.querySelectorAll(".an").forEach(function(x){x.onchange=function(){collect();var p=P.find(function(q){return q.id==x.dataset.id}),n=+x.value;while(p.v.length<n)p.v.push({u:"",p:0});p.v.length=n;admView(1,"p")}});
+ if(tab=="y")payBind();$("ax").onclick=admClose;$("asw").onclick=function(){AT="";AL="";admPick()};
+ if(tab=="o"||tab=="c"){$("orf").onclick=function(){admView(1,tab)};if(tab=="o")ordAdmin();else custAdmin()}else if(tab=="s")$("spb").onclick=admChPw;else $("asv").onclick=admSave}
+function payHtml(c){var d={upi:hasUpi()?CFG.upi:"",bank:"Punjab National Bank",ship:CFG.ship};return PF.map(function(f){var v=c[f[0]]!==undefined?c[f[0]]:(d[f[0]]!==undefined?d[f[0]]:"");return '<label>'+f[1]+'</label><input id="pf_'+f[0]+'" value="'+esc(v)+'">'}).join("")+'<label>QR code image (apna PhonePe / GPay / bank QR upload karein)</label><input type="file" id="pf_qrf" accept="image/*"><div>'+(c.qr?'<img src="'+esc(c.qr)+'" alt="QR" style="width:130px;margin-top:8px;border:1px solid var(--line);background:#fff"> <button class="btn o" id="qrx" type="button">Remove QR</button>':'')+'</div><p class="small">Jo box khaali rahega wo customers ko payment screen par dikhega hi nahi. Bank details tabhi dikhengi jab Account number bhara ho. Sab khaali ho to customer ko WhatsApp par order karne ko kaha jayega.</p>'}
+function payBind(){var f=$("pf_qrf");if(f)f.onchange=function(){var fl=f.files[0];if(!fl)return;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,480/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);collect();PD.cfg=PD.cfg||{};PD.cfg.qr=cv.toDataURL("image/png");admView(1,"y")};im.src=r.result};r.readAsDataURL(fl)};var x=$("qrx");if(x)x.onclick=function(){collect();PD.cfg.qr="";admView(1,"y")}}
+/* ---- shop shell: nav, search, favourites, orders, customer login ---- */
+var PWR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 2.5v9.5"/><path d="M17.7 6.3a8.5 8.5 0 1 1-11.4 0"/></svg>';
+var Q="",AV="acc";
+var NT={
+en:{mHome:"Home",mProd:"Products",mOrd:"My Orders",mFav:"Favourites",mTrack:"Track Order",mAbout:"About Us",mPol:"Policies",mFaq:"FAQ",mCon:"Contact",
+ mLogin:"Login",mLogout:"Logout",mHi:"Hi",noRes:"No products found. Try another search.",
+ ordT:"My Orders",ordE:"You have not placed any orders from this device yet.",ordN:"Orders are saved on this device only.",ordTr:"Track",ordOn:"Order placed",
+ favT:"My Favourites",favE:"No favourites yet. Tap the heart on any product to save it here.",rem:"Remove",
+ accT:"My Account",logT:"Customer Login",logP:"Enter your name and mobile number. We use them to fill your delivery details faster.",logB:"Continue",logN:"Your details stay on this device. No password needed.",
+ bad:"Enter your name and a valid 10-digit mobile number.",wel:"Welcome",bye:"Logged out",shopMore:"Browse products"},
+hi:{mHome:"होम",mProd:"उत्पाद",mOrd:"मेरे ऑर्डर",mFav:"पसंदीदा",mTrack:"ऑर्डर ट्रैक",mAbout:"हमारे बारे में",mPol:"नीतियाँ",mFaq:"सामान्य प्रश्न",mCon:"संपर्क",
+ mLogin:"लॉगिन",mLogout:"लॉगआउट",mHi:"नमस्ते",noRes:"कोई उत्पाद नहीं मिला। दूसरा शब्द खोजें।",
+ ordT:"मेरे ऑर्डर",ordE:"इस डिवाइस से अभी तक कोई ऑर्डर नहीं हुआ।",ordN:"ऑर्डर सिर्फ़ इसी डिवाइस पर सेव रहते हैं।",ordTr:"ट्रैक करें",ordOn:"ऑर्डर मिला",
+ favT:"मेरी पसंद",favE:"अभी कोई पसंदीदा नहीं। किसी उत्पाद पर दिल दबाकर यहाँ सेव करें।",rem:"हटाएँ",
+ accT:"मेरा खाता",logT:"ग्राहक लॉगिन",logP:"अपना नाम और मोबाइल नंबर डालें। इससे डिलीवरी की जानकारी जल्दी भर जाएगी।",logB:"आगे बढ़ें",logN:"आपकी जानकारी इसी डिवाइस पर रहती है। पासवर्ड नहीं चाहिए।",
+ bad:"नाम और 10 अंकों का सही मोबाइल नंबर डालें।",wel:"स्वागत है",bye:"लॉगआउट हो गया",shopMore:"उत्पाद देखें"},
+hg:{mHome:"Home",mProd:"Products",mOrd:"Mere Orders",mFav:"Favourites",mTrack:"Track Order",mAbout:"Hamare Baare Mein",mPol:"Policies",mFaq:"FAQ",mCon:"Contact",
+ mLogin:"Login",mLogout:"Logout",mHi:"Namaste",noRes:"Koi product nahi mila. Dusra shabd try karein.",
+ ordT:"Mere Orders",ordE:"Is device se abhi tak koi order nahi hua.",ordN:"Orders sirf isi device par save rehte hain.",ordTr:"Track karein",ordOn:"Order placed",
+ favT:"Meri Pasand",favE:"Abhi koi favourite nahi. Kisi product ka dil dabakar yahan save karein.",rem:"Hatayein",
+ accT:"Mera Account",logT:"Customer Login",logP:"Apna naam aur mobile number daalein. Isse delivery details jaldi bhar jayengi.",logB:"Aage badhein",logN:"Aapki details isi device par rehti hain. Password nahi chahiye.",
+ bad:"Naam aur 10 digit ka sahi mobile number daalein.",wel:"Swagat hai",bye:"Logout ho gaya",shopMore:"Products dekhein"}};
+["en","hi","hg"].forEach(function(l){for(var k in NT[l])T[l][k]=NT[l][k]});
+var N2={
+en:{pmO:"Pay online",pmC:"Cash on Delivery",codN:"Pay cash when your order arrives. We may call you to confirm the order.",utrL:"UTR / Transaction ID (after paying)",utrP:"e.g. 412345678901",slipL:"Payment slip / screenshot",slipOk:"Slip attached",payFirst:"Pay using the QR / UPI / bank details above, then enter the UTR and upload the slip.",placeC:"Place order (Cash on Delivery)",placeO:"Submit order & payment details",needU:"Please enter the UTR / transaction ID and upload the payment slip.",badU:"UTR should be 10 to 22 letters/numbers.",nf:"Order not found. Please check the Order ID.",fail:"Order could not be submitted. Check your internet and try again, or order on WhatsApp.",sending:"Submitting…",trackNote:"Enter your Order ID to see its latest status.",doneU:"We will verify your payment and confirm shortly.",doneC:"We will confirm your order. Please pay in cash on delivery."},
+hi:{pmO:"ऑनलाइन भुगतान",pmC:"कैश ऑन डिलीवरी",codN:"ऑर्डर पहुँचने पर नकद भुगतान करें। पुष्टि के लिए हम आपको कॉल कर सकते हैं।",utrL:"UTR / ट्रांज़ैक्शन आईडी (भुगतान के बाद)",utrP:"जैसे 412345678901",slipL:"पेमेंट स्लिप / स्क्रीनशॉट",slipOk:"स्लिप जुड़ गई",payFirst:"ऊपर दिए QR / UPI / बैंक विवरण से भुगतान करें, फिर UTR डालें और स्लिप अपलोड करें।",placeC:"ऑर्डर करें (कैश ऑन डिलीवरी)",placeO:"ऑर्डर और पेमेंट विवरण भेजें",needU:"कृपया UTR / ट्रांज़ैक्शन आईडी डालें और पेमेंट स्लिप अपलोड करें।",badU:"UTR 10 से 22 अक्षर/अंकों का होना चाहिए।",nf:"ऑर्डर नहीं मिला। कृपया ऑर्डर आईडी जाँचें।",fail:"ऑर्डर नहीं जा सका। इंटरनेट जाँचकर दोबारा कोशिश करें, या WhatsApp पर ऑर्डर करें।",sending:"भेजा जा रहा है…",trackNote:"ताज़ा स्थिति देखने के लिए अपनी ऑर्डर आईडी डालें।",doneU:"हम आपका भुगतान जाँचकर जल्द पुष्टि करेंगे।",doneC:"हम आपका ऑर्डर कन्फर्म करेंगे। डिलीवरी पर नकद दें।"},
+hg:{pmO:"Online payment",pmC:"Cash on Delivery",codN:"Order pahunchne par cash dein. Confirm karne ke liye hum call kar sakte hain.",utrL:"UTR / Transaction ID (payment ke baad)",utrP:"jaise 412345678901",slipL:"Payment slip / screenshot",slipOk:"Slip lag gayi",payFirst:"Upar diye QR / UPI / bank details se pay karein, phir UTR daalein aur slip upload karein.",placeC:"Order karein (Cash on Delivery)",placeO:"Order aur payment details bhejein",needU:"Kripya UTR / transaction ID daalein aur payment slip upload karein.",badU:"UTR 10 se 22 letters/numbers ka hona chahiye.",nf:"Order nahi mila. Order ID check karein.",fail:"Order nahi ja saka. Internet check karke dobara try karein, ya WhatsApp par order karein.",sending:"Bhej rahe hain…",trackNote:"Latest status dekhne ke liye apni Order ID daalein.",doneU:"Hum aapka payment verify karke jaldi confirm karenge.",doneC:"Hum aapka order confirm karenge. Delivery par cash dein."}};
+["en","hi","hg"].forEach(function(l){for(var k in N2[l])T[l][k]=N2[l][k]});
+
+var N3={
+en:{ddC:"Customer Login",ddCd:"Orders, tracking & favourites",ddA:"Admin Login",ddAd:"Business owner / staff (email + password)",ddP:"Admin Panel",ddO:"Logout"},
+hi:{ddC:"ग्राहक लॉगिन",ddCd:"ऑर्डर, ट्रैकिंग और पसंदीदा",ddA:"एडमिन लॉगिन",ddAd:"व्यवसाय मालिक / स्टाफ़ (ईमेल + पासवर्ड)",ddP:"एडमिन पैनल",ddO:"लॉगआउट"},
+hg:{ddC:"Customer Login",ddCd:"Orders, tracking aur favourites",ddA:"Admin Login",ddAd:"Business owner / staff (email + password)",ddP:"Admin Panel",ddO:"Logout"}};
+["en","hi","hg"].forEach(function(l){for(var k in N3[l])T[l][k]=N3[l][k]});
+
+var N4={
+en:{cLogin:"Login",cSign:"Sign up",cId:"Mobile number or email",cPw:"Password",cNeed:"Enter your mobile/email and password.",cWrong:"Wrong mobile/email or password.",cFg:"Forgot password?",cName:"Full name",cPh:"Mobile number",cEm:"Email",cPw6:"Create password (min 6 characters)",cUp:"Create account",cBad:"Enter your name, a 10-digit mobile number, a valid email and a password of at least 6 characters.",cSend:"Send code to my email",cCode:"6-digit code from email",cNew:"New password (min 6 characters)",cReset:"Reset password",cSent:"If this account exists, a code has been emailed. Check inbox and spam.",cDone:"Password changed. Please login.",cBack:"← Back to login",cEmL:"Email",cWelNew:"Account created",needLogin:"Please login or sign up to place your order. Your cart is saved.",ordLogin:"Login to see your order history.",loading:"Loading…",ordNone:"No orders yet on this account.",ordSv:"Your orders are saved to your account. Login from any phone to see them again.",sessEnd:"Session ended. Please login again.",pyL:"Payment",logP2:"Login with your mobile number or email. Your orders stay saved in your account."},
+hi:{cLogin:"लॉगिन",cSign:"साइन अप",cId:"मोबाइल नंबर या ईमेल",cPw:"पासवर्ड",cNeed:"मोबाइल/ईमेल और पासवर्ड डालें।",cWrong:"मोबाइल/ईमेल या पासवर्ड गलत है।",cFg:"पासवर्ड भूल गए?",cName:"पूरा नाम",cPh:"मोबाइल नंबर",cEm:"ईमेल",cPw6:"पासवर्ड बनाएँ (कम से कम 6 अक्षर)",cUp:"अकाउंट बनाएँ",cBad:"नाम, 10 अंकों का मोबाइल, सही ईमेल और कम से कम 6 अक्षर का पासवर्ड डालें।",cSend:"मेरे ईमेल पर कोड भेजें",cCode:"ईमेल में आया 6 अंकों का कोड",cNew:"नया पासवर्ड (कम से कम 6 अक्षर)",cReset:"पासवर्ड बदलें",cSent:"अगर यह अकाउंट है तो कोड ईमेल पर भेज दिया गया है। इनबॉक्स और स्पैम देखें।",cDone:"पासवर्ड बदल गया। कृपया लॉगिन करें।",cBack:"← लॉगिन पर वापस",cEmL:"ईमेल",cWelNew:"अकाउंट बन गया",needLogin:"ऑर्डर के लिए कृपया लॉगिन या साइन अप करें। आपकी कार्ट सुरक्षित है।",ordLogin:"ऑर्डर हिस्ट्री देखने के लिए लॉगिन करें।",loading:"लोड हो रहा है…",ordNone:"इस अकाउंट पर अभी कोई ऑर्डर नहीं।",ordSv:"आपके ऑर्डर आपके अकाउंट में सेव हैं। किसी भी फ़ोन से लॉगिन करके देखें।",sessEnd:"सेशन खत्म हो गया। कृपया दोबारा लॉगिन करें।",pyL:"भुगतान",logP2:"मोबाइल नंबर या ईमेल से लॉगिन करें। आपके ऑर्डर अकाउंट में सेव रहते हैं।"},
+hg:{cLogin:"Login",cSign:"Sign up",cId:"Mobile number ya email",cPw:"Password",cNeed:"Mobile/email aur password daalein.",cWrong:"Mobile/email ya password galat hai.",cFg:"Password bhool gaye?",cName:"Poora naam",cPh:"Mobile number",cEm:"Email",cPw6:"Password banayein (kam se kam 6 characters)",cUp:"Account banayein",cBad:"Naam, 10 digit mobile, sahi email aur kam se kam 6 character ka password daalein.",cSend:"Mere email par code bhejein",cCode:"Email mein aaya 6-digit code",cNew:"Naya password (kam se kam 6 characters)",cReset:"Password badlein",cSent:"Agar ye account hai to code email par bhej diya gaya hai. Inbox aur spam dekhein.",cDone:"Password badal gaya. Ab login karein.",cBack:"← Login par wapas",cEmL:"Email",cWelNew:"Account ban gaya",needLogin:"Order ke liye login ya sign up karein. Aapki cart safe hai.",ordLogin:"Order history dekhne ke liye login karein.",loading:"Load ho raha hai…",ordNone:"Is account par abhi koi order nahi.",ordSv:"Aapke orders aapke account mein save hain. Kisi bhi phone se login karke dekhein.",sessEnd:"Session khatam ho gaya. Dobara login karein.",pyL:"Payment",logP2:"Mobile number ya email se login karein. Aapke orders account mein save rehte hain."}};
+["en","hi","hg"].forEach(function(l){for(var k in N4[l])T[l][k]=N4[l][k]});
+
+var N5={
+en:{cMP:"Password",cMO:"Email code",cOr:"or",cOtp:"Send login code to my email",cOtpGo:"Login with code",cPhT:"Add your mobile number",cPhP:"Needed for delivery updates.",cSave:"Save & continue",cLoginC:"Login code"},
+hi:{cMP:"पासवर्ड",cMO:"ईमेल कोड",cOr:"या",cOtp:"मेरे ईमेल पर लॉगिन कोड भेजें",cOtpGo:"कोड से लॉगिन",cPhT:"अपना मोबाइल नंबर जोड़ें",cPhP:"डिलीवरी अपडेट के लिए ज़रूरी है।",cSave:"सेव करें और आगे बढ़ें",cLoginC:"लॉगिन कोड"},
+hg:{cMP:"Password",cMO:"Email code",cOr:"ya",cOtp:"Mere email par login code bhejein",cOtpGo:"Code se login",cPhT:"Apna mobile number jodein",cPhP:"Delivery updates ke liye zaroori hai.",cSave:"Save karein aur aage badhein",cLoginC:"Login code"}};
+["en","hi","hg"].forEach(function(l){for(var k in N5[l])T[l][k]=N5[l][k]});
+
+/* ---- backend (Google Apps Script) ---- */
+function apiGet(q){var u=CFG.api+(CFG.api.indexOf("?")>-1?"&":"?")+Object.keys(q).map(function(k){return k+"="+encodeURIComponent(q[k])}).join("&");return fetch(u,{cache:"no-store"}).then(function(r){return r.json()}).catch(function(){return null})}
+var LASTERR="";
+function apiPost(o){var c=window.AbortController?new AbortController():null,tm=c?setTimeout(function(){c.abort()},45000):0;return fetch(CFG.api,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(o),signal:c?c.signal:undefined}).then(function(r){clearTimeout(tm);return r.text().then(function(t){try{LASTERR="";return JSON.parse(t)}catch(e){LASTERR="Server ne JSON nahi diya (HTTP "+r.status+"): "+t.replace(/<[^>]*>/g," ").replace(/\s+/g," ").slice(0,200);return null}})}).catch(function(e){clearTimeout(tm);LASTERR=(e&&e.name==="AbortError")?"45 second mein jawab nahi aaya (timeout)":"Network/CORS error: "+((e&&e.message)||e);return null})}
+function syncRemote(){if(!CFG.api||$("adm").classList.contains("on"))return;apiGet({action:"config"}).then(function(r){if(!r||!r.ok||!r.pd||!Object.keys(r.pd).length)return;var s=JSON.stringify(r.pd);if(s===JSON.stringify(PD))return;PD=r.pd;try{localStorage.setItem("ya_pd_cache",s)}catch(e){}grab();applyPD();render()})}
+function stageOf(s){s=String(s||"").toLowerCase();return s.indexOf("deliver")>-1?3:s.indexOf("ship")>-1?2:s.indexOf("pack")>-1?1:0}
+async function findOrder(id){if(CFG.api){var r=await apiGet({action:"track",id:id});return r&&r.ok?r:null}var l=jget("ya_all_orders",[]);for(var i=0;i<l.length;i++)if(l[i].id===id)return{status:l[i].status};return null}
+function imgData(file,max,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,max/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);var cx=cv.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(im,0,0,cv.width,cv.height);cb(cv.toDataURL("image/jpeg",.88))};im.onerror=function(){cb("")};im.src=r.result};r.onerror=function(){cb("")};r.readAsDataURL(file)}
+document.addEventListener("change",function(e){if(e.target&&e.target.id==="fsl"){var f=e.target.files[0];if(!f)return;grab();imgData(f,1600,function(d){form.slip=d;drawer()})}});
+document.addEventListener("click",function(e){var m=e.target.closest("[data-pm]");if(!m)return;grab();form.pay=m.dataset.pm;drawer()});
+async function placeOrder(mode){
+ if(busy)return;grab();
+ if(CFG.api&&!USR){open_(false);CNOTE=t("needLogin");AFTER=1;acOpen("login");return}
+ var online=mode===3&&form.pay==="online",method=mode===4?"wa":(form.pay==="cod"?"cod":"online");
+ if(online){var u=(form.utr||"").replace(/\s/g,"");if(!u||!form.slip){alert(t("needU"));return}if(!/^[A-Za-z0-9]{10,22}$/.test(u)){alert(t("badU"));return}form.utr=u}
+ var s0=sub(),sh=s0?CFG.ship:0,id="YA-"+Math.floor(10000+Math.random()*90000),w=mode===4?window.open("","_blank"):null;
+ var o={id:id,d:Date.now(),name:form.name,phone:form.phone,addr:form.addr,sub:s0,ship:sh,tot:s0+sh,method:method,utr:method==="online"?form.utr.toUpperCase():"",slip:method==="online"?form.slip:"",status:method==="online"?"Payment verification pending":"Placed",
+  it:Object.keys(cart).map(function(k){var it=item(k);return{i:it.p.id,n:it.p.n.en,u:it.v.u,q:cart[k],pr:it.v.p}})};
+ if(CFG.api){busy=true;drawer();var r=await cCall({action:"order",order:o,ctok:CT});busy=false;if(r&&r.handled){if(w)w.close();return}if(!r||!r.ok){if(w)w.close();alert(r&&r.err&&r.err!=="expired"?r.err:t("fail"));drawer();return}
+  cCall({action:"corders",ctok:CT}).then(function(v){if(v&&v.ok&&!(v.orders||[]).some(function(x){return x.id===id}))alert("Dhyan dein: order "+id+" server ki Orders sheet mein save hota nahi dikh raha. Apps Script ka Code.gs aur Executions check karna hoga.")})}
+ saveOrd(o);
+ if(w){var tx="Yugal Agro order "+id+"%0A"+o.it.map(function(i){return i.q+" x "+i.n+" ("+i.u+")"}).join("%0A")+"%0ATotal: "+inr(o.tot)+"%0A"+o.name+", "+o.phone+", "+o.addr;w.location.href="https://wa.me/"+CFG.wa+"?text="+tx}
+ var msg=method==="online"?t("doneU"):method==="cod"?t("doneC"):"";
+ order={id:id,stage:0,label:o.status};cart={};step=0;form.utr="";form.slip="";$("oid").value=id;
+ $("db").innerHTML='<p><b>✅ '+t("done")+' '+id+'</b></p>'+(msg?'<p class="small">'+msg+'</p>':'');$("df").innerHTML="";$("cc").textContent=0;tracker()}
+
+/* ---- admin: orders ---- */
+function oimg(i){var id=i.i,pr=null;if(!PH[id]){pr=P.find(function(p){return p.n.en===i.n});if(pr)id=pr.id}var u=PH[id];return u?'<img class="oi" src="'+esc(u)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'<span class="oi ox">'+((P.find(function(p){return p.id==id})||{}).e||"")+'</span>'}
+
+var STS=["Payment verification pending","Placed","Payment verified","Packed","Shipped","Delivered","Cancelled"];
+function ordCard(o){var mt=o.method==="cod"?'<span class="chip cod">COD</span>':o.method==="wa"?'<span class="chip">WhatsApp</span>':'<span class="chip on2">Online</span>',
+ big=o.slipId?"https://drive.google.com/file/d/"+encodeURIComponent(o.slipId)+"/view":o.slip||"",th=o.slipId?"https://drive.google.com/thumbnail?id="+encodeURIComponent(o.slipId)+"&sz=w1200":o.slip||"",
+ opts=STS.slice();if(opts.indexOf(o.status)<0)opts.unshift(o.status||"Placed");
+ return '<div class="oa" data-oid="'+esc(o.id)+'"><div class="oh"><b>'+esc(o.id)+'</b><span>'+mt+'</span></div><div class="small">'+new Date(o.d).toLocaleString("en-IN")+'</div><div><b>'+esc(o.name)+'</b> · <a href="tel:'+esc(o.phone)+'">'+esc(o.phone)+'</a>'+(o.email?' · '+esc(o.email):'')+'<br>'+esc(o.addr)+'</div><ul>'+(o.it||[]).map(function(i){return '<li class="oli">'+oimg(i)+'<span>'+i.q+' × '+esc(i.n)+' ('+esc(i.u)+') — '+inr(i.pr*i.q)+'</span></li>'}).join("")+'</ul><div><b>Total: '+inr(o.tot)+'</b> <span class="small">(delivery '+inr(o.ship||0)+')</span></div>'
+ +(o.utr?'<div>UTR: <b>'+esc(o.utr)+'</b></div>':'')+(th?'<a class="slk" href="'+esc(big)+'" target="_blank" rel="noopener"><img class="slp" src="'+esc(th)+'" alt="Payment slip"></a>':'')
+ +'<div class="row"><select class="os">'+opts.map(function(s){return '<option'+(s===o.status?' selected':'')+'>'+esc(s)+'</option>'}).join("")+'</select><input class="nt" placeholder="Note (optional)" value="'+esc(o.note||"")+'"><button class="btn" data-os="1">Update</button></div></div>'}
+async function ordAdmin(){var box=$("ol");if(!box)return;
+ var r=await apiPost({action:"orders",tok:AT,lv:AL});if(r&&r.err==="expired"){admLogout(1);return}
+ if(!r||!r.ok){box.textContent="Orders load nahi hue: "+((r&&r.err)||"server se jawab nahi aaya");return}
+ var list=r.orders||[];
+ box.innerHTML='<input id="osr" placeholder="Search: order ID, naam, mobile, email, UTR" style="width:100%;box-sizing:border-box;margin-bottom:8px"><p class="small" id="ocn"></p><div id="ocs"></div>';
+ function draw(){var q=$("osr").value.toLowerCase().trim(),l=list.filter(function(o){return !q||[o.id,o.name,o.phone,o.email,o.utr].join(" ").toLowerCase().indexOf(q)>-1});
+  $("ocn").textContent=l.length+" / "+list.length+" orders";$("ocs").innerHTML=l.length?l.map(ordCard).join(""):"<p>Koi order nahi mila.</p>";
+  $("ocs").querySelectorAll("a.slk").forEach(function(a){a.onclick=function(e){e.preventDefault();var im=a.querySelector("img"),u=im.src.replace("sz=w1200","sz=w2000"),o=document.createElement("div");o.className="slb";o.innerHTML='<img src="'+u+'" alt="Payment slip"><span>✕</span>';o.onclick=function(){o.remove()};document.body.appendChild(o)}});
+   $("ocs").querySelectorAll("[data-os]").forEach(function(bt){bt.onclick=async function(){var c=bt.closest(".oa"),id=c.dataset.oid,st=c.querySelector(".os").value,nt=c.querySelector(".nt").value;bt.textContent="…";
+   var r2=await apiPost({action:"setStatus",tok:AT,lv:AL,id:id,status:st,note:nt});if(r2&&r2.err==="expired"){admLogout(1);return}
+   if(r2&&r2.ok)list.forEach(function(x){if(x.id===id){x.status=st;x.note=nt}});if(!(r2&&r2.ok))alert("Status update fail hua: "+aErr(r2,"Failed"));bt.textContent=r2&&r2.ok?"Updated ✓":"Failed";setTimeout(function(){bt.textContent="Update"},1800)}})}
+ $("osr").oninput=draw;draw()}
+async function custAdmin(){var box=$("cl");if(!box)return;
+ var r=await apiPost({action:"customers",tok:AT,lv:AL});if(r&&r.err==="expired"){admLogout(1);return}
+ if(!r||!r.ok){box.textContent="Customers load nahi hue: "+((r&&r.err)||"server se jawab nahi aaya");return}
+ var list=r.customers||[];
+ box.innerHTML='<input id="csr" placeholder="Search: naam, mobile, email" style="width:100%;box-sizing:border-box;margin-bottom:8px"><p class="small" id="ccn"></p><div style="overflow-x:auto"><table class="ct" id="ctb"></table></div>';
+ function dt(x){return x?new Date(+x).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"—"}
+ function draw(){var q=$("csr").value.toLowerCase().trim(),l=list.filter(function(c){return !q||[c.name,c.phone,c.email,c.cid].join(" ").toLowerCase().indexOf(q)>-1});
+  $("ccn").textContent=l.length+" / "+list.length+" customers";
+  $("ctb").innerHTML='<tr><th>Name</th><th>Mobile</th><th>Email</th><th>Joined</th><th>Orders</th><th>Total ₹</th><th>Last login</th></tr>'+l.map(function(c){return '<tr><td><b>'+esc(c.name)+'</b><br><span class="small">'+esc(c.cid)+'</span></td><td><a href="tel:'+esc(c.phone)+'">'+esc(c.phone)+'</a></td><td>'+esc(c.email)+'</td><td>'+dt(c.created)+'</td><td>'+(c.n||0)+'</td><td>'+inr(c.tot||0)+'</td><td>'+dt(c.lastLogin)+'</td></tr>'}).join("")}
+ $("csr").oninput=draw;draw()}
+
+function jget(k,d){try{return JSON.parse(safe(k))||d}catch(e){return d}}
+var FAV=jget("ya_fav",[]),USR=jget("ya_user",null);
+function isFav(id){return FAV.indexOf(+id)>-1}
+function toast(m){var o=document.querySelector(".toast");if(o)o.remove();var d=document.createElement("div");d.className="toast";d.textContent=m;document.body.appendChild(d);setTimeout(function(){d.remove()},2600)}
+function saveOrd(o){try{var l=jget("ya_orders",[]);l.unshift({id:o.id,d:o.d,tot:o.tot,w:o.method==="wa"?1:0,m:o.method,it:o.it.map(function(i){return{i:i.i,u:i.u,q:i.q,pr:i.pr}})});save("ya_orders",JSON.stringify(l.slice(0,30)))}catch(e){}
+ try{var a=jget("ya_all_orders",[]);a.unshift(o);save("ya_all_orders",JSON.stringify(a.slice(0,15)))}catch(e){try{var a2=jget("ya_all_orders",[]);o.slip="";a2.unshift(o);save("ya_all_orders",JSON.stringify(a2.slice(0,15)))}catch(e2){}}}
+function shell(){
+ var n=FAV.length;[$("fc"),$("nfc")].forEach(function(e){if(e)e.textContent=n?n:""});
+ var lo=$("lgo");if(lo){lo.innerHTML=PWR;lo.style.display=(USR||AT)?"inline-flex":"none";lo.style.color="#d6343a";lo.style.alignItems="center";lo.style.justifyContent="center"}
+ var a=$("accl");if(a)a.textContent=USR?(t("mHi")+", "+USR.name.split(" ")[0]):(AT?"Admin ▾":t("mLogin")+" ▾");ddRender();
+ if($("ac").classList.contains("on"))acRender(AV);
+}
+function closeAc(){$("ac").classList.remove("on")}
+function acOpen(v){AV=v;$("ac").classList.add("on");acRender(v)}
+function pn(id){var p=P.find(function(x){return x.id==id});return p?p.n[L]:"#"+id}
+function acRender(v){
+ var b=$("acbody"),h="";
+ var v0=v;if((v==="acc"||v==="edit"||(v==="ord"&&CFG.api))&&!USR){v=AV="login";if(v0==="ord")CNOTE=t("ordLogin")}
+ $("act").textContent=v==="edit"?t("eT"):v==="fav"?t("favT"):v==="ord"?t("ordT"):v==="login"?t("logT"):t("accT");
+ if(v==="login"){
+  h=cLoginHtml();
+ }else if(v==="acc"){
+  h='<div class="prof"><div class="av">'+esc(USR.name.charAt(0).toUpperCase())+'</div><div><b>'+esc(USR.name)+'</b><br><span class="small">+91 '+esc(USR.phone)+'</span><br><span class="small">'+esc(USR.email||"")+'</span></div></div><div class="lst"><button class="btn o" data-ac="edit">✏️ '+t("mEdit")+'</button><button class="btn o" data-ac="ord">📦 '+t("mOrd")+'</button><button class="btn o" data-ac="fav">♥ '+t("mFav")+(FAV.length?" ("+FAV.length+")":"")+'</button><button class="btn o" data-lg="refund">📜 '+t("mPol")+'</button><button class="btn" id="lgt" style="background:#d6343a">⏻ '+t("mLogout")+'</button></div>';
+ }else if(v==="edit"){
+  h='<label>'+t("cName")+'</label><input id="enm" value="'+esc(USR.name)+'" autocomplete="name"><label>'+t("cPh")+'</label><input id="eph" type="tel" inputmode="numeric" maxlength="14" value="'+esc(USR.phone||"")+'"><label>'+t("cEm")+'</label><input value="'+esc(USR.email||"")+'" disabled><label>'+t("eAd")+'</label><textarea id="ead" rows="3" style="width:100%;box-sizing:border-box" autocomplete="street-address">'+esc(USR.addr||"")+'</textarea><p><button class="btn" id="esv" style="width:100%">'+t("eSv")+'</button></p><p class="msg" id="cm"></p><p style="text-align:center"><button class="lnk" data-ac="acc">'+t("cBack").replace(/.*/,"←")+'</button></p>';
+ }else if(v==="fav"){
+  h=FAV.length?'<div class="lst">'+FAV.map(function(id){var p=P.find(function(x){return x.id==id});if(!p)return"";var vr=vars(p)[0];return '<div class="it"><span class="ln">'+(PH[p.id]?'<img class="th" src="'+PH[p.id]+'" alt="">':'')+'<span>'+p.n[L]+'<br><span class="small">'+esc(vr.u)+' · '+inr(vr.p)+'</span></span></span><span><button class="btn" data-fa="'+p.id+'">'+t("add")+'</button> <button class="ic" data-f="'+p.id+'" title="'+t("rem")+'">✕</button></span></div>'}).join("")+'</div>':'<p class="small">'+t("favE")+'</p><p><a href="#range"><button class="btn" id="gos">'+t("shopMore")+'</button></a></p>';
+ }else if(CFG.api){h='<p class="small">'+t("loading")+'</p>'
+ }else{
+  var o=jget("ya_orders",[]);
+  h=o.length?o.map(function(r){var dt=new Date(r.d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});return '<div class="ord"><div class="oh"><b>'+esc(r.id)+'</b><span class="chip">'+t("ordOn")+'</span></div><div class="small">'+dt+(r.w?' · WhatsApp':'')+'</div><ul>'+r.it.map(function(i){return '<li>'+i.q+' × '+esc(pn(i.i))+' ('+esc(i.u)+')</li>'}).join("")+'</ul><div class="oh"><b>'+inr(r.tot)+'</b><button class="btn o" data-ot="'+esc(r.id)+'">'+t("ordTr")+'</button></div></div>'}).join("")+'<p class="small">'+t("ordN")+'</p>':'<p class="small">'+t("ordE")+'</p><p><a href="#range"><button class="btn" id="gos">'+t("shopMore")+'</button></a></p>';
+ }
+ b.innerHTML=h;
+ var g;if(v==="login")cBind();if(v==="edit")eBind();if(v==="ord"&&CFG.api&&USR)cOrders();
+ g=$("lgt");if(g)g.onclick=function(){cOut();closeAc();toast(t("bye"))};
+ g=$("gos");if(g)g.onclick=closeAc;
+}
+document.addEventListener("click",function(e){
+ if(e.target.closest("[data-lg]"))closeAc();
+ var dd=e.target.closest("[data-dd]");
+ if(dd){e.preventDefault();ddClose();var kk=dd.dataset.dd;if(kk==="cust"||kk==="cg"){LM="in";CNOTE="";acOpen("login")}else if(kk==="cs"){LM="up";CNOTE="";acOpen("login")}else if(kk==="adm"||kk==="panel")admOpen();else if(kk==="out")admLogout();return}
+ if(e.target.closest("#lgo")){e.preventDefault();ddClose();if(AT)admLogout();else{cOut();closeAc();toast(t("bye"))}return}
+ if(e.target.closest("#accb")){e.preventDefault();if(USR){ddClose();acOpen("acc")}else ddToggle();return}
+ if(!e.target.closest("#lgdd"))ddClose();
+ var f=e.target.closest("[data-f]");
+ if(f){e.preventDefault();var id=+f.dataset.f,i=FAV.indexOf(id);if(i>-1)FAV.splice(i,1);else FAV.push(id);save("ya_fav",JSON.stringify(FAV));render();return}
+ var a=e.target.closest("[data-ac]");
+ if(a){e.preventDefault();var v=a.dataset.ac;acOpen(v==="acc"&&!USR?"login":v);return}
+ var q=e.target.closest("[data-fa]");
+ if(q){var k=q.dataset.fa+"_0";cart[k]=(cart[k]||0)+1;step=0;closeAc();open_(true);render();return}
+ var o=e.target.closest("[data-ot]");
+ if(o){closeAc();$("oid").value=o.dataset.ot;$("track").scrollIntoView({behavior:"smooth"});return}
+ if(e.target===$("ac"))closeAc();
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){ddClose();closeAc();$("lg").classList.remove("on")}});
+$("acx").onclick=closeAc;
+var sbox=document.querySelector(".mb input[type=search]");
+if(sbox){sbox.addEventListener("input",function(){Q=this.value.toLowerCase().trim();cat="all";render()});sbox.addEventListener("keydown",function(e){if(e.key==="Enter")$("range").scrollIntoView({behavior:"smooth"})})}
+function navActive(){var ids=["top","range","track","about","faq","bulk"],y=window.scrollY+190,cur="top";
+ ids.forEach(function(i){var e=$(i);if(e&&e.getBoundingClientRect().top+window.scrollY<=y)cur=i});
+ if(window.innerHeight+window.scrollY>=document.body.offsetHeight-4)cur="bulk";
+ document.querySelectorAll(".nv a").forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+cur)})}
+window.addEventListener("scroll",function(){navActive();var b=document.querySelector(".bt");if(b)b.classList.toggle("show",window.scrollY>500)},{passive:true});
+function SHELL_INIT(){if(USR&&(!CT||!CFG.api)){USR=null;try{localStorage.removeItem("ya_user")}catch(e){}}
+ if(USR){form.name=USR.name;form.phone=USR.phone;if(USR.addr)form.addr=USR.addr}navActive();
+ if(CT&&CFG.api)cCall({action:"cme",ctok:CT}).then(function(r){if(r&&r.ok){USR=r.user;save("ya_user",JSON.stringify(USR));if(USR.addr&&!form.addr)form.addr=USR.addr;shell()}})}
+/* ---- hero video sequence: milk, paneer, ghee, dal, vermicompost ---- */
+(function(){
+ var hv=$("hv");if(!hv)return;
+ var V=[].slice.call(hv.querySelectorAll("video")),cur=-1,tk=0,paused=false,vis=true;
+ V.forEach(function(v){v.muted=true;v.defaultMuted=true;v.volume=0;v.loop=false;v.controls=false;v.playsInline=true;
+  ["muted","playsinline","webkit-playsinline","disablepictureinpicture","disableremoteplayback"].forEach(function(a){v.setAttribute(a,"")});v.setAttribute("x-webkit-airplay","deny")});
+ function load(v){if(!v.getAttribute("src")){v.preload="auto";v.src=v.dataset.src;v.load()}}
+ function tryPlay(v){try{v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){})}catch(e){}}
+ function show(i){
+  var n=(i+V.length)%V.length,v=V[n],old=cur>=0?V[cur]:null,my=++tk,done=false;
+  cur=n;load(v);
+  try{v.currentTime=0}catch(e){}
+  function reveal(){if(done||my!==tk)return;done=true;
+   V.forEach(function(x){if(x!==v)x.classList.remove("on")});v.classList.add("on");
+   if(old&&old!==v)setTimeout(function(){if(!old.classList.contains("on"))try{old.pause()}catch(e){}},1200)}
+  if(!paused&&vis)tryPlay(v);
+  if(v.readyState>=3&&!v.paused)reveal();
+  else{v.addEventListener("playing",function f(){v.removeEventListener("playing",f);reveal()});setTimeout(reveal,1800)}
+ }
+ V.forEach(function(v,k){
+  v.addEventListener("ended",function(){if(k===cur)show(cur+1)});
+  v.addEventListener("playing",function(){if(k===cur)load(V[(cur+1)%V.length])});
+  v.addEventListener("canplay",function(){if(k===cur&&!paused&&vis&&v.paused&&!v.ended)tryPlay(v)});
+  v.addEventListener("error",function(){if(k===cur)setTimeout(function(){show(cur+1)},800)});
+ });
+ if("IntersectionObserver"in window)new IntersectionObserver(function(en){vis=en[0].isIntersecting;var v=V[cur];if(!v)return;if(vis&&!paused)tryPlay(v);else v.pause()},{threshold:.1}).observe(hv);
+ document.addEventListener("visibilitychange",function(){var v=V[cur];if(!v)return;if(document.hidden)v.pause();else if(vis&&!paused)tryPlay(v)});
+ /* if the browser blocked autoplay (iPhone low-power mode, data saver), start on first touch / scroll / click */
+ ["touchstart","pointerdown","click","keydown","scroll"].forEach(function(ev){window.addEventListener(ev,function(){var v=V[cur];if(v&&!paused&&vis&&v.paused&&!v.ended)tryPlay(v)},{passive:true})});
+ /* watchdog: keep the current video running */
+ setInterval(function(){var v=V[cur];if(v&&!paused&&vis&&!document.hidden&&v.paused&&!v.ended)tryPlay(v)},1500);
+ show(0);
+})();
+/* ---- v8 customer accounts (server-side) ---- */
+var CT=safe("ya_ct")||"",LM="in",CNOTE="",AFTER=0;
+(function(){var N6={
+en:{ddG:"Continue with Google",ddGd:"One tap, no password",ddC:"Continue with Mobile / Email",ddCd:"Login with password or email code",ddS:"Sign up",ddSd:"New here? Create your account",logT:"Welcome",mEdit:"Edit profile",eT:"Edit profile",eAd:"Delivery address",eSv:"Save changes",eOk:"Profile updated.",eBad:"Enter your name and a 10-digit mobile number."},
+hi:{ddG:"Google से जारी रखें",ddGd:"एक टैप, पासवर्ड नहीं",ddC:"मोबाइल / ईमेल से जारी रखें",ddCd:"पासवर्ड या ईमेल कोड से लॉगिन",ddS:"साइन अप",ddSd:"नए हैं? अकाउंट बनाएँ",logT:"स्वागत है",mEdit:"प्रोफ़ाइल बदलें",eT:"प्रोफ़ाइल बदलें",eAd:"डिलीवरी पता",eSv:"सेव करें",eOk:"प्रोफ़ाइल अपडेट हो गई।",eBad:"नाम और 10 अंकों का मोबाइल डालें।"},
+hg:{ddG:"Google se continue karein",ddGd:"Ek tap, password nahi",ddC:"Mobile / Email se continue karein",ddCd:"Password ya email code se login",ddS:"Sign up",ddSd:"Naye hain? Account banayein",logT:"Swagat hai",mEdit:"Profile edit karein",eT:"Profile edit karein",eAd:"Delivery address",eSv:"Save karein",eOk:"Profile update ho gayi.",eBad:"Naam aur 10-digit mobile daalein."}};
+["en","hi","hg"].forEach(function(l){for(var k in N6[l])T[l][k]=N6[l][k]})})();
+function cOut(expired){CT="";USR=null;try{localStorage.removeItem("ya_ct");localStorage.removeItem("ya_user")}catch(e){}form.name="";form.phone="";form.addr="";shell();if(expired){toast(t("sessEnd"));if($("ac").classList.contains("on"))acOpen("login")}}
+function cSet(r){CT=r.ctok;USR=r.user;save("ya_ct",CT);save("ya_user",JSON.stringify(USR));form.name=USR.name;form.phone=USR.phone;if(USR.addr&&!form.addr)form.addr=USR.addr}
+async function cCall(o){var r=await apiPost(o);if(!r)return {ok:false,err:"Server se connect nahi hua. Internet check karein, ya Apps Script deployment ka access Anyone karein."+(LASTERR?" [Detail: "+LASTERR+"]":"")};if(r&&r.err==="expired"&&CT){cOut(1);return{ok:false,handled:1}}return r}
+function cDone(r,isNew){cSet(r);closeAc();shell();toast(t(isNew?"cWelNew":"wel")+", "+USR.name.split(" ")[0]);if(AFTER){AFTER=0;open_(true);drawer()}}
+function eBind(){var m=$("cm");$("esv").onclick=async function(){
+ var nm=$("enm").value.trim(),p=String($("eph").value).replace(/[\s-]/g,"").replace(/^(\+91|91|0)(?=\d{10}$)/,""),ad=$("ead").value.trim();
+ if(!nm||!/^\d{10}$/.test(p)){m.className="msg bad";m.textContent=t("eBad");return}
+ m.className="msg";m.textContent="…";var r=await cCall({action:"cprofile",ctok:CT,name:nm,phone:p,addr:ad});if(r.handled)return;
+ if(r&&r.ok){USR=r.user;save("ya_user",JSON.stringify(USR));form.name=USR.name;form.phone=USR.phone;if(USR.addr)form.addr=USR.addr;shell();m.className="msg ok";m.textContent=t("eOk")}else{m.className="msg bad";m.textContent=aErr(r)}}}
+function cLoginHtml(){
+ if(LM==="ph")return '<h4 style="margin:0 0 4px">'+t("cPhT")+'</h4><p class="small">'+t("cPhP")+'</p><label>'+t("cPh")+'</label><input id="cph" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel"><p><button class="btn" id="cps" style="width:100%">'+t("cSave")+'</button></p><p class="msg" id="cm"></p>';
+ var up=LM==="up",h='<div class="ctabs"><button data-lm="in" class="'+(up?"":"on")+'">'+t("cLogin")+'</button><button data-lm="up" class="'+(up?"on":"")+'">'+t("cSign")+'</button></div><p class="small">'+t("logP2")+'</p>'+(CNOTE?'<p class="warn">'+esc(CNOTE)+'</p>':'');
+ if(CFG.gid&&LM!=="fg")h+='<div id="cgb" style="display:flex;justify-content:center;min-height:44px;margin:6px 0"></div><p class="small" style="text-align:center;margin:4px 0 10px">— '+t("cOr")+' —</p>';
+ if(up)h+='<label>'+t("cName")+'</label><input id="cnm" autocomplete="name"><label>'+t("cPh")+'</label><input id="cph" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel"><label>'+t("cEm")+'</label><input id="cem" type="email" autocomplete="email"><label>'+t("cPw6")+'</label><input id="cp1" type="password" autocomplete="new-password"><p><button class="btn" id="cup" style="width:100%">'+t("cUp")+'</button></p>';
+ else if(LM==="fg")h+='<label>'+t("cId")+'</label><input id="cid" autocomplete="username"><p><button class="btn" id="csd" style="width:100%">'+t("cSend")+'</button></p><div id="cfb"></div><p style="text-align:center"><button class="lnk" id="cbk">'+t("cBack")+'</button></p>';
+ else if(LM==="otp")h+='<div class="ctabs"><button data-lm="in">'+t("cMP")+'</button><button data-lm="otp" class="on">'+t("cMO")+'</button></div><label>'+t("cId")+'</label><input id="cid" autocomplete="username"><p><button class="btn" id="csd" style="width:100%">'+t("cOtp")+'</button></p><div id="cfb"></div>';
+ else h+='<div class="ctabs"><button data-lm="in" class="on">'+t("cMP")+'</button><button data-lm="otp">'+t("cMO")+'</button></div><label>'+t("cId")+'</label><input id="cid" autocomplete="username"><label>'+t("cPw")+'</label><input id="cpw" type="password" autocomplete="current-password"><p><button class="btn" id="cgo" style="width:100%">'+t("cLogin")+'</button></p><p style="text-align:center"><button class="lnk" id="cfg">'+t("cFg")+'</button></p>';
+ return h+'<p class="msg" id="cm"></p><p class="small">🔒 '+t("ordSv")+'</p>'}
+async function cGoogle(resp){var m=$("cm");if(m){m.className="msg";m.textContent="…"}var r=await cCall({action:"cgoogle",cred:resp.credential});if(r.handled)return;
+ if(r&&r.ok){if(r.needPhone){cSet(r);shell();LM="ph";acOpen("login")}else cDone(r)}else if(m){m.className="msg bad";m.textContent=aErr(r)}}
+function cBind(){
+ document.querySelectorAll("[data-lm]").forEach(function(x){x.onclick=function(){LM=x.dataset.lm;CNOTE="";acRender("login")}});
+ var m=$("cm");function bad(s){m.className="msg bad";m.textContent=s}function wait(){m.className="msg";m.textContent="…"}
+ function ph(v){return String(v).replace(/[\s-]/g,"").replace(/^(\+91|91|0)(?=\d{10}$)/,"")}
+ if($("cgb"))loadGsi(function(){google.accounts.id.initialize({client_id:CFG.gid,callback:cGoogle});google.accounts.id.renderButton($("cgb"),{theme:"outline",size:"large",text:"continue_with",shape:"pill",width:280})},function(){});
+ if(LM==="ph"){$("cph").focus();$("cps").onclick=async function(){var p=ph($("cph").value);if(!/^\d{10}$/.test(p)){bad(t("bad"));return}wait();var r=await cCall({action:"cphone",ctok:CT,phone:p});if(r.handled)return;
+   if(r&&r.ok){USR=r.user;save("ya_user",JSON.stringify(USR));form.phone=USR.phone;cDone({ctok:CT,user:USR})}else bad(aErr(r))}}
+ else if(LM==="up"){$("cnm").focus();$("cup").onclick=async function(){var nm=$("cnm").value.trim(),p=ph($("cph").value),em=$("cem").value.trim().toLowerCase(),pw=$("cp1").value;
+   if(!nm||!/^\d{10}$/.test(p)||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)||pw.length<6){bad(t("cBad"));return}
+   wait();var r=await cCall({action:"csignupotp",name:nm,phone:p,email:em,pw:pw});if(r.handled)return;
+   if(!(r&&r.ok)){bad(aErr(r));return}
+   m.className="msg ok";m.textContent=t("cSent");$("cup").style.display="none";
+   ["cnm","cph","cem","cp1"].forEach(function(k){$(k).readOnly=true});
+   var bx=document.createElement("div");bx.innerHTML='<label>'+t("cCode")+'</label><input id="ccd" inputmode="numeric" maxlength="6" autocomplete="one-time-code"><p><button class="btn" id="cvf" style="width:100%">'+t("cUp")+'</button></p>';
+   $("cup").parentNode.parentNode.insertBefore(bx,$("cup").parentNode.nextSibling);$("ccd").focus();
+   $("cvf").onclick=async function(){var cd=$("ccd").value.trim();if(!/^\d{6}$/.test(cd)){bad(t("cBad"));return}wait();
+    var r2=await cCall({action:"csignup",name:nm,phone:p,email:em,pw:pw,code:cd});if(r2.handled)return;if(r2&&r2.ok)cDone(r2,true);else bad(aErr(r2))}}}
+ else if(LM==="otp"){$("cid").focus();$("csd").onclick=async function(){var id=$("cid").value.trim();if(!id){bad(t("cNeed"));return}wait();var r=await cCall({action:"cotp",id:id});if(r.handled)return;
+   if(r&&r.ok){m.className="msg ok";m.textContent=t("cSent");$("csd").textContent="↻";$("cfb").innerHTML='<label>'+t("cLoginC")+'</label><input id="ccd" inputmode="numeric" maxlength="6" autocomplete="one-time-code"><p><button class="btn" id="cov" style="width:100%">'+t("cOtpGo")+'</button></p>';$("ccd").focus();
+    $("cov").onclick=async function(){var cd=$("ccd").value.trim();if(!/^\d{6}$/.test(cd)){bad(t("cBad"));return}wait();var r2=await cCall({action:"cotpv",id:id,code:cd});if(r2.handled)return;if(r2&&r2.ok)cDone(r2);else bad(aErr(r2))}}
+   else bad(aErr(r))}}
+ else if(LM==="fg"){$("cbk").onclick=function(){LM="in";acRender("login")};
+  $("csd").onclick=async function(){var id=$("cid").value.trim();if(!id){bad(t("cNeed"));return}wait();var r=await cCall({action:"cforgot",id:id});if(r.handled)return;
+   if(r&&r.ok){m.className="msg ok";m.textContent=t("cSent");$("cfb").innerHTML='<label>'+t("cCode")+'</label><input id="ccd" inputmode="numeric" maxlength="6" autocomplete="one-time-code"><label>'+t("cNew")+'</label><input id="cnp" type="password" autocomplete="new-password"><p><button class="btn" id="crs" style="width:100%">'+t("cReset")+'</button></p>';
+    $("crs").onclick=async function(){var cd=$("ccd").value.trim(),pw=$("cnp").value;if(!/^\d{6}$/.test(cd)||pw.length<6){bad(t("cBad"));return}wait();
+     var r2=await cCall({action:"creset",id:id,code:cd,pw:pw});if(r2.handled)return;if(r2&&r2.ok){LM="in";CNOTE=t("cDone");acRender("login")}else bad(aErr(r2))}}
+   else bad(aErr(r))}}
+ else{var go=$("cgo");$("cpw").onkeydown=function(e){if(e.key==="Enter")go.click()};$("cid").focus();$("cfg").onclick=function(){LM="fg";CNOTE="";acRender("login")};
+  go.onclick=async function(){var id=$("cid").value.trim(),pw=$("cpw").value;if(!id||!pw){bad(t("cNeed"));return}wait();
+   var r=await cCall({action:"clogin",id:id,pw:pw});if(r.handled)return;if(r&&r.ok)cDone(r);else bad(aErr(r,t("cWrong")))}}}
+async function cOrders(){var b=$("acbody"),r=await cCall({action:"corders",ctok:CT});if(r.handled||AV!=="ord"||!$("ac").classList.contains("on"))return;
+ if(!r||!r.ok){b.innerHTML='<p class="warn">'+esc(aErr(r))+'</p>';return}
+ var o=r.orders||[];
+ b.innerHTML=o.length?o.map(function(x){var dt=new Date(+x.d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}),mt=x.method==="cod"?"COD":x.method==="wa"?"WhatsApp":"Online";
+  return '<div class="ord"><div class="oh"><b>'+esc(x.id)+'</b><span class="chip">'+esc(x.status||"Placed")+'</span></div><div class="small">'+dt+' · '+mt+'</div><ul>'+(x.it||[]).map(function(i){return '<li class="oli">'+oimg(i)+'<span>'+i.q+' × '+esc(i.n)+' ('+esc(i.u)+')</span></li>'}).join("")+'</ul>'+(x.utr?'<div class="pay">UTR: '+esc(x.utr)+'</div>':'')+(x.note?'<div class="pay">'+esc(x.note)+'</div>':'')+'<div class="oh"><b>'+inr(+x.tot)+'</b><button class="btn o" data-ot="'+esc(x.id)+'">'+t("ordTr")+'</button></div></div>'}).join("")+'<p class="small">'+t("ordSv")+'</p>'
+  :'<p class="small">'+t("ordNone")+'</p><p><a href="#range"><button class="btn" id="gos">'+t("shopMore")+'</button></a></p>';
+ var g=$("gos");if(g)g.onclick=closeAc}
+/* ---- v7 admin gateway: Google sign-in -> Operational / Confidential (separate passwords) ---- */
+var AG="",AT="",AL="",AEM="",AST={op:0,cf:0},ALN={op:"Operational Admin",cf:"Confidential Admin"},GSI=0;
+function ddClose(){var d=$("lgdd");if(d)d.classList.remove("on");var b=$("accb");if(b)b.setAttribute("aria-expanded","false")}
+function ddToggle(){var d=$("lgdd");if(!d)return;var on=!d.classList.contains("on");d.classList.toggle("on",on);$("accb").setAttribute("aria-expanded",on?"true":"false")}
+function ddRender(){var d=$("lgdd");if(!d)return;
+ d.innerHTML=AT?'<button data-dd="panel" role="menuitem"><span class="di">🛠️</span><span><b>'+t("ddP")+'</b><small>'+esc(ALN[AL])+'</small></span></button><hr><button data-dd="out" role="menuitem"><span class="di">⏻</span><span><b>'+t("ddO")+'</b><small>'+esc(AEM)+'</small></span></button>'
+ :(CFG.gid?'<button data-dd="cg" role="menuitem"><span class="di">G</span><span><b>'+t("ddG")+'</b><small>'+t("ddGd")+'</small></span></button>':'')+'<button data-dd="cust" role="menuitem"><span class="di">📱</span><span><b>'+t("ddC")+'</b><small>'+t("ddCd")+'</small></span></button><button data-dd="cs" role="menuitem"><span class="di">✨</span><span><b>'+t("ddS")+'</b><small>'+t("ddSd")+'</small></span></button><hr><button data-dd="adm" role="menuitem"><span class="di">🔐</span><span><b>'+t("ddA")+'</b><small>'+t("ddAd")+'</small></span></button>'}
+function admHead(s){$("adt").textContent=s}
+function admX(logout){var xb=$("axc");
+ if(logout){xb.className="ic pw";xb.innerHTML=PWR+"<span>Logout</span>";xb.title="Logout";xb.setAttribute("aria-label","Logout");xb.onclick=function(){admLogout()}}
+ else{xb.className="ic";xb.textContent="✕";xb.title="Close";xb.setAttribute("aria-label","Close");xb.onclick=admClose}}
+function admOpen(){ddClose();$("adm").classList.add("on");if(AT)admView(1);else if(AG)admPick();else admGate()}
+function admLogout(expired){AG="";AT="";AL="";AEM="";AST={op:0,cf:0};try{google.accounts.id.disableAutoSelect()}catch(e){}ddRender();shell();
+ if(expired){$("adm").classList.add("on");admGate("Session expire ho gaya. Dobara login karein.")}else{admClose();toast("Logged out")}}
+async function aCall(o){var r=await apiPost(o);if(!r)return {ok:false,err:"Server se connect nahi hua. Internet check karein, ya Apps Script deployment ka access Anyone karein."+(LASTERR?" [Detail: "+LASTERR+"]":"")};if(r&&r.err==="expired"){admLogout(1);return{ok:false,handled:1}}return r}
+function aErr(r,fb){return r?(r.err||fb||"Failed"):"Server se connect nahi hua"+(LASTERR?" [Detail: "+LASTERR+"]":"")}
+function loadGsi(ok,bad){if(window.google&&google.accounts&&google.accounts.id)return ok();if(GSI)return GSI.push([ok,bad]);GSI=[[ok,bad]];var s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.async=true;
+ s.onload=function(){var q=GSI;GSI=0;q.forEach(function(f){f[0]()})};s.onerror=function(){var q=GSI;GSI=0;q.forEach(function(f){f[1]()})};document.head.appendChild(s)}
+function admGate(note,ok){admHead("Admin Login");admX(0);var b=$("ab");
+ b.innerHTML='<div class="alc"><div class="alk">🔐</div><h4>Admin Login</h4><p class="small">Admin email aur password daalein. Uske baad Operational ya Confidential section chunein, jinke password alag-alag hain.</p></div><div class="pwf"><label>Admin email</label><input id="gem" type="email" autocomplete="username" value="'+esc(AEM)+'"><label>Password</label><input id="gpw" type="password" autocomplete="current-password"><p><button class="btn" id="glog" style="width:100%">Login</button></p><p style="text-align:center"><button class="lnk" id="gfg">First time setup / Forgot password?</button></p><p class="msg '+(ok?"ok":"bad")+'" id="am">'+esc(note||"")+'</p></div>';
+ if(!CFG.api){$("am").className="msg bad";$("am").textContent="CFG.api set nahi hai. Admin login ke liye Apps Script backend jodna zaroori hai.";return}
+ var pw=$("gpw");pw.onkeydown=function(e){if(e.key==="Enter")$("glog").click()};$("gfg").onclick=admGateForgot;
+ $("glog").onclick=async function(){var m=$("am"),em=$("gem").value.trim();if(!em||!pw.value){m.className="msg bad";m.textContent="Email aur password dono daalein.";return}m.className="msg";m.textContent="Checking…";
+  var r=await aCall({action:"agate",email:em,pw:pw.value});if(r.handled)return;
+  if(r&&r.ok){AG=r.gs;AEM=r.email;AST=r.st||{op:0,cf:0};admPick()}else{m.className="msg bad";var ee=aErr(r,"Email ya password galat hai.");m.textContent=ee+(/^Server se connect|^Bahut zyada/.test(ee)?"":" Pehli baar hai ya password yaad nahi? Neeche \"First time setup / Forgot password?\" dabayein.")}}}
+function admGateForgot(){admHead("Admin login password");var b=$("ab");
+ b.innerHTML='<div class="pwf"><h4>Admin login password</h4><p class="small">Pehli baar setup ya password bhool gaye: admin email daalein. Agar email sahi hai to us par 6-digit code aayega.</p><label>Admin email</label><input id="gem" type="email" autocomplete="username"><p><button class="btn" id="gfs" style="width:100%">Email me the code</button></p><div id="gfb"></div><p class="msg" id="am"></p><p style="text-align:center"><button class="lnk" id="abk">← Back</button></p></div>';
+ $("abk").onclick=function(){admGate()};
+ $("gfs").onclick=async function(){var m=$("am"),em=$("gem").value.trim();if(!em){m.className="msg bad";m.textContent="Admin email daalein.";return}m.className="msg";m.textContent="Sending… (pehli baar 10-15 second lag sakte hain)";
+  var r=await aCall({action:"gforgot",email:em});if(r.handled)return;
+  if(r&&r.ok){m.className="msg ok";m.textContent="Agar email sahi hai to code bhej diya gaya hai. Inbox (aur spam) dekhein.";$("gfs").textContent="Resend code";
+   $("gfb").innerHTML='<label>6-digit code</label><input id="grc" inputmode="numeric" maxlength="6" autocomplete="one-time-code"><label>New password (kam se kam 8 characters)</label><input id="grn" type="password" autocomplete="new-password"><label>Confirm new password</label><input id="grm" type="password" autocomplete="new-password"><p><button class="btn" id="grb" style="width:100%">Set password</button></p>';
+   $("grb").onclick=async function(){var p1=$("grn").value,p2=$("grm").value;m.className="msg bad";
+    if(!/^\d{6}$/.test($("grc").value.trim())){m.textContent="6-digit code daalein.";return}if(p1.length<8){m.textContent="Password kam se kam 8 characters ka rakhein.";return}if(p1!==p2){m.textContent="Dono password match nahi karte.";return}
+    m.className="msg";m.textContent="Saving…";var r2=await aCall({action:"greset",email:em,code:$("grc").value.trim(),pw:p1});if(r2.handled)return;
+    if(r2&&r2.ok)admGate("Admin login password set ho gaya. Ab login karein.",1);else{m.className="msg bad";m.textContent=aErr(r2,"Code galat ya expire ho gaya.")}}}
+  else{m.className="msg bad";m.textContent=aErr(r)}}}
+function admPick(){admHead("Admin Login");admX(0);var b=$("ab");
+ b.innerHTML='<div class="ais"><span>✅ Signed in: <b>'+esc(AEM)+'</b></span><button class="lnk" id="agx">Sign out</button></div><p style="margin:6px 0 0"><b>Kaunsa section kholna hai? (har ek ka alag password)</b></p><div class="apk"><button class="apc op" data-lv="op"><i>🛠️</i><b>Operational Admin</b><span>Prices, orders & status, awards</span></button><button class="apc cf" data-lv="cf"><i>🔒</i><b>Confidential Admin</b><span>Mobile, email, WhatsApp, FSSAI, address, bank & UPI details</span></button></div><p class="small">Dono ke password alag-alag hain.</p>';
+ $("agx").onclick=function(){AG="";AEM="";admGate()};
+ b.querySelectorAll("[data-lv]").forEach(function(x){x.onclick=function(){admPw(x.dataset.lv,"")}})}
+function admPw(lv,note,ok){admHead(ALN[lv]);admX(0);var b=$("ab"),has=AST[lv];
+ b.innerHTML='<div class="pwf"><h4>'+(has?ALN[lv]+" password":"Create "+ALN[lv]+" password")+'</h4><p class="small" style="text-align:center">'+esc(AEM)+'</p>'+
+ (has?'<label>Password</label><input id="apw" type="password" autocomplete="current-password"><p><button class="btn" id="alog" style="width:100%">Login</button></p><p style="text-align:center"><button class="lnk" id="afg">Forgot password?</button></p>'
+ :'<p class="small">Pehli baar hai: ye password sirf is admin type ke liye hoga.</p><label>New password (kam se kam 8 characters)</label><input id="apn" type="password" autocomplete="new-password"><label>Confirm password</label><input id="apc" type="password" autocomplete="new-password"><p><button class="btn" id="aset" style="width:100%">Create &amp; Login</button></p>')+
+ '<p class="msg '+(ok?"ok":"bad")+'" id="am">'+esc(note||"")+'</p><p style="text-align:center"><button class="lnk" id="abk">← Back</button></p></div>';
+ $("abk").onclick=admPick;
+ if(has){var pw=$("apw");pw.focus();pw.onkeydown=function(e){if(e.key==="Enter")$("alog").click()};
+  $("afg").onclick=function(){admForgot(lv)};
+  $("alog").onclick=async function(){var m=$("am");m.className="msg";m.textContent="Checking…";var r=await aCall({action:"alogin",gs:AG,lv:lv,pw:pw.value});if(r.handled)return;
+   if(r&&r.ok){AT=r.tok;AL=lv;ddRender();shell();admView(1)}else{m.className="msg bad";m.textContent=aErr(r,"Wrong password")}}}
+ else{$("aset").onclick=async function(){var m=$("am"),p1=$("apn").value,p2=$("apc").value;m.className="msg bad";
+   if(p1.length<8){m.textContent="Password kam se kam 8 characters ka rakhein.";return}if(p1!==p2){m.textContent="Dono password match nahi karte.";return}
+   m.className="msg";m.textContent="Saving…";var r=await aCall({action:"setpw",gs:AG,lv:lv,pw:p1});if(r.handled)return;
+   if(r&&r.ok){AST[lv]=1;AT=r.tok;AL=lv;ddRender();shell();admView(1)}else{m.className="msg bad";m.textContent=aErr(r)}}}}
+function admForgot(lv){admHead("Reset password");var b=$("ab");
+ b.innerHTML='<div class="pwf"><h4>Forgot '+ALN[lv]+' password</h4><p class="small">Hum ek 6-digit code <b>'+esc(AEM)+'</b> par email karenge. Code 10 minute tak chalega.</p><p><button class="btn" id="afs" style="width:100%">Email me the code</button></p><div id="afb"></div><p class="msg" id="am"></p><p style="text-align:center"><button class="lnk" id="abk">← Back</button></p></div>';
+ $("abk").onclick=function(){admPw(lv,"")};
+ $("afs").onclick=async function(){var m=$("am");m.className="msg";m.textContent="Sending… (pehli baar 10-15 second lag sakte hain)";var r=await aCall({action:"forgot",gs:AG,lv:lv});if(r.handled)return;
+  if(r&&r.ok){m.className="msg ok";m.textContent="Code bhej diya gaya hai. Apna inbox (aur spam) dekhein.";$("afs").textContent="Resend code";
+   $("afb").innerHTML='<label>6-digit code</label><input id="arc" inputmode="numeric" maxlength="6" autocomplete="one-time-code"><label>New password (kam se kam 8 characters)</label><input id="arn" type="password" autocomplete="new-password"><label>Confirm new password</label><input id="arm" type="password" autocomplete="new-password"><p><button class="btn" id="arb" style="width:100%">Reset password</button></p>';
+   $("arb").onclick=async function(){var p1=$("arn").value,p2=$("arm").value;m.className="msg bad";
+    if(!/^\d{6}$/.test($("arc").value.trim())){m.textContent="6-digit code daalein.";return}if(p1.length<8){m.textContent="Password kam se kam 8 characters ka rakhein.";return}if(p1!==p2){m.textContent="Dono password match nahi karte.";return}
+    m.className="msg";m.textContent="Resetting…";var r2=await aCall({action:"reset",gs:AG,lv:lv,code:$("arc").value.trim(),pw:p1});if(r2.handled)return;
+    if(r2&&r2.ok){AST[lv]=1;admPw(lv,"Password badal gaya. Ab naye password se login karein.",1)}else{m.className="msg bad";m.textContent=aErr(r2,"Code galat ya expire ho gaya.")}}}
+  else{m.className="msg bad";m.textContent=aErr(r)}}}
+async function admChPw(){var m=$("am"),o=$("spo").value,p1=$("spn").value,p2=$("spc").value;m.className="msg bad";
+ if(!o){m.textContent="Current password daalein.";return}if(p1.length<8){m.textContent="Naya password kam se kam 8 characters ka rakhein.";return}if(p1!==p2){m.textContent="Dono naye password match nahi karte.";return}
+ m.className="msg";m.textContent="Saving…";var r=await aCall({action:"chpw",tok:AT,lv:AL,target:$("spt").value,old:o,pw:p1});if(r.handled)return;
+ if(r&&r.ok){m.className="msg ok";m.textContent="Password badal gaya.";$("spo").value=$("spn").value=$("spc").value=""}else{m.className="msg bad";m.textContent=aErr(r,"Current password galat hai.")}}
+function admClose(){$("adm").classList.remove("on")}
+async function admSave(){collect();PD.ts=Date.now();applyPD();applyCfg();render();var m=$("am");m.textContent="Saving…";
+ try{localStorage.setItem("ya_pd_cache",JSON.stringify(PD))}catch(e){}
+ if(CFG.api){var r=await apiPost({action:"saveConfig",tok:AT,lv:AL,pd:PD});if(r&&r.err==="expired"){admLogout(1);return}m.className="msg "+(r&&r.ok?"ok":"bad");m.textContent=r&&r.ok?"Saved. Ye ab sabhi customers ko (1 minute ke andar) dikhega.":"Save nahi hua: "+((r&&r.err)||"server se jawab nahi aaya");return}
+ try{var a=await claude.use("artifact");if(!a)throw 0;var h=await(await fetch(location.href.split("#")[0],{cache:"no-store"})).text();
+  h=h.replace(/(<script id="pd" type="application\/json">)[\s\S]*?(<\/script>)/,function(x,a1,a2){return a1+JSON.stringify(PD)+a2});await a.publish(h);m.textContent="Saved for all customers."}
+ catch(e){m.innerHTML='Sirf is device par update hua (CFG.api set nahi hai). Sabke liye sync karne ke liye Apps Script URL jodein. <button class="btn o" id="acp">Copy details</button> then paste it inside the &lt;script id="pd"&gt; block of index.html.';var c=$("acp");if(c)c.onclick=function(){try{navigator.clipboard.writeText(JSON.stringify(PD))}catch(e){}}}}
+$("axc").onclick=admClose;
+SHELL_INIT();
+render();
+syncRemote();setInterval(syncRemote,60000);document.addEventListener("visibilitychange",function(){if(!document.hidden)syncRemote()});
+</script>
+</body>
+</html>
