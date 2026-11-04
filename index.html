@@ -231,6 +231,59 @@ li.oli{list-style:none;display:flex;align-items:center;gap:10px;margin:6px 0}ul:
 .slb{position:fixed;inset:0;z-index:200;background:#000d;display:grid;place-items:center;padding:14px;cursor:zoom-out}.slb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;background:#fff}.slb span{position:fixed;top:14px;right:18px;color:#fff;font-size:28px}
 .oi{width:64px;height:64px}
 #adm .alc .alk{filter:none}
+
+/* ===== v15: payment page, payment proof (UTR + slip) ===== */
+.dr{transition:transform .25s,width .25s}.dr.wide{width:min(640px,100%)}
+.pcard{border:2px solid var(--g);border-radius:16px;padding:16px;margin:14px 0;background:var(--card)}
+.pcard .pct{font-weight:700;font-size:17px;color:var(--g);margin-bottom:6px}
+.pcard input#fut{width:100%;box-sizing:border-box;font-size:18px;letter-spacing:1px;padding:13px 14px;border:2px solid var(--line);border-radius:12px;font-weight:600}
+.pcard input#fut:focus{border-color:var(--g);outline:0}
+.upl{display:flex;flex-direction:column;align-items:center;gap:4px;border:2px dashed var(--g);border-radius:14px;padding:22px 12px;margin-top:6px;background:var(--g2);color:var(--g);cursor:pointer;text-align:center}
+.upl span{font-size:34px;line-height:1}.upl b{font-size:16px}.upl small{color:var(--mute)}
+.upl:hover{filter:brightness(.97)}
+.pcard .slp{display:block;margin:12px auto 4px;max-width:100%;max-height:420px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.pcard .ok{text-align:center;color:var(--g);font-weight:600;font-size:14px}
+.pp{border:1px solid var(--line);border-left:5px solid var(--g);border-radius:12px;background:var(--card);padding:12px;margin:10px 0}
+.pp .pph{font-weight:700;color:var(--g);margin-bottom:8px}
+.pp .utr{display:flex;flex-direction:column;gap:2px;background:var(--g2);border-radius:10px;padding:10px 12px;margin-bottom:10px}
+.pp .utr small{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+.pp .utr b{font-size:20px;letter-spacing:1.2px;color:var(--g);word-break:break-all;font-family:ui-monospace,Menlo,Consolas,monospace}
+.pp a.slk{display:block}
+.pp .slp{display:block;width:100%;max-width:420px;max-height:520px;object-fit:contain;margin:0 auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+.pp .small{text-align:center;margin-top:4px}
+.slmiss{display:block;padding:18px;text-align:center;border:1px dashed var(--line);border-radius:10px;color:var(--mute)}
+
+/* ===== v16: order status colours ===== */
+:root{--sw:#d99a00;--sw2:#fff3cf;--sw3:#7a5200;--sl:#6fbf73;--sl2:#e6f6e4;--sl3:#1c6b2e;--sg:#1f8a3b;--sg2:#d3f0d8;--sg3:#0f5a22;--sd:#0b6b2a;--sd2:#bfe9c8;--sd3:#073d17;--sx:#d32f2f;--sx2:#fde1e1;--sx3:#8a1212}
+.st{display:inline-flex;align-items:center;gap:7px;border-radius:99px;padding:4px 12px 4px 9px;font-size:13px;font-weight:700;line-height:1.2}
+.st i{width:10px;height:10px;border-radius:50%;flex:none;background:currentColor}
+.st-w{background:var(--sw2);color:var(--sw3)}.st-w i{background:var(--sw)}
+.st-l{background:var(--sl2);color:var(--sl3)}.st-l i{background:var(--sl)}
+.st-g{background:var(--sg2);color:var(--sg3)}.st-g i{background:var(--sg)}
+.st-d{background:var(--sd2);color:var(--sd3)}.st-d i{background:var(--sd)}
+.st-x{background:var(--sx2);color:var(--sx3)}.st-x i{background:var(--sx)}
+.st-w i,.st-l i,.st-g i{animation:stp 1.5s infinite}
+@keyframes stp{0%{box-shadow:0 0 0 0 currentColor}70%{box-shadow:0 0 0 6px transparent}100%{box-shadow:0 0 0 0 transparent}}
+[data-theme="dark"] .st-w{background:#3a2e08;color:#ffd666}[data-theme="dark"] .st-l{background:#1e3320;color:#a6e3a9}[data-theme="dark"] .st-g{background:#16401f;color:#8be09a}[data-theme="dark"] .st-d{background:#0f4a22;color:#b6f2c1}[data-theme="dark"] .st-x{background:#431818;color:#ff9b9b}
+#adm .oa,.ord{border-left:5px solid var(--line)}
+.k-w{border-left-color:var(--sw)!important}.k-l{border-left-color:var(--sl)!important}.k-g{border-left-color:var(--sg)!important}.k-d{border-left-color:var(--sd)!important}.k-x{border-left-color:var(--sx)!important}
+.route.k-w div.d::before,.route.k-w div.d::after{background:var(--sw)}
+.route.k-l div.d::before,.route.k-l div.d::after{background:var(--sl)}
+.route.k-g div.d::before,.route.k-g div.d::after{background:var(--sg)}
+.route.k-d div.d::before,.route.k-d div.d::after{background:var(--sd)}
+.route.k-x div::before,.route.k-x div::after{background:var(--sx);opacity:.35}.route.k-x div:first-child::before{opacity:1}.route.k-x{--stx:1}
+
+/* ===== v17: full-page payment step ===== */
+.dr.wide{width:100%;padding-left:0;padding-right:0;overflow-y:auto;overflow-x:hidden}
+.dr.wide>*{width:100%;max-width:1040px;margin-left:auto;margin-right:auto;box-sizing:border-box;padding-left:18px;padding-right:18px}
+.dr.wide .b{flex:none;overflow:visible}
+.dr.wide .pm{max-width:520px;margin-left:auto;margin-right:auto}
+.pgrid{display:grid;grid-template-columns:1fr 1.1fr;gap:20px;align-items:start;margin-top:10px}
+.pgrid .pcard{margin-top:0}
+.pgrid #qr{display:flex;justify-content:center;margin:8px 0}
+.pgrid #qr img{width:min(260px,100%)!important;height:auto!important}
+@media(max-width:820px){.pgrid{grid-template-columns:1fr}}
+.dr.wide #df{max-width:640px;padding-bottom:24px}
 </style>
 </head>
 <body>
@@ -397,6 +450,7 @@ function render(){
 function count(){return Object.keys(cart).reduce(function(a,k){return a+cart[k]},0)}
 function sub(){return Object.keys(cart).reduce(function(a,k){return a+cart[k]*item(k).v.p},0)}
 function drawer(){
+ try{$("dr").classList.toggle("wide",step===2&&count()>0)}catch(e){}
  $("cc").textContent=count();$("dt").textContent=t("cart");
  $("sp").innerHTML=[t("s_cart"),t("s_addr"),t("s_pay")].map(function(s,i){return '<span class="'+(i===step?"on":"")+'">'+(i+1)+'. '+s+'</span>'}).join("");
  var b=$("db"),f=$("df"),s=sub(),sh=s?CFG.ship:0,tot=s+sh;
@@ -415,7 +469,7 @@ function drawer(){
   anyp=qi||hu||pl||bank.length,pm=form.pay==="cod"?"cod":"online",
   hh='<div class="pm"><button class="pmb'+(pm==="online"?" on":"")+'" data-pm="online">\ud83d\udcb3 '+t("pmO")+'</button><button class="pmb'+(pm==="cod"?" on":"")+'" data-pm="cod">\ud83d\udcb5 '+t("pmC")+'</button></div><h3 style="text-align:center;margin:0">'+inr(tot)+'</h3>';
   if(pm==="cod"){hh+='<p class="small" style="text-align:center">'+t("codN")+'</p>'}
-  else{hh+=(qi||hu?'<p class="small" style="text-align:center">'+t("payScan")+'</p><div id="qr">'+(qi?'<img src="'+esc(qi)+'" alt="QR" style="width:190px;height:190px;object-fit:contain">':'')+'</div>':'')+(btn?'<p style="text-align:center">'+btn+'</p>':'')+(bank.length?'<div class="card" style="margin:10px 0"><b>'+t("bk")+'</b>'+bank.map(function(r){return '<div class="it"><span>'+t(r[0])+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+'</div>':'')+(anyp?'':'<p class="small">'+t("nop")+'</p>')+'<p class="small">'+t("payFirst")+'</p><label>'+t("utrL")+'</label><input id="fut" placeholder="'+t("utrP")+'" value="'+esc(form.utr)+'" autocomplete="off"><label>'+t("slipL")+'</label><input type="file" id="fsl" accept="image/*">'+(form.slip?'<img class="slp" src="'+form.slip+'" alt=""><span class="small">\u2705 '+t("slipOk")+'</span>':'')}
+  else{hh+='<div class="pgrid"><div class="pl">'+(qi||hu?'<p class="small" style="text-align:center">'+t("payScan")+'</p><div id="qr">'+(qi?'<img src="'+esc(qi)+'" alt="QR" style="width:190px;height:190px;object-fit:contain">':'')+'</div>':'')+(btn?'<p style="text-align:center">'+btn+'</p>':'')+(bank.length?'<div class="card" style="margin:10px 0"><b>'+t("bk")+'</b>'+bank.map(function(r){return '<div class="it"><span>'+t(r[0])+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+'</div>':'')+(anyp?'':'<p class="small">'+t("nop")+'</p>')+'</div><div class="pr"><div class="pcard"><div class="pct">'+(UPT[L]||UPT.en).h+'</div><p class="small" style="margin:0 0 10px">'+t("payFirst")+'</p><label><b>1.</b> '+t("utrL")+'</label><input id="fut" placeholder="'+t("utrP")+'" value="'+esc(form.utr)+'" autocomplete="off"><label style="margin-top:12px;display:block"><b>2.</b> '+t("slipL")+'</label><label class="upl" for="fsl"><span>'+(form.slip?'\ud83d\udd04':'\ud83d\udce4')+'</span><b>'+(form.slip?(UPT[L]||UPT.en).c:(UPT[L]||UPT.en).u)+'</b><small>JPG / PNG</small></label><input type="file" id="fsl" accept="image/*" hidden>'+(form.slip?'<img class="slp" src="'+form.slip+'" alt=""><div class="ok">\u2705 '+t("slipOk")+'</div>':'')+'</div></div></div>'}
   b.innerHTML=hh;
   if(pm==="online"&&hu&&!qi){try{new QRCode($("qr"),{text:link,width:170,height:170})}catch(e){$("qr").textContent=link}}
   f.innerHTML=sums(s,sh,tot)+'<button class="btn" style="width:100%" data-s="3"'+(busy?' disabled':'')+'>'+(busy?t("sending"):(pm==="cod"?t("placeC"):t("placeO")))+'</button> <button class="btn wa" style="width:100%;margin-top:8px" data-s="4">'+t("wa")+'</button> <button class="btn o" style="width:100%;margin-top:8px" data-s="1">'+t("back")+'</button>';
@@ -428,7 +482,8 @@ function grab(){var a=$("fn");if(a){form.name=a.value;form.phone=$("fp").value;f
 var order=null;
 function tracker(){
  var n=order?order.stage:-1;
- $("tstat").textContent=order?order.id+" · "+(order.label||t("st")[n]):"—";
+ var lb=order?(order.label||t("st")[n]):"",k=stKind(lb);$("tstat").innerHTML=order?'<b>'+esc(order.id)+'</b> &nbsp;'+stChip(lb):"—";$("route").className="route k-"+k;
+ if(k==="w")n=0;
  $("route").innerHTML=t("st").map(function(s,i){return '<div class="'+(i<=n?"d":"")+'">'+s+'</div>'}).join("");
 }
 function open_(v){$("dr").classList.toggle("on",v);$("ov").classList.toggle("on",v)}
@@ -572,7 +627,7 @@ async function placeOrder(mode){
   it:Object.keys(cart).map(function(k){var it=item(k);return{i:it.p.id,n:it.p.n.en,u:it.v.u,q:cart[k],pr:it.v.p}})};
  if(CFG.api){busy=true;drawer();var r=await cCall({action:"order",order:o,ctok:CT});busy=false;if(r&&r.handled){if(w)w.close();return}if(!r||!r.ok){if(w)w.close();alert(r&&r.err&&r.err!=="expired"?r.err:t("fail"));drawer();return}
   cCall({action:"corders",ctok:CT}).then(function(v){if(v&&v.ok&&!(v.orders||[]).some(function(x){return x.id===id}))alert("Dhyan dein: order "+id+" server ki Orders sheet mein save hota nahi dikh raha. Apps Script ka Code.gs aur Executions check karna hoga.")})}
- saveOrd(o);
+ saveOrd(o);if(method==="online"&&o.slip)thumbSlip(o.id,o.slip);
  if(w){var tx="Yugal Agro order "+id+"%0A"+o.it.map(function(i){return i.q+" x "+i.n+" ("+i.u+")"}).join("%0A")+"%0ATotal: "+inr(o.tot)+"%0A"+o.name+", "+o.phone+", "+o.addr;w.location.href="https://wa.me/"+CFG.wa+"?text="+tx}
  var msg=method==="online"?t("doneU"):method==="cod"?t("doneC"):"";
  order={id:id,stage:0,label:o.status};cart={};step=0;form.utr="";form.slip="";$("oid").value=id;
@@ -585,8 +640,8 @@ var STS=["Payment verification pending","Placed","Payment verified","Packed","Sh
 function ordCard(o){var mt=o.method==="cod"?'<span class="chip cod">COD</span>':o.method==="wa"?'<span class="chip">WhatsApp</span>':'<span class="chip on2">Online</span>',
  big=o.slipId?"https://drive.google.com/file/d/"+encodeURIComponent(o.slipId)+"/view":o.slip||"",th=o.slipId?"https://drive.google.com/thumbnail?id="+encodeURIComponent(o.slipId)+"&sz=w1200":o.slip||"",
  opts=STS.slice();if(opts.indexOf(o.status)<0)opts.unshift(o.status||"Placed");
- return '<div class="oa" data-oid="'+esc(o.id)+'"><div class="oh"><b>'+esc(o.id)+'</b><span>'+mt+'</span></div><div class="small">'+new Date(o.d).toLocaleString("en-IN")+'</div><div><b>'+esc(o.name)+'</b> · <a href="tel:'+esc(o.phone)+'">'+esc(o.phone)+'</a>'+(o.email?' · '+esc(o.email):'')+'<br>'+esc(o.addr)+'</div><ul>'+(o.it||[]).map(function(i){return '<li class="oli">'+oimg(i)+'<span>'+i.q+' × '+esc(i.n)+' ('+esc(i.u)+') — '+inr(i.pr*i.q)+'</span></li>'}).join("")+'</ul><div><b>Total: '+inr(o.tot)+'</b> <span class="small">(delivery '+inr(o.ship||0)+')</span></div>'
- +(o.utr?'<div>UTR: <b>'+esc(o.utr)+'</b></div>':'')+(th?'<a class="slk" href="'+esc(big)+'" target="_blank" rel="noopener"><img class="slp" src="'+esc(th)+'" alt="Payment slip"></a>':'')
+ return '<div class="oa k-'+stKind(o.status)+'" data-oid="'+esc(o.id)+'"><div class="oh"><b>'+esc(o.id)+'</b><span>'+mt+'</span></div><div style="margin:6px 0">'+stChip(o.status)+'</div><div class="small">'+new Date(o.d).toLocaleString("en-IN")+'</div><div><b>'+esc(o.name)+'</b> · <a href="tel:'+esc(o.phone)+'">'+esc(o.phone)+'</a>'+(o.email?' · '+esc(o.email):'')+'<br>'+esc(o.addr)+'</div><ul>'+(o.it||[]).map(function(i){return '<li class="oli">'+oimg(i)+'<span>'+i.q+' × '+esc(i.n)+' ('+esc(i.u)+') — '+inr(i.pr*i.q)+'</span></li>'}).join("")+'</ul><div><b>Total: '+inr(o.tot)+'</b> <span class="small">(delivery '+inr(o.ship||0)+')</span></div>'
+ +ppBox(o)
  +'<div class="row"><select class="os">'+opts.map(function(s){return '<option'+(s===o.status?' selected':'')+'>'+esc(s)+'</option>'}).join("")+'</select><input class="nt" placeholder="Note (optional)" value="'+esc(o.note||"")+'"><button class="btn" data-os="1">Update</button></div></div>'}
 async function ordAdmin(){var box=$("ol");if(!box)return;
  var r=await apiPost({action:"orders",tok:AT,lv:AL});if(r&&r.err==="expired"){admLogout(1);return}
@@ -595,7 +650,7 @@ async function ordAdmin(){var box=$("ol");if(!box)return;
  box.innerHTML='<input id="osr" placeholder="Search: order ID, naam, mobile, email, UTR" style="width:100%;box-sizing:border-box;margin-bottom:8px"><p class="small" id="ocn"></p><div id="ocs"></div>';
  function draw(){var q=$("osr").value.toLowerCase().trim(),l=list.filter(function(o){return !q||[o.id,o.name,o.phone,o.email,o.utr].join(" ").toLowerCase().indexOf(q)>-1});
   $("ocn").textContent=l.length+" / "+list.length+" orders";$("ocs").innerHTML=l.length?l.map(ordCard).join(""):"<p>Koi order nahi mila.</p>";
-  $("ocs").querySelectorAll("a.slk").forEach(function(a){a.onclick=function(e){e.preventDefault();var im=a.querySelector("img"),u=im.src.replace("sz=w1200","sz=w2000"),o=document.createElement("div");o.className="slb";o.innerHTML='<img src="'+u+'" alt="Payment slip"><span>✕</span>';o.onclick=function(){o.remove()};document.body.appendChild(o)}});
+  $("ocs").querySelectorAll("a.slk").forEach(function(a){a.onclick=function(e){var im=a.querySelector("img");if(!im)return;e.preventDefault();slb(im.src.replace("sz=w1200","sz=w2000"))}});
    $("ocs").querySelectorAll("[data-os]").forEach(function(bt){bt.onclick=async function(){var c=bt.closest(".oa"),id=c.dataset.oid,st=c.querySelector(".os").value,nt=c.querySelector(".nt").value;bt.textContent="…";
    var r2=await apiPost({action:"setStatus",tok:AT,lv:AL,id:id,status:st,note:nt});if(r2&&r2.err==="expired"){admLogout(1);return}
    if(r2&&r2.ok)list.forEach(function(x){if(x.id===id){x.status=st;x.note=nt}});if(!(r2&&r2.ok))alert("Status update fail hua: "+aErr(r2,"Failed"));bt.textContent=r2&&r2.ok?"Updated ✓":"Failed";setTimeout(function(){bt.textContent="Update"},1800)}})}
@@ -771,7 +826,7 @@ async function cOrders(){var b=$("acbody"),r=await cCall({action:"corders",ctok:
  if(!r||!r.ok){b.innerHTML='<p class="warn">'+esc(aErr(r))+'</p>';return}
  var o=r.orders||[];
  b.innerHTML=o.length?o.map(function(x){var dt=new Date(+x.d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}),mt=x.method==="cod"?"COD":x.method==="wa"?"WhatsApp":"Online";
-  return '<div class="ord"><div class="oh"><b>'+esc(x.id)+'</b><span class="chip">'+esc(x.status||"Placed")+'</span></div><div class="small">'+dt+' · '+mt+'</div><ul>'+(x.it||[]).map(function(i){return '<li class="oli">'+oimg(i)+'<span>'+i.q+' × '+esc(i.n)+' ('+esc(i.u)+')</span></li>'}).join("")+'</ul>'+(x.utr?'<div class="pay">UTR: '+esc(x.utr)+'</div>':'')+(x.note?'<div class="pay">'+esc(x.note)+'</div>':'')+'<div class="oh"><b>'+inr(+x.tot)+'</b><button class="btn o" data-ot="'+esc(x.id)+'">'+t("ordTr")+'</button></div></div>'}).join("")+'<p class="small">'+t("ordSv")+'</p>'
+  return '<div class="ord k-'+stKind(x.status)+'"><div class="oh"><b>'+esc(x.id)+'</b>'+stChip(x.status)+'</div><div class="small">'+dt+' · '+mt+'</div><ul>'+(x.it||[]).map(function(i){return '<li class="oli">'+oimg(i)+'<span>'+i.q+' × '+esc(i.n)+' ('+esc(i.u)+')</span></li>'}).join("")+'</ul>'+ppBox(x)+(x.note?'<div class="pay">'+esc(x.note)+'</div>':'')+'<div class="oh"><b>'+inr(+x.tot)+'</b><button class="btn o" data-ot="'+esc(x.id)+'">'+t("ordTr")+'</button></div></div>'}).join("")+'<p class="small">'+t("ordSv")+'</p>'
   :'<p class="small">'+t("ordNone")+'</p><p><a href="#range"><button class="btn" id="gos">'+t("shopMore")+'</button></a></p>';
  var g=$("gos");if(g)g.onclick=closeAc}
 /* ---- v7 admin gateway: Google sign-in -> Operational / Confidential (separate passwords) ---- */
@@ -852,6 +907,22 @@ async function admSave(){collect();PD.ts=Date.now();applyPD();applyCfg();render(
   h=h.replace(/(<script id="pd" type="application\/json">)[\s\S]*?(<\/script>)/,function(x,a1,a2){return a1+JSON.stringify(PD)+a2});await a.publish(h);m.textContent="Saved for all customers."}
  catch(e){m.innerHTML='Sirf is device par update hua (CFG.api set nahi hai). Sabke liye sync karne ke liye Apps Script URL jodein. <button class="btn o" id="acp">Copy details</button> then paste it inside the &lt;script id="pd"&gt; block of index.html.';var c=$("acp");if(c)c.onclick=function(){try{navigator.clipboard.writeText(JSON.stringify(PD))}catch(e){}}}}
 $("axc").onclick=admClose;
+
+/* ---- v15 helpers: payment proof box, slip fallback, lightbox, local slip cache ---- */
+var UPT={en:{h:"\u2705 After paying, fill these 2 things",u:"Tap to upload payment screenshot",c:"Change screenshot"},hi:{h:"\u2705 भुगतान के बाद ये 2 चीज़ें भरें",u:"पेमेंट स्क्रीनशॉट अपलोड करने के लिए टैप करें",c:"स्क्रीनशॉट बदलें"},hg:{h:"\u2705 Payment ke baad ye 2 cheezein bharein",u:"Payment screenshot upload karne ke liye tap karein",c:"Screenshot badlein"}};
+function slipUrls(o){var id=o.slipId;if(id){id=encodeURIComponent(id);return["https://drive.google.com/thumbnail?id="+id+"&sz=w1200","https://lh3.googleusercontent.com/d/"+id+"=w1200","https://drive.google.com/uc?export=view&id="+id]}var c=jget("ya_slips",{}),v=o.slip||c[o.id];return v?[v]:[]}
+function slipMiss(im){var a=document.createElement("span");a.className="slmiss";a.textContent="\ud83d\udcce Slip preview load nahi hui — yahan tap karke kholein";im.replaceWith(a)}
+async function slipFetch(im){try{var adm=typeof AT!=="undefined"&&AT&&$("adm")&&$("adm").classList.contains("on"),a={action:"slip",id:im.dataset.sid,oid:im.dataset.oid},r=adm?await apiPost(Object.assign(a,{tok:AT,lv:AL})):await cCall(Object.assign(a,{ctok:CT}));if(r&&r.ok&&r.data){im.onerror=null;im.src=r.data;return}}catch(e){}slipMiss(im)}
+function slipErr(im){var l=(im.dataset.u||"").split("|"),n=+(im.dataset.n||0)+1;if(n<l.length){im.dataset.n=n;im.src=l[n]}else if(im.dataset.sid&&!im.dataset.f){im.dataset.f=1;slipFetch(im)}else slipMiss(im)}
+function ppBox(o){var u=slipUrls(o);if(!o.utr&&!u.length)return"";var big=o.slipId?"https://drive.google.com/file/d/"+encodeURIComponent(o.slipId)+"/view":(u[0]||"");
+ return '<div class="pp"><div class="pph">\ud83d\udcb3 Payment proof</div>'+(o.utr?'<div class="utr"><small>UTR / Transaction ID</small><b>'+esc(o.utr)+'</b></div>':'')+(u.length?'<a class="slk" href="'+esc(big)+'" target="_blank" rel="noopener"><img class="slp" src="'+esc(u[0])+'"'+(u.length>1?' data-u="'+esc(u.join("|"))+'" data-n="0" data-sid="'+esc(o.slipId)+'" data-oid="'+esc(o.id)+'"':'')+' alt="Payment slip" onerror="slipErr(this)"></a><div class="small">Tap to enlarge</div>':'')+'</div>'}
+function slb(u){var o=document.createElement("div");o.className="slb";o.innerHTML='<img src="'+u+'" alt="Payment slip"><span>\u2715</span>';o.onclick=function(){o.remove()};document.body.appendChild(o)}
+document.addEventListener("click",function(e){var a=e.target.closest(".ord a.slk");if(!a)return;var im=a.querySelector("img");if(!im)return;e.preventDefault();slb(im.src)});
+function thumbSlip(id,d){var im=new Image();im.onload=function(){try{var k=Math.min(1,900/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);var cx=cv.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(im,0,0,cv.width,cv.height);var c=jget("ya_slips",{});c[id]=cv.toDataURL("image/jpeg",.8);var ks=Object.keys(c);while(ks.length>8)delete c[ks.shift()];save("ya_slips",JSON.stringify(c))}catch(e){}};im.src=d}
+
+/* ---- v16 status helpers ---- */
+function stKind(s){s=String(s||"").toLowerCase();return s.indexOf("cancel")>-1?"x":s.indexOf("deliver")>-1?"d":(s.indexOf("pending")>-1||s.indexOf("verification")>-1||s.indexOf("hold")>-1)?"w":s.indexOf("placed")>-1?"l":"g"}
+function stChip(s){var k=stKind(s);return '<span class="st st-'+k+'"><i></i>'+(k==="d"?"\u2713 ":k==="x"?"\u2715 ":"")+esc(s||"Placed")+'</span>'}
 SHELL_INIT();
 render();
 syncRemote();setInterval(syncRemote,60000);document.addEventListener("visibilitychange",function(){if(!document.hidden)syncRemote()});
